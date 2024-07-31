@@ -1,5 +1,5 @@
 
-import Astre from './components/test';
+import Astre from './components/Astre';
 import ThreeScene from './components/ThreeScene'
 
 function Home() {

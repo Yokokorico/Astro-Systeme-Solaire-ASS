@@ -1,11 +1,11 @@
 
-import Terre from './components/test';
+import Astre from './components/test';
 import ThreeScene from './components/ThreeScene'
 
 function Home() {
   return (
     <div>
-    <Terre/>
+    <Astre id="mars"/>
       <ThreeScene />
       </div>
 

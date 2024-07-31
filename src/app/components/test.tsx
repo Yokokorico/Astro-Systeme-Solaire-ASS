@@ -5,7 +5,10 @@ import apiService from './apiService';
 import { Body }from '../types/bodies';
 import { kelvinToCelsius } from '../utils/kelvinToCelsius';
 
-function Terre() {
+export interface AstreProps {
+    id: string;
+}
+const Astre: React.FC<AstreProps> = ({ id }) => {
     const [data, setData] = useState<Body | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -13,7 +16,7 @@ function Terre() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await apiService('terre');
+                const result = await apiService(id);
                 setData(result);
             } catch (error) {
                 setError(error as Error);
@@ -64,4 +67,4 @@ function Terre() {
     
 }
 
-export default Terre;
+export default Astre;

@@ -1,4 +1,4 @@
-export interface Body {
+export interface Astre {
     id: string;
     name: string;
     mass: {
@@ -6,7 +6,7 @@ export interface Body {
         massExponent: number;
     };
     gravity: number;
-    moons?: Body[];
+    moons?: Astre[];
     isPlanet?: boolean;
     semimajorAxis: number;
     perihelion: number;
@@ -28,6 +28,7 @@ export interface Body {
     };
     axialTilt: number;
     avgTemp: number;
+    eccentricity: number;
     bodyType: string;
 
 }

@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import apiService from '../services/apiService';
-import { Body }from '../types/bodies';
+import { Astre }from '../types/bodies';
 import { kelvinToCelsius } from '../utils/kelvinToCelsius';
 
 export interface AstreDetailsProps {
     id: string;
 }
 const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
-    const [data, setData] = useState<Body | null>(null);
+    const [data, setData] = useState<Astre | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 

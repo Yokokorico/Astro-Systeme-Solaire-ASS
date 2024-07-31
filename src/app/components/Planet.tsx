@@ -19,6 +19,8 @@ interface PlanetProps extends GroupProps {
 
 export function Planet({ name, ...props }: PlanetProps) {
   const { nodes, materials } = useGLTF(`/${name}.glb`) as GLTFResult
+  console.log(materials);
+  
   useGLTF.preload(`/${name}.glb`)
   return (
     <group {...props} dispose={null}>

@@ -1,11 +1,11 @@
 
-import Astre from './components/Astre';
+import AstreDetails from './components/AstreDetails';
 import ThreeScene from './components/ThreeScene'
 
 function Home() {
   return (
     <div>
-    <Astre id="mars"/>
+    <AstreDetails id="mars"/>
       <ThreeScene />
       </div>
 

@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import apiService from './apiService';
+import apiService from '../services/apiService';
 import { Body }from '../types/bodies';
 import { kelvinToCelsius } from '../utils/kelvinToCelsius';
 
-export interface AstreProps {
+export interface AstreDetailsProps {
     id: string;
 }
-const Astre: React.FC<AstreProps> = ({ id }) => {
+const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     const [data, setData] = useState<Body | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -67,4 +67,4 @@ const Astre: React.FC<AstreProps> = ({ id }) => {
     
 }
 
-export default Astre;
+export default AstreDetails;

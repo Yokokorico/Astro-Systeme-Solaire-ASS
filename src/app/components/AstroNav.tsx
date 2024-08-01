@@ -12,8 +12,8 @@ const AstroNav = () => {
     const countObjects = 3; // nombre d'objets visitables, défini par le tableau des objets
 
     function previous() {
-        setIndexObjects(indexObjects - 1);
         indexObjects === countObjects ? setAtMax(false) : '';
+        setIndexObjects(indexObjects - 1);
         indexObjects === 1 ? setAtMin(true) : '';
     }
 

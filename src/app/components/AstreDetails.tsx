@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import apiService from '../services/apiService';
+import ApiService from '../services/apiService';
 import { Astre }from '../types/bodies';
-import { kelvinToCelsius } from '../utils/kelvinToCelsius';
+import { kelvinToCelsius } from '../utils/Conversion';
 
 export interface AstreDetailsProps {
     id: string;
 }
 const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
+
     const [data, setData] = useState<Astre | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -16,7 +17,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await apiService(id);
+                const result = await ApiService(id);
                 setData(result);
             } catch (error) {
                 setError(error as Error);

@@ -1,0 +1,6 @@
+:root {
+  --astrobar-background: rgba(0, 0, 0, .75);
+  --astrobar-primary:    rgb(255, 255, 255);
+  --astrobar-secondary:  rgb(138, 246, 250);
+  --astrobar-tertiary:   rgb(239, 250, 138);
+}

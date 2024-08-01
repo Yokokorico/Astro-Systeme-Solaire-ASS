@@ -8,7 +8,7 @@ const ThreeScene = () => {
     const [hovered, setHovered]= useState(false);
  return(
     <div id="canvas-container">
-        <Canvas style={{height: '100vh', width: '100vw'}}>
+        <Canvas style={{height: '100vh', width: '100vw', background: 'black'}}>
             <ambientLight intensity={1} />
             <directionalLight color="white" position={[0, 0, 5]} />
             {/* <Planet scale={[0.0071492,0.0071492, 0.0071492]} name="jupiter" position={[500, 0, 0]}/>

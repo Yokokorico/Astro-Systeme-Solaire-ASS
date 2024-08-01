@@ -5,7 +5,7 @@ import ThreeScene from './components/ThreeScene'
 function Home() {
   return (
     <div>
-    <AstreDetails id="mars"/>
+    <AstreDetails id="terre"/>
       <ThreeScene />
       </div>
 

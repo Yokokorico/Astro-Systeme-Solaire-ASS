@@ -7,13 +7,10 @@ import "./variables.css";
 
 function Home() {
   return (
-
     <div>
-    <AstreDetails id="terre"/>
       <ThreeScene />
         <AstroNav />
       </div>
-
   )
 }
 

@@ -14,27 +14,12 @@ type GLTFResult = GLTF & {
   }
 }
 
-interface PlanetProps extends GroupProps {
-  name: string;
-  angularSpeed: number;
-}
+export function Sun() {
+  const { nodes, materials } = useGLTF(`/soleil.glb`) as GLTFResult
+  useGLTF.preload(`/soleil.glb`)
 
-export function Planet({ name, angularSpeed, ...props }: PlanetProps) {
-  const { nodes, materials } = useGLTF(`/${name}.glb`) as GLTFResult
-  const planetRef : any = useRef()
-  useGLTF.preload(`/${name}.glb`)
-
-  useEffect( () => {
-    console.log(angularSpeed);
-  },[]);
-
-  useFrame(() => {
-    if (planetRef.current) {
-      planetRef.current.rotation.y += angularSpeed;
-    }
-  });
   return (
-    <group ref={planetRef} {...props} dispose={null}>
+    <group dispose={null}>
       <group name="Scene" >
         <mesh
           name="cubemap"
@@ -47,4 +32,3 @@ export function Planet({ name, angularSpeed, ...props }: PlanetProps) {
     </group>
   )
 }
-

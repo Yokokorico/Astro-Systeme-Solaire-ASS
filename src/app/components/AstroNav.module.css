@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Optimus';
+    src: url('../../../public/assets/fonts/Optimus.otf');
+}
+@font-face {
+    font-family: 'Nasi';
+    src: url('../../../public/assets/fonts/Nasi.otf');
+}
+
+#astroNav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: var(--astrobar-background);
+    color: var(--astrobar-primary);
+    backdrop-filter: blur(8px);
+}
+
+#previous,
+#next {
+    position: relative;
+    width: 49px;
+    height: 49px;
+    background-image: url(../../../public/assets/images/chevron.png);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: invert(1) drop-shadow(0 0 2px var(--astrobar-primary)) drop-shadow(0 0 8px var(--astrobar-primary));
+    transition: .5s;
+}
+.chevronDot {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(../../../public/assets/images/chevron-dot.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 2px var(--astrobar-primary)) drop-shadow(0 0 8px var(--astrobar-primary));
+    transition: .25s;
+    transition-delay: .25s;
+    opacity: 0;
+}
+#previous:hover,
+#next:hover {
+    background-size: 75%;
+}
+#previous:hover .chevronDot,
+#next:hover .chevronDot {
+    opacity: 1;
+}
+#previous:active,
+#next:active {
+    background-size: 90%;
+}
+#previous {
+    transform: rotate(180deg);
+}
+
+#current {
+    width: 250px;
+    height: 100%;
+    font-size: 2rem;
+    font-family: 'Optimus';
+    letter-spacing: .2rem;
+    user-select: none;
+    text-shadow: 0 0 2px var(--astrobar-primary), 0 0 32px var(--astrobar-primary);
+}

@@ -1,9 +1,16 @@
 
+import { div } from 'three/webgpu';
 import ThreeScene from './components/ThreeScene'
+import AstroNav from './components/AstroNav';
+
+import "./variables.css";
 
 function Home() {
   return (
-      <ThreeScene />
+      <div>
+        <ThreeScene />
+        <AstroNav />
+      </div>
   )
 }
 

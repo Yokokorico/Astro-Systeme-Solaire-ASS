@@ -17,7 +17,18 @@ const ThreeScene = () => {
     const [error, setError] = useState<Error | null>(null);
     const sunRef : any = useRef();
     const directionalLightRef = useRef<any>(); 
-    const planets = ["soleil", "mercure", "venus", "terre", "mars", "jupiter", "saturne", "neptune", "uranus" ]
+    const planets = [
+        "soleil",
+        "mercure",
+        "venus",
+        "terre",
+        "mars",
+        "jupiter",
+        "saturne",
+        "neptune",
+        "uranus",
+    ];
+
     useEffect(() => {
         const fetchData = async () => {
             try {

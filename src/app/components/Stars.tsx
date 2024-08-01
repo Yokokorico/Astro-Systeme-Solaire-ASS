@@ -9,7 +9,7 @@ const Stars = ({ count = 5000 }) => {
     const positions = useMemo(() => {
         const positions = []
 
-        const minDistance = 500
+        const minDistance = 500;
 
         for (let i = 0; i < count; i++) {
             const distance = minDistance + Math.random() * 4500

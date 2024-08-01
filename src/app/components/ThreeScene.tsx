@@ -70,7 +70,7 @@ const ThreeScene = () => {
         const planet = data.find(planet => 
             planet.id?.toLowerCase() === name.toLowerCase()
         );        
-        return new Vector3(scaleOrbit(planet?.semimajorAxis),0,0);
+        return new Vector3(scaleOrbit(planet?.semimajorAxis) + 50,0,0);
     }
 
     const getAngularSpeed= (name: string): number => {
@@ -85,13 +85,13 @@ const ThreeScene = () => {
         return(
             <div id="canvas-container">
                 <div id="canvas-container">
-                <Canvas style={{ height: '100vh', width: '100vw' }} gl={{ antialias: true}} shadows>
+                <Canvas style={{ height: '100vh', width: '100vw' }} gl={{ antialias: true}} shadows camera={{position: [0, 0, -80]}}>
                     <ambientLight intensity={0.3}></ambientLight>
                     <pointLight position={[0,1,0]} distance={0} power={550000} />
                     <Planet 
-                        scale={[0.00696342, 0.00696342, 0.00696342]} 
+                        scale={[0.0696342, 0.0696342, 0.0696342]} 
                         name="soleil" 
-                        angularSpeed={0}
+                        angularSpeed={0.0001}
                         ref={sunRef}
                     > 
                     </Planet>

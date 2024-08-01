@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ApiService from '../services/apiService';
-import { Astre }from '../types/bodies';
+import { Astre } from '../types/bodies';
 import { kelvinToCelsius } from '../utils/Conversion';
+import styles from './AstreDetails.module.css';
 
 export interface AstreDetailsProps {
     id: string;
 }
-const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
 
+const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     const [data, setData] = useState<Astre | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,9 +29,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
         };
 
         fetchData();
-    }, []);
-
-
+    }, [id]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -39,33 +39,58 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
         return <div>Error: {error.message}</div>;
     }
 
+    if (!data) {
+        return <div>No data available</div>;
+    }
+
+    const dataFields = [
+        { label: 'Masse', value: data.mass ? `${data.mass.massValue} x 10^${data.mass.massExponent}` : null },
+        { label: 'Gravité', value: data.gravity },
+        { label: 'SemimajorAxis', value: data.semimajorAxis },
+        { label: 'Perihelion', value: data.perihelion },
+        { label: 'Aphelion', value: data.aphelion },
+        { label: 'Inclination', value: data.inclination },
+        { label: 'Volume', value: data.vol ? `${data.vol.volValue} x 10^${data.vol.volExponent}` : null },
+        { label: 'Densité', value: data.density },
+        { label: 'Vitesse de libération', value: data.escape },
+        { label: 'Rayon équatorial', value: data.equaRadius },
+        { label: 'Aplatissement', value: data.flattening },
+        { label: 'Orbital Sideral', value: data.sideralOrbit },
+        { label: 'Rotation Sideral', value: data.sideralRotation },
+        { label: 'Autour de la planète', value: data.aroundPlanet?.planet || null },
+        { label: 'Type de corps', value: data.bodyType },
+        { label: 'Inclinaison axiale', value: data.axialTilt },
+        { label: 'Température', value: data.avgTemp !== null ? `${kelvinToCelsius(data.avgTemp).toFixed(2)} °C` : null }
+    ];
+
     return (
-        <div>
-            {data && (
-                <div>
-                    <p>Nom : {data.name}</p>
-                    <p>Masse: {data.mass.massValue} x 10<sup>{data.mass.massExponent}</sup></p>
-                    <p>Gravité {data.gravity}</p>
-                    <p>SemimajorAxis {data.semimajorAxis}</p>
-                    <p>Perihelion {data.perihelion}</p>
-                    <p>Aphelion {data.aphelion}</p>
-                    <p>Inclination {data.inclination}</p>
-                    <p>Volume {data.vol.volValue} x 10<sup>{data.vol.volExponent}</sup></p>
-                    <p>Density {data.density}</p>
-                    <p>Escape {data.escape}</p>
-                    <p>Equaradius {data.equaRadius}</p>
-                    <p>Flattening {data.flattening}</p>
-                    <p>SideralOrbit {data.sideralOrbit}</p>
-                    <p>SideralRotation {data.sideralRotation}</p>
-                    <p>AroundPlanet {data.aroundPlanet?.planet}</p>
-                    <p>BodyType {data.bodyType}</p>
-                    <p>AxialTilt {data.axialTilt}</p>
-                    <p>Temperature: {kelvinToCelsius(data.avgTemp).toFixed(2)} &deg;C</p>
+        <div className={styles.container}>
+            <div className={styles.imageContainer}>
+                <div className={styles.imageWrapper}>
+                    <img src="/path-to-image.jpg" alt="Planet" className={styles.image} />
                 </div>
-            )}
+                <div className={styles.textContainer}>
+                    <h2 className={styles.title}>{data.name}</h2>
+                </div>
+            </div>
+            <div className={styles.scrollContainer} ref={scrollContainerRef}>
+                <div className={styles.fieldContainer}>
+                    {dataFields.map((field, index) => field.value !== null && (
+                        <div key={index} className={styles.row}>
+                            <span className={styles.label}>{field.label}:</span>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.fieldContainer}>
+                    {dataFields.map((field, index) => field.value !== null && (
+                        <div key={index} className={styles.row}>
+                            <span className={styles.value}>{field.value}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
-    
 }
 
 export default AstreDetails;

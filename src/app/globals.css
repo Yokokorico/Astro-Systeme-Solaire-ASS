@@ -20,6 +20,11 @@ body {
 
 }
 
+.locked {
+  filter: invert(.5) !important;
+  pointer-events: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

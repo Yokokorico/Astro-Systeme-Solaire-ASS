@@ -12,13 +12,29 @@ import { Vector3 } from "three";
 import React from 'react';
 import { OrbitLine } from './OrbitLine';
 
-const ThreeScene = () => {
+interface cameraProp {
+    position: {x: number, y: number, z: number},
+    lookAt: {x: number, y: number, z: number},
+}
+
+const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
+    const [hovered, setHovered]= useState(false);
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const sunRef = useRef<THREE.Group>(null);
-    const directionalLightRef = useRef<THREE.PointLight>(null);
-    const planets = ["soleil", "mercure", "venus", "terre", "mars", "jupiter", "saturne", "neptune", "uranus"];
+    const sunRef : any = useRef();
+    const directionalLightRef = useRef<any>(); 
+    const planets = [
+        "soleil",
+        "mercure",
+        "venus",
+        "terre",
+        "mars",
+        "jupiter",
+        "saturne",
+        "neptune",
+        "uranus",
+    ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,14 +71,19 @@ const ThreeScene = () => {
     };
 
     const findPositionPlanetByName = (name: string): Vector3 => {
-        const planet = data.find(planet => planet.id?.toLowerCase() === name.toLowerCase());
-        return new Vector3(scaleOrbit(planet?.semimajorAxis), 0, 0);
-    };
+        const planet = data.find(planet => 
+            planet.id?.toLowerCase() === name.toLowerCase()
+        );        
+        return new Vector3(scaleOrbit(planet?.semimajorAxis) + 50,0,0);
+    }
 
-    const getAngularSpeed = (name: string): number => {
-        const planet = data.find(planet => planet.id?.toLowerCase() === name.toLowerCase());
-        return angularSpeed(planet?.sideralRotation);
-    };
+    const getAngularSpeed= (name: string): number => {
+        const planet = data.find(planet => 
+            planet.id?.toLowerCase() === name.toLowerCase()
+        );
+        return angularSpeed(planet?.sideralRotation)
+    }
+
     const getOrbitalSpeed = (name: string): number => {
         const planet = data.find(planet => planet.id?.toLowerCase() === name.toLowerCase());
         // Utilisez la période orbitale (sideralOrbit) en jours pour calculer la vitesse angulaire
@@ -70,44 +91,64 @@ const ThreeScene = () => {
     };
     
 
-    return (
-        <div id="canvas-container">
-            <Canvas style={{ height: '100vh', width: '100vw' }} gl={{ antialias: true }} shadows>
-                <ambientLight intensity={0.3} />
-                <pointLight ref={directionalLightRef} position={[0, 1, 0]} distance={0} power={550000} />
-                <Planet
-                    scale={[0.00696342, 0.00696342, 0.00696342]}
-                    name="soleil"
-                    angularSpeed={0}
-                    semiMajorAxis={0}
-                    sideralOrbit={0}
-                    orbitCenter={new Vector3(0, 0, 0)}
-                    ref={sunRef}
-                />
-                {planets.filter(planet => planet !== 'soleil').map((planet) => (
-                    <React.Fragment key={planet}>
-                    <Planet
-                        key={planet}
-                        scale={findRadiusPlanetByName(planet)}
-                        name={planet}
-                        position={findPositionPlanetByName(planet)}
-                        angularSpeed={getAngularSpeed(planet)} // Peut ne pas être utilisé si vous calculez la vitesse orbitale
-                        sideralOrbit={getOrbitalSpeed(planet)}
-                        semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
-                        orbitCenter={new Vector3(0, 0, 0)} // Le centre de l'orbite est le soleil
-                    />
-                    <OrbitLine
-                    semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
-                    orbitCenter={new Vector3(0, 0, 0)}
-                    lineOpacity={0.1}
-                    />
-            </React.Fragment>
-                ))}
-                <OrbitControls />
+    if(!loading && data){
+      
+        return(
+            <div id="canvas-container">
+                <div id="canvas-container">
+                    <React.Fragment>
+                    <Canvas
+                        style={{ height: '100vh', width: '100vw' }}
+                        gl={{ antialias: true}}
+                        shadows
+                        camera={{
+                            position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
+                        }}
+                        >
+                        <ambientLight intensity={0.2}></ambientLight>
+                        <pointLight position={[0,1,0]} distance={0} power={550000} />
+                        <Planet 
+                            scale={[0.0696342, 0.0696342, 0.0696342]} 
+                            name="soleil" 
+                            angularSpeed={0.0001}
+                            semiMajorAxis={0}
+                            sideralOrbit={0}
+                            orbitCenter={new Vector3(0, 0, 0)}
+
+                            ref={sunRef}
+                        > 
+                        </Planet>
+                        {planets.filter(planet => planet !== 'soleil').map((planet) => (
+                        <group>
+                            <Planet
+                                key={planet}
+                                scale={findRadiusPlanetByName(planet)}
+                                name={planet}
+                                position={findPositionPlanetByName(planet)}
+                                angularSpeed={getAngularSpeed(planet)}
+                                sideralOrbit={getOrbitalSpeed(planet)}
+                                semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
+                                orbitCenter={new Vector3(0, 0, 0)}
+                            />
+
+                            <OrbitLine
+                            semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
+                            orbitCenter={new Vector3(0, 0, 0)}
+                            lineOpacity={0.2}
+                            />
+                             </group>
+                        ))}
+    
+              
+                <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
                 <Stars />
             </Canvas>
+            
+</React.Fragment>
         </div>
-    );
+    </div>
+ )
+}
 };
 
 export default ThreeScene;

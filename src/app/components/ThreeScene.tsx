@@ -1,13 +1,14 @@
 'use client';
 import * as THREE from 'three';  // Pour accéder au namespace THREE
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { use, useEffect, useRef, useState } from "react";
+import { Canvas, } from "@react-three/fiber";
+import {  useEffect, useRef, useState } from "react";
 import Planet from "./Planet";
 import Stars from "./Stars";
 import { angularSpeed, calculateOrbitalSpeed, scaleOrbit, scaleRadius } from "../utils/Conversion";
 import getPlanetById from "../services/ApiService";
 import { Astre } from "../types/bodies";
+import  CameraUpdater from "./CameraUpdater";
 import { Vector3 } from "three";
 import React from 'react';
 import { OrbitLine } from './OrbitLine';
@@ -20,7 +21,7 @@ interface cameraProp {
 
 const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
     const [planetPositions, setPlanetPositions] = useState<{ [key: string]: THREE.Vector3 }>({});
-    const [cameraFocus, setCameraFocus] = useState<THREE.Vector3 | null>(null);
+    const [cameraDistance, setCameraDistance] = useState(10);
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -60,9 +61,6 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
     }, [sunRef.current?.position]);
 
 
-    useEffect(() => {
-        setCameraFocus(planetPositions.terre);
-    }, [planetPositions.terre]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -103,9 +101,10 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
             [name]: position,
         }));
      };
+
+    
     
      const getPosition = (name: string): THREE.Vector3 | undefined => {
-        console.log(planetPositions[name])
         return planetPositions[name];
      };
 
@@ -120,9 +119,7 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
                         style={{ height: '100vh', width: '100vw' }}
                         gl={{ antialias: true}}
                         shadows
-                        camera={{
-                            position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
-                        }}
+           
                         >
                         <ambientLight intensity={0.2}></ambientLight>
                         <pointLight position={[0,1,0]} distance={0} power={550000} />
@@ -159,9 +156,13 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
                              </group>
                         ))}
     
-              
-                <OrbitControls target={planetPositions.terre} />
-                <Stars />
+                             <CameraUpdater
+                                planetPosition={getPosition("terre")}
+                                cameraDistance={cameraDistance}
+                            />
+
+    <OrbitControls target={ [cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]} />
+    <Stars />
             </Canvas>
             
 </React.Fragment>

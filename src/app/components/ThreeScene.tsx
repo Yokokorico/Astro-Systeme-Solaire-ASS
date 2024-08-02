@@ -10,7 +10,12 @@ import { Astre } from "../types/bodies";
 import { Sun } from "./Sun"
 import { Vector3 } from "three";
 
-const ThreeScene = () => {
+interface cameraProp {
+    position: {x: number, y: number, z: number},
+    lookAt: {x: number, y: number, z: number},
+}
+
+const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
     const [hovered, setHovered]= useState(false);
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
@@ -85,29 +90,36 @@ const ThreeScene = () => {
         return(
             <div id="canvas-container">
                 <div id="canvas-container">
-                <Canvas style={{ height: '100vh', width: '100vw' }} gl={{ antialias: true}} shadows camera={{position: [0, 0, -80]}}>
-                    <ambientLight intensity={0.3}></ambientLight>
-                    <pointLight position={[0,1,0]} distance={0} power={550000} />
-                    <Planet 
-                        scale={[0.0696342, 0.0696342, 0.0696342]} 
-                        name="soleil" 
-                        angularSpeed={0.0001}
-                        ref={sunRef}
-                    > 
-                    </Planet>
-                    {planets.filter(planet => planet !== 'soleil').map((planet) => (
-                        <Planet
-                            key={planet}
-                            scale={findRadiusPlanetByName(planet)}
-                            name={planet}
-                            position={findPositionPlanetByName(planet)}
-                            angularSpeed={getAngularSpeed(planet)}
-                        />
-                    ))}
-                    <OrbitControls />
-                    <Stars />
-                </Canvas>
-            </div>
+                    <Canvas
+                        style={{ height: '100vh', width: '100vw' }}
+                        gl={{ antialias: true}}
+                        shadows
+                        camera={{
+                            position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
+                        }}
+                        >
+                        <ambientLight intensity={0.2}></ambientLight>
+                        <pointLight position={[0,1,0]} distance={0} power={550000} />
+                        <Planet 
+                            scale={[0.0696342, 0.0696342, 0.0696342]} 
+                            name="soleil" 
+                            angularSpeed={0.0001}
+                            ref={sunRef}
+                        > 
+                        </Planet>
+                        {planets.filter(planet => planet !== 'soleil').map((planet) => (
+                            <Planet
+                                key={planet}
+                                scale={findRadiusPlanetByName(planet)}
+                                name={planet}
+                                position={findPositionPlanetByName(planet)}
+                                angularSpeed={getAngularSpeed(planet)}
+                            />
+                        ))}
+                        <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
+                        <Stars />
+                    </Canvas>
+                </div>
             </div>
          )
     }

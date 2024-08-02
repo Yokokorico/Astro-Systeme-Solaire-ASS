@@ -112,7 +112,7 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
       
         return(
             <div id="canvas-container">
-<button onClick={() => getPosition("terre")}>Position Terre</button>
+<button onClick={() => console.log(getPosition("terre")) }>Position Terre</button>
                 <div id="canvas-container">
                     <React.Fragment>
                     <Canvas

@@ -2,8 +2,8 @@
 import * as THREE from 'three';  // Pour accéder au namespace THREE
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
-import { Planet } from "./Planet";
+import { use, useEffect, useRef, useState } from "react";
+import Planet from "./Planet";
 import Stars from "./Stars";
 import { angularSpeed, calculateOrbitalSpeed, scaleOrbit, scaleRadius } from "../utils/Conversion";
 import getPlanetById from "../services/ApiService";
@@ -15,10 +15,12 @@ import { OrbitLine } from './OrbitLine';
 interface cameraProp {
     position: {x: number, y: number, z: number},
     lookAt: {x: number, y: number, z: number},
+    cameraFocus: {x: number, y: number, z: number}
 }
 
 const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
-    const [hovered, setHovered]= useState(false);
+    const [planetPositions, setPlanetPositions] = useState<{ [key: string]: THREE.Vector3 }>({});
+    const [cameraFocus, setCameraFocus] = useState<THREE.Vector3 | null>(null);
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -57,6 +59,11 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
         }
     }, [sunRef.current?.position]);
 
+
+    useEffect(() => {
+        setCameraFocus(planetPositions.terre);
+    }, [planetPositions.terre]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -89,12 +96,24 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
         // Utilisez la période orbitale (sideralOrbit) en jours pour calculer la vitesse angulaire
         return calculateOrbitalSpeed(planet?.sideralOrbit);
     };
+
+    const handlePlanetPositionUpdate = (name: string, position: THREE.Vector3) => {
+        setPlanetPositions(prevPositions => ({
+            ...prevPositions,
+            [name]: position,
+        }));
+     };
     
+     const getPosition = (name: string): THREE.Vector3 | undefined => {
+        console.log(planetPositions[name])
+        return planetPositions[name];
+     };
 
     if(!loading && data){
       
         return(
             <div id="canvas-container">
+<button onClick={() => getPosition("terre")}>Position Terre</button>
                 <div id="canvas-container">
                     <React.Fragment>
                     <Canvas
@@ -114,12 +133,12 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
                             semiMajorAxis={0}
                             sideralOrbit={0}
                             orbitCenter={new Vector3(0, 0, 0)}
-
+                            onPositionUpdate={handlePlanetPositionUpdate}
                             ref={sunRef}
                         > 
                         </Planet>
                         {planets.filter(planet => planet !== 'soleil').map((planet) => (
-                        <group>
+                        <group key={planet}>
                             <Planet
                                 key={planet}
                                 scale={findRadiusPlanetByName(planet)}
@@ -129,6 +148,7 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
                                 sideralOrbit={getOrbitalSpeed(planet)}
                                 semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
                                 orbitCenter={new Vector3(0, 0, 0)}
+                                onPositionUpdate={handlePlanetPositionUpdate}
                             />
 
                             <OrbitLine
@@ -140,7 +160,7 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
                         ))}
     
               
-                <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
+                <OrbitControls target={planetPositions.terre} />
                 <Stars />
             </Canvas>
             

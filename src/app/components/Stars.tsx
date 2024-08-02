@@ -9,7 +9,7 @@ const Stars = ({ count = 5000 }) => {
     const positions = useMemo(() => {
         const positions = []
 
-        const minDistance = 500;
+        const minDistance = 5000;
 
         for (let i = 0; i < count; i++) {
             const distance = minDistance + Math.random() * 4500
@@ -41,15 +41,15 @@ const Stars = ({ count = 5000 }) => {
     }, [count, positions])
 
     // Animate the stars
-    useFrame(() => {
-        if (!meshRef.current) return
+    // useFrame(() => {
+    //     if (!meshRef.current) return
 
-        meshRef.current.rotation.y += 0.0001
-    })
+    //     meshRef.current.rotation.y += 0.0001
+    // })
 
     return (
         <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-            <dodecahedronGeometry args={[0.4, 0]} />
+            <dodecahedronGeometry args={[8, 0]} />
             <meshBasicMaterial attach='material' color='white' />
         </instancedMesh>
     )

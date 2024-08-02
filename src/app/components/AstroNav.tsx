@@ -19,12 +19,18 @@ const AstroNav: React.FC<astroProps> = ({ planets }) =>  {
         indexObjects === countObjects - 1 ? setAtMax(false) : '';
         setIndexObjects(indexObjects - 1);
         indexObjects === 1 ? setAtMin(true) : '';
+        focusOnTarget(indexObjects);
     }
 
     function next() {
         indexObjects === 0 ? setAtMin(false) : '';
         setIndexObjects(indexObjects + 1);
         indexObjects === countObjects - 2 ? setAtMax(true) : '';
+    }
+
+    function focusOnTarget(target: number) {
+        // const targeteName = planets.filter(planet => planet.)
+        console.log(planets);
     }
 
     return(

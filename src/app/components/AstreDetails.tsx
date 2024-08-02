@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import ApiService from '../services/apiService';
+import ApiService from '../services/ApiService';
 import { Astre } from '../types/bodies';
 import { kelvinToCelsius } from '../utils/Conversion';
 import styles from './AstreDetails.module.css';

@@ -1,6 +1,6 @@
 'use client';
 import * as THREE from 'three';  // Pour accéder au namespace THREE
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Sphere } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { Planet } from "./Planet";
@@ -97,54 +97,55 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
             <div id="canvas-container">
                 <div id="canvas-container">
                     <React.Fragment>
-                    <Canvas
-                        style={{ height: '100vh', width: '100vw' }}
-                        gl={{ antialias: true}}
-                        shadows
-                        camera={{
-                            position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
-                        }}
-                        >
-                        <ambientLight intensity={0.2}></ambientLight>
-                        <pointLight position={[0,1,0]} distance={0} power={550000} />
-                        <Planet 
-                            scale={[0.0696342, 0.0696342, 0.0696342]} 
-                            name="soleil" 
-                            angularSpeed={0.0001}
-                            semiMajorAxis={0}
-                            sideralOrbit={0}
-                            orbitCenter={new Vector3(0, 0, 0)}
+                        <Canvas
+                            style={{ height: '100vh', width: '100vw' }}
+                            gl={{ antialias: true}}
+                            shadows
+                            camera={{
+                                position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
+                                far: 100000.0,
+                            }}
+                            >
+                            <ambientLight intensity={0.2}></ambientLight>
+                            <pointLight position={[0,1,0]} distance={0} power={550000} />
+                            <Planet 
+                                scale={[0.0696342, 0.0696342, 0.0696342]} 
+                                name="soleil" 
+                                angularSpeed={0.0001}
+                                semiMajorAxis={0}
+                                sideralOrbit={0}
+                                orbitCenter={new Vector3(0, 0, 0)}
 
-                            ref={sunRef}
-                        > 
-                        </Planet>
-                        {planets.filter(planet => planet !== 'soleil').map((planet) => (
-                        <group>
-                            <Planet
-                                key={planet}
-                                scale={findRadiusPlanetByName(planet)}
-                                name={planet}
-                                position={findPositionPlanetByName(planet)}
-                                angularSpeed={getAngularSpeed(planet)}
-                                sideralOrbit={getOrbitalSpeed(planet)}
+                                ref={sunRef}
+                            > 
+                            </Planet>
+                            {planets.filter(planet => planet !== 'soleil').map((planet) => (
+                            <group>
+                                <Planet
+                                    key={planet}
+                                    scale={findRadiusPlanetByName(planet)}
+                                    name={planet}
+                                    position={findPositionPlanetByName(planet)}
+                                    angularSpeed={getAngularSpeed(planet)}
+                                    sideralOrbit={getOrbitalSpeed(planet)}
+                                    semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
+                                    orbitCenter={new Vector3(0, 0, 0)}
+                                />
+
+                                <OrbitLine
                                 semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
                                 orbitCenter={new Vector3(0, 0, 0)}
-                            />
-
-                            <OrbitLine
-                            semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
-                            orbitCenter={new Vector3(0, 0, 0)}
-                            lineOpacity={0.2}
-                            />
-                             </group>
-                        ))}
-    
-              
-                <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
-                <Stars />
-            </Canvas>
-            
-</React.Fragment>
+                                lineOpacity={0.2}
+                                />
+                                </group>
+                            ))}
+                    <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
+                    <Stars />
+                    {/* <Sphere 
+                        material={}
+                    /> */}
+                </Canvas>
+            </React.Fragment>
         </div>
     </div>
  )

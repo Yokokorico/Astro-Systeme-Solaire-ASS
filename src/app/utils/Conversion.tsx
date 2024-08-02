@@ -7,7 +7,7 @@ export const scaleRadius = (radius: number | undefined) => {
 }
 
 export const scaleOrbit = (orbit: number | undefined) => {
-    return orbit ? ( orbit / 1000000 ) / 2 : 0;
+    return orbit ? ( orbit / 1000000 ) / 1.1 : 0;
 }
 
 export const angularSpeed = (sideralRotation: number | undefined) => {    

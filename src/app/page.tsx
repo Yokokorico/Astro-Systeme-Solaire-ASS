@@ -9,6 +9,10 @@ import './variables.css';
 
 function Home() {
   const astroPlanets = ["soleil", "mercure", "venus", "terre", "mars", "jupiter", "saturne", "neptune", "uranus"];
+  const astroCamera = {
+    position: {x: 0, y: 300, z: -180},
+    lookAt: {x: 0, y: -30, z: 0},
+  };
 
   const [selectedPlanet, setSelectedPlanet] = useState(astroPlanets[0]);
 
@@ -18,11 +22,11 @@ function Home() {
 
   return (
     <div>
-      <ThreeScene />
+      <ThreeScene position={astroCamera.position} lookAt={astroCamera.lookAt}/>
       <AstreDetails id={selectedPlanet} />
       <AstroNav planets={astroPlanets} onPlanetChange={handlePlanetChange} />
-    </div>
-  );
-}
+      </div>
+    )
+  }
 
 export default Home;

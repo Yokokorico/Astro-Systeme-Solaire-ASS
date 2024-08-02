@@ -13,3 +13,11 @@ export const scaleOrbit = (orbit: number | undefined) => {
 export const angularSpeed = (sideralRotation: number | undefined) => {    
     return sideralRotation ? ((2*Math.PI) / (sideralRotation*3600))*2 : 0; 
 }
+
+export const calculateOrbitalSpeed = (orbitalPeriodDays: number | undefined): number => {
+    if (orbitalPeriodDays) {
+        const periodInSeconds = orbitalPeriodDays * 24 * 60 * 60; 
+        return (2 * Math.PI) / periodInSeconds;
+    }
+    return 0;
+};

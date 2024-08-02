@@ -17,21 +17,23 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, onPlanetChange }) => {
     const countObjects = planets.length; // nombre d'objets visitables, défini par le tableau des objets
 
     function previous() {
-        if (indexObjects > 0) {
-            setIndexObjects(indexObjects - 1);
-            onPlanetChange(planets[indexObjects - 1]);
-            setAtMax(false);
-            if (indexObjects - 1 === 0) setAtMin(true);
-        }
+        indexObjects === countObjects - 1 ? setAtMax(false) : '';
+        setIndexObjects(indexObjects - 1);
+        onPlanetChange(planets[indexObjects - 1]);
+        indexObjects === 1 ? setAtMin(true) : '';
+        focusOnTarget(indexObjects);
     }
 
     function next() {
-        if (indexObjects < countObjects - 1) {
-            setIndexObjects(indexObjects + 1);
-            onPlanetChange(planets[indexObjects + 1]);
-            setAtMin(false);
-            if (indexObjects + 1 === countObjects - 1) setAtMax(true);
-        }
+        indexObjects === 0 ? setAtMin(false) : '';
+        setIndexObjects(indexObjects + 1);
+        onPlanetChange(planets[indexObjects + 1]);
+        indexObjects === countObjects - 2 ? setAtMax(true) : '';
+    }
+
+    function focusOnTarget(target: number) {
+        // const targeteName = planets.filter(planet => planet.)
+        console.log(planets);
     }
 
     return(

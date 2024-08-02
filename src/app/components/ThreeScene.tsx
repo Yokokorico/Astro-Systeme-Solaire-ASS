@@ -1,13 +1,14 @@
 'use client';
 import * as THREE from 'three';  // Pour accéder au namespace THREE
-import { OrbitControls, Sphere } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
-import { Planet } from "./Planet";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas, } from "@react-three/fiber";
+import {  useEffect, useRef, useState } from "react";
+import Planet from "./Planet";
 import Stars from "./Stars";
 import { angularSpeed, calculateOrbitalSpeed, scaleOrbit, scaleRadius } from "../utils/Conversion";
 import getPlanetById from "../services/ApiService";
 import { Astre } from "../types/bodies";
+import  CameraUpdater from "./CameraUpdater";
 import { Vector3 } from "three";
 import React from 'react';
 import { OrbitLine } from './OrbitLine';
@@ -15,10 +16,12 @@ import { OrbitLine } from './OrbitLine';
 interface cameraProp {
     position: {x: number, y: number, z: number},
     lookAt: {x: number, y: number, z: number},
+    cameraFocus: {x: number, y: number, z: number}
 }
 
 const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
-    const [hovered, setHovered]= useState(false);
+    const [planetPositions, setPlanetPositions] = useState<{ [key: string]: THREE.Vector3 }>({});
+    const [cameraDistance, setCameraDistance] = useState(10);
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
@@ -57,6 +60,8 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
         }
     }, [sunRef.current?.position]);
 
+
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -89,63 +94,78 @@ const ThreeScene: React.FC<cameraProp> = (cameraProp) => {
         // Utilisez la période orbitale (sideralOrbit) en jours pour calculer la vitesse angulaire
         return calculateOrbitalSpeed(planet?.sideralOrbit);
     };
+
+    const handlePlanetPositionUpdate = (name: string, position: THREE.Vector3) => {
+        setPlanetPositions(prevPositions => ({
+            ...prevPositions,
+            [name]: position,
+        }));
+     };
+
     
+    
+     const getPosition = (name: string): THREE.Vector3 | undefined => {
+        return planetPositions[name];
+     };
 
     if(!loading && data){
       
         return(
             <div id="canvas-container">
+<button onClick={() => console.log(getPosition("terre")) }>Position Terre</button>
                 <div id="canvas-container">
                     <React.Fragment>
-                        <Canvas
-                            style={{ height: '100vh', width: '100vw' }}
-                            gl={{ antialias: true}}
-                            shadows
-                            camera={{
-                                position: [cameraProp.position.x, cameraProp.position.y, cameraProp.position.z],
-                                far: 100000.0,
-                            }}
-                            >
-                            <ambientLight intensity={0.2}></ambientLight>
-                            <pointLight position={[0,1,0]} distance={0} power={550000} />
-                            <Planet 
-                                scale={[0.0696342, 0.0696342, 0.0696342]} 
-                                name="soleil" 
-                                angularSpeed={0.0001}
-                                semiMajorAxis={0}
-                                sideralOrbit={0}
-                                orbitCenter={new Vector3(0, 0, 0)}
-
-                                ref={sunRef}
-                            > 
-                            </Planet>
-                            {planets.filter(planet => planet !== 'soleil').map((planet) => (
-                            <group>
-                                <Planet
-                                    key={planet}
-                                    scale={findRadiusPlanetByName(planet)}
-                                    name={planet}
-                                    position={findPositionPlanetByName(planet)}
-                                    angularSpeed={getAngularSpeed(planet)}
-                                    sideralOrbit={getOrbitalSpeed(planet)}
-                                    semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
-                                    orbitCenter={new Vector3(0, 0, 0)}
-                                />
-
-                                <OrbitLine
+                    <Canvas
+                        style={{ height: '100vh', width: '100vw' }}
+                        gl={{ antialias: true}}
+                        shadows
+           
+                        >
+                        <ambientLight intensity={0.2}></ambientLight>
+                        <pointLight position={[0,1,0]} distance={0} power={550000} />
+                        <Planet 
+                            scale={[0.0696342, 0.0696342, 0.0696342]} 
+                            name="soleil" 
+                            angularSpeed={0.0001}
+                            semiMajorAxis={0}
+                            sideralOrbit={0}
+                            orbitCenter={new Vector3(0, 0, 0)}
+                            onPositionUpdate={handlePlanetPositionUpdate}
+                            ref={sunRef}
+                        > 
+                        </Planet>
+                        {planets.filter(planet => planet !== 'soleil').map((planet) => (
+                        <group key={planet}>
+                            <Planet
+                                key={planet}
+                                scale={findRadiusPlanetByName(planet)}
+                                name={planet}
+                                position={findPositionPlanetByName(planet)}
+                                angularSpeed={getAngularSpeed(planet)}
+                                sideralOrbit={getOrbitalSpeed(planet)}
                                 semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
                                 orbitCenter={new Vector3(0, 0, 0)}
-                                lineOpacity={0.2}
-                                />
-                                </group>
-                            ))}
-                    <OrbitControls target={[cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]}/>
-                    <Stars />
-                    {/* <Sphere 
-                        material={}
-                    /> */}
-                </Canvas>
-            </React.Fragment>
+                                onPositionUpdate={handlePlanetPositionUpdate}
+                            />
+
+                            <OrbitLine
+                            semiMajorAxis={scaleOrbit(data.find(p => p.id?.toLowerCase() === planet.toLowerCase())?.semimajorAxis || 1)}
+                            orbitCenter={new Vector3(0, 0, 0)}
+                            lineOpacity={0.2}
+                            />
+                             </group>
+                        ))}
+    
+                             <CameraUpdater
+                                planetPosition={getPosition("terre")}
+                                cameraDistance={cameraDistance}
+                            />
+
+    <OrbitControls target={ [cameraProp.lookAt.x, cameraProp.lookAt.y, cameraProp.lookAt.z]} />
+    <Stars />
+            </Canvas>
+            
+</React.Fragment>
         </div>
     </div>
  )

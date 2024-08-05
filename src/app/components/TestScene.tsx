@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import Stars from "./Stars";
 
 interface AstroBody {
   radius: number;
@@ -23,7 +24,6 @@ const astroBodies: AstroBodies = {
     widthSegments: 256,
     heightSegments: 128,
     texture: "2k_sun.jpg",
-    
     sideralOrbit: 0,
     distance: 0,
     rotationSpeed: 0.0001,
@@ -81,7 +81,7 @@ const AstroObject: React.FC<{ astroBody: AstroBody; name: string }> = ({ astroBo
   );
 };
 
-const Sun: React.FC<{ astroBody: AstroBody }> = ({ astroBody }) => {
+export const Sun: React.FC<{ astroBody: AstroBody }> = ({ astroBody }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const texture = useTexture(`/${astroBody.texture}`);
 
@@ -118,7 +118,7 @@ const CustomCamera: React.FC = () => {
   useFrame(() => {
     const newPos = new THREE.Vector3();
     const targetPos = new THREE.Vector3();
-    const earth = scene.getObjectByName('earth');
+    const earth = scene.getObjectByName('terre');
     if (earth) {
       earth.getWorldPosition(targetPos);
 

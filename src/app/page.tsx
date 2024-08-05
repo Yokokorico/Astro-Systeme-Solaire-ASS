@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import AstreDetails from "./components/AstreDetails";
-import ThreeScene from "./components/ThreeScene";
 import AstroNav from "./components/AstroNav";
-
 import "./variables.css";
-import { Canvas } from "@react-three/fiber";
-import { FirstPersonControls } from "@react-three/drei";
 import Scene from "./components/TestScene";
+import AstroMap from "./components/AstroMap";
 
 function Home() {
   const astroPlanets = [
@@ -35,9 +31,8 @@ function Home() {
 
   return (
     <div>
-      {/* <ThreeScene position={astroCamera.position} lookAt={astroCamera.lookAt}/> */}
-        <Scene></Scene>
-      {/* <AstreDetails id={selectedPlanet} /> */}
+ 
+      <AstroMap />
       <AstroNav planets={astroPlanets} onPlanetChange={handlePlanetChange} />
     </div>
   );

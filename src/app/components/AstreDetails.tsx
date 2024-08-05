@@ -66,9 +66,6 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     return (
         <div className={styles.container}>
             <div className={styles.imageContainer}>
-                <div className={styles.imageWrapper}>
-                    <img src="/path-to-image.jpg" alt="Planet" className={styles.image} />
-                </div>
                 <div className={styles.textContainer}>
                     <h2 className={styles.title}>{data.name}</h2>
                 </div>

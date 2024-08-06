@@ -27,7 +27,7 @@ export interface Astre {
         rel: string;
     };
     axialTilt?: number;
-    avgTemp?: number;
+    avgTemp: number;
     eccentricity?: number;
     bodyType?: string;
 

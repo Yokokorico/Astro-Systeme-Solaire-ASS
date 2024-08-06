@@ -14,7 +14,7 @@ export interface AstroPlanetProps {
     rotationSpeed?: number;
     speedMultiplier?: number; // Added prop for speed multiplier
     timeDilation?: number; // Added prop for time dilation
-    axialTilt?: number; // Added prop for axial tilt
+    axialTilt?: number; // Added prop for axial tilt 
 }
 
 function AstroPlanet({

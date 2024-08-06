@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
-import Scene from "./components/TestScene";
 import AstroMap from "./components/AstroMap";
 
 function Home() {
@@ -18,10 +17,6 @@ function Home() {
     "neptune",
     "uranus",
   ];
-  const astroCamera = {
-    position: { x: 0, y: 300, z: -180 },
-    lookAt: { x: 0, y: -30, z: 0 },
-  };
 
   const [selectedPlanet, setSelectedPlanet] = useState(astroPlanets[0]);
 
@@ -31,8 +26,7 @@ function Home() {
 
   return (
     <div>
- 
-      <AstroMap />
+      <AstroMap astroPlanets={astroPlanets} selectedPlanetId={selectedPlanet}/>
       <AstroNav planets={astroPlanets} onPlanetChange={handlePlanetChange} />
     </div>
   );

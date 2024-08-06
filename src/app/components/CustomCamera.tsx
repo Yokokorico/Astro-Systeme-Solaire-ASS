@@ -47,7 +47,7 @@ export const CustomCamera: React.FC = () => {
       );
       cameraLookAtOffset.setX(-2.4);
       cameraLookAtOffset.setY(0);
-      cameraLookAtOffset.setZ(0);
+      cameraLookAtOffset.setZ(0); 
       const newCameraLookAt = new THREE.Vector3().addVectors(
         targetPos,
         cameraLookAtOffset

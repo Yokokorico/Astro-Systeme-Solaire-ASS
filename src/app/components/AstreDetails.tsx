@@ -8,6 +8,7 @@ import styles from './AstreDetails.module.css';
 
 export interface AstreDetailsProps {
     id: string;
+    isVisible: boolean;
 }
 
 const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {

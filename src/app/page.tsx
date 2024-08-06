@@ -70,7 +70,7 @@ function Home() {
   return (
     <div>
       <AstroMap astroType={astroPlanets} selectedPlanetId={selectedPlanet.id} />
-      <AstreDetails id={selectedPlanet.id} />
+      <AstreDetails id={selectedPlanet.id} isVisible={true} />
       <AstroNav planets={astroPlanets.map(p => p.id)} onPlanetChange={handlePlanetChange} />
     </div>
   );

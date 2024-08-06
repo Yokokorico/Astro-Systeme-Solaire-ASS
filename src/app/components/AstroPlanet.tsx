@@ -15,6 +15,10 @@ export interface AstroPlanetProps {
     speedMultiplier?: number;
     timeDilation?: number;
     axialTilt?: number;
+    hasRing?: boolean; // Added prop for rings
+    ringInnerRadius?: number; // Added prop for inner radius of the ring
+    ringOuterRadius?: number; // Added prop for outer radius of the ring
+    ringTexture?: string; // Added prop for ring texture
 }
 
 function AstroPlanet({
@@ -28,12 +32,22 @@ function AstroPlanet({
     rotationSpeed = 0,
     speedMultiplier = 1,
     timeDilation = 1,
-    axialTilt = 0
+    axialTilt = 0,
+    hasRing, // Default no ring
+    ringInnerRadius = radius * 1.1, // Default inner radius of ring slightly larger than planet
+    ringOuterRadius = radius * 1.8, // Default outer radius of ring
+    ringTexture // Default texture for the ring
 }: AstroPlanetProps) {
     const meshRef = useRef<THREE.Mesh>(null);
+    const ringMeshRef = useRef<THREE.Mesh>(null);
     const groupRef = useRef<THREE.Group>(null);
     const axialTiltGroupRef = useRef<THREE.Group>(null);
     const textureMap = useTexture(`/${texture}`);
+    let ringTextureMap;
+
+    if(hasRing){
+        ringTextureMap = useTexture(`/${ringTexture}`);
+    }
 
     useEffect(() => {
         if (axialTiltGroupRef.current) {
@@ -53,18 +67,43 @@ function AstroPlanet({
             groupRef.current.rotation.y += adjustedOrbitSpeed;
         }
         if (meshRef.current) {
-            meshRef.current.rotation.y += adjustedRotationSpeed;
+            meshRef.current.rotation.y += adjustedRotationSpeed; // Apply rotational speed
+        }
+        if (ringMeshRef.current) {
+            ringMeshRef.current.rotation.z += adjustedRotationSpeed; // Apply rotational speed to the ring
         }
     });
 
+    useEffect(() => {
+        if (ringMeshRef.current) {
+            const geometry = ringMeshRef.current.geometry;
+            const pos = geometry.attributes.position;
+            const uv = geometry.attributes.uv;
+            const v3 = new THREE.Vector3();
+
+            for (let i = 0; i < pos.count; i++) {
+                v3.fromBufferAttribute(pos, i);
+                const u = (v3.length() - ringInnerRadius) / (ringOuterRadius - ringInnerRadius);
+                uv.setXY(i, THREE.MathUtils.clamp(u, 0.1, 0.9), 1);
+            }
+
+            uv.needsUpdate = true;
+        }
+    }, [ringInnerRadius, ringOuterRadius, ringTexture]);
     return (
         <group ref={groupRef}>
             {distance !== undefined && (
                 <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
-                    <mesh ref={meshRef} name={name} >
+                    <mesh ref={meshRef} name={name}>
                         <sphereGeometry args={[radius, widthSegments, heightSegments]} />
                         <meshStandardMaterial map={textureMap} />
                     </mesh>
+                    {hasRing && (
+                        <mesh ref={ringMeshRef} position={[0, 0, 0]} rotation={[-0.5 * Math.PI, 0, 0]}>
+                            <ringGeometry args={[ringInnerRadius, ringOuterRadius, 512]} />
+                            <meshBasicMaterial map={ringTextureMap} side={THREE.DoubleSide} />
+                        </mesh>
+                    )}
                 </group>
             )}
         </group>

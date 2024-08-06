@@ -44,40 +44,42 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     }
  
     const dataFields = [
-        { label: 'Masse', value: data.mass ? `${data.mass.massValue} x 10^${data.mass.massExponent}` : null },
-        { label: 'Gravité', value: data.gravity },
-        { label: 'SemimajorAxis', value: data.semimajorAxis },
-        { label: 'Perihelion', value: data.perihelion },
-        { label: 'Aphelion', value: data.aphelion },
+        { label: 'Masse', value: data.mass ? `${data.mass.massValue} x 10^${data.mass.massExponent} kg` : null },
+        { label: 'Gravité', value: `${data.gravity} m/s²` },
+        { label: 'SemimajorAxis', value: `${data.semimajorAxis?.toLocaleString()} km` },
+        { label: 'Périhélie', value: `${data.perihelion?.toLocaleString()} km` },
+        { label: 'Aphélie', value: `${data.aphelion?.toLocaleString()} km` },
         { label: 'Inclination', value: data.inclination },
-        { label: 'Volume', value: data.vol ? `${data.vol.volValue} x 10^${data.vol.volExponent}` : null },
-        { label: 'Densité', value: data.density },
+        { label: 'Volume', value: data.vol ? `${data.vol.volValue} x 10^${data.vol.volExponent} km³` : null },
+        { label: 'Densité', value: `${data.density} g/cm³` },
         { label: 'Vitesse de libération', value: data.escape },
         { label: 'Rayon équatorial', value: data.equaRadius },
         { label: 'Aplatissement', value: data.flattening },
-        { label: 'Orbital Sideral', value: data.sideralOrbit },
-        { label: 'Rotation Sideral', value: data.sideralRotation },
+        { label: 'Orbite Sidérale', value: data.sideralOrbit },
+        { label: 'Rotation Sidérale', value: data.sideralRotation },
         { label: 'Autour de la planète', value: data.aroundPlanet?.planet || null },
         { label: 'Type de corps', value: data.bodyType },
-        { label: 'Inclinaison axiale', value: data.axialTilt },
+        { label: 'Inclinaison axiale', value: data.axialTilt  },
         { label: 'Température', value: data.avgTemp !== null ? `${kelvinToCelsius(data.avgTemp).toFixed(2)} °C` : null }
     ];
 
     return (
-        <div className={styles.container}>
-            <div className={`flex flex-cols ${styles.titleContainer}`}><h2 className={`nasalization blue ${styles.title}`}>{data.name}</h2></div>
-                <div className={styles.scrollContainer} ref={scrollContainerRef}>
-                    <div className={styles.fieldContainer}>
-                        {dataFields.map((field, index) => field.value !== null && (
-                            <div key={index} className={styles.row}>
-                                <span className={`blue ${styles.label}`}>{field.label}:</span>
-                            </div>
-                        ))}
-                    </div>
+        <div className={`${styles.container} ${styles[data.id]}`}>
+            <div className={`flex flex-cols ${styles.titleContainer} `}>
+                <h2 className={`nasalization ${styles.title}`}>{data.name}</h2>
+            </div>
+            <div className={styles.scrollContainer} ref={scrollContainerRef}>
                 <div className={styles.fieldContainer}>
                     {dataFields.map((field, index) => field.value !== null && (
                         <div key={index} className={styles.row}>
-                            <span className={`blue ${styles.value}`}>{field.value}</span>
+                            <span className={`${styles.label}`}>{field.label}:</span>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.fieldContainer}>
+                    {dataFields.map((field, index) => field.value !== null && (
+                        <div key={index} className={styles.row}>
+                            <span className={`${styles.value}`}>{field.value}</span>
                         </div>
                     ))}
                 </div>

@@ -9,7 +9,7 @@ const Stars = ({ count = 5000 }) => {
     const positions = useMemo(() => {
         const positions = []
 
-        const minDistance = 7000;
+        const minDistance = 5000;
 
         for (let i = 0; i < count; i++) {
             const distance = minDistance + Math.random() * 4500
@@ -49,7 +49,7 @@ const Stars = ({ count = 5000 }) => {
 
     return (
         <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-            <dodecahedronGeometry args={[5, 0]} />
+            <dodecahedronGeometry args={[1, 0]} />
             <meshBasicMaterial attach='material' color='white' />
         </instancedMesh>
     )

@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-export const CustomCamera: React.FC = () => {
+interface CustomCameraProps {
+  targetName: string;
+}
+
+export const CustomCamera: React.FC<CustomCameraProps> = ({ targetName }) => {
   const { camera, gl, scene } = useThree();
 
   useEffect(() => {
@@ -26,13 +30,19 @@ export const CustomCamera: React.FC = () => {
 
   useFrame(() => {
     const targetPos = new THREE.Vector3();
-    const earth = scene.getObjectByName("terre");
-    
-    if (earth) {
-      earth.getWorldPosition(targetPos);
+    let targetObject: THREE.Object3D | undefined;
 
-      // Adjust camera offset to position it slightly to the right of the planet
-      const cameraOffset = new THREE.Vector3(0, 0, 4.5); // Increased value to move camera right
+    scene.traverse((object) => {
+      
+      if (object instanceof THREE.Mesh && object.name === targetName) {
+        targetObject = object;        
+      }
+    });
+
+    if (targetObject) {
+      targetObject.getWorldPosition(targetPos);
+
+      const cameraOffset = new THREE.Vector3(0, 0, 7); // Adjust as needed
       const newCameraPosition = new THREE.Vector3().addVectors(
         targetPos,
         cameraOffset
@@ -40,14 +50,7 @@ export const CustomCamera: React.FC = () => {
 
       camera.position.copy(newCameraPosition);
 
-      const cameraLookAt = new THREE.Vector3();
-      const cameraLookAtOffset = new THREE.Vector3().subVectors(
-        targetPos,
-        cameraLookAt
-      );
-      cameraLookAtOffset.setX(-2.4);
-      cameraLookAtOffset.setY(0);
-      cameraLookAtOffset.setZ(0); 
+      const cameraLookAtOffset = new THREE.Vector3(-2.4, 0, 0); // Adjust as needed
       const newCameraLookAt = new THREE.Vector3().addVectors(
         targetPos,
         cameraLookAtOffset

@@ -1,5 +1,5 @@
 export interface Astre {
-    id?: string;
+    id: string;
     name: string;
     mass?: {
         massValue: number;

@@ -14,13 +14,14 @@ import Stars from './Stars';
 export interface AstroMapProps {
     astroType: AstroType[];
     selectedPlanetId: string;
+    speedRatio: number;
 }
 
-function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
+function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
     const [data, setData] = useState<Astre[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-
+   
     useEffect(() => {
         console.log(selectedPlanetId); 
     }, [selectedPlanetId]);
@@ -67,9 +68,9 @@ function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
                         widthSegments={128}
                         heightSegments={64}
                         texture={`2k_${astroBody.id}.jpg`}
-                        sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit)}
+                        sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit)*speedRatio}
                         distance={scaleOrbit(astroBody.semimajorAxis)}
-                        rotationSpeed={scaleSideralRotation(astroBody.sideralRotation)}
+                        rotationSpeed={scaleSideralRotation(astroBody.sideralRotation)*speedRatio}
                         axialTilt={astroBody.axialTilt}
                         speedMultiplier={100}
                         timeDilation={100}

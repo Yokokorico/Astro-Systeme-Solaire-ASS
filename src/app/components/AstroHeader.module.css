@@ -1,0 +1,21 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 1rem 3rem 0 3rem;
+    font-family: 'Nasalization';
+    background: var(--astrobar-background);
+    margin: 0;
+    z-index: 2;
+}
+.title {
+    font-size: 3rem;
+    line-height: 2rem;
+}
+.subtitle {
+    font-size: 1rem;
+}

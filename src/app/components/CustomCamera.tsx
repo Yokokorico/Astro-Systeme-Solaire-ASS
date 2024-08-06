@@ -14,7 +14,7 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
   useEffect(() => {
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
     perspectiveCamera.position.set(0, 0, 250);
-    perspectiveCamera.far = 10000;
+    perspectiveCamera.far = 10000000;
 
     const handleResize = () => {
       perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
@@ -36,7 +36,7 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
 
     scene.traverse((object) => {
       
-      if (object instanceof THREE.Mesh && object.name === cameraPlanetFocused) {
+      if (object instanceof THREE.Mesh && object.name === cameraPlanetFocused && object.name !== 'soleil') {
         
         targetObject = object;        
       }

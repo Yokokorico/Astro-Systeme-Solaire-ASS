@@ -42,7 +42,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     if (!data) {
         return <div>No data available</div>;
     }
-
+ 
     const dataFields = [
         { label: 'Masse', value: data.mass ? `${data.mass.massValue} x 10^${data.mass.massExponent}` : null },
         { label: 'Gravité', value: data.gravity },
@@ -65,23 +65,19 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.imageContainer}>
-                <div className={styles.textContainer}>
-                    <h2 className={styles.title}>{data.name}</h2>
-                </div>
-            </div>
-            <div className={styles.scrollContainer} ref={scrollContainerRef}>
+            <div className={`flex flex-cols ${styles.titleContainer}`}><h2 className={`nasalization blue ${styles.title}`}>{data.name}</h2></div>
+                <div className={styles.scrollContainer} ref={scrollContainerRef}>
+                    <div className={styles.fieldContainer}>
+                        {dataFields.map((field, index) => field.value !== 0 && (
+                            <div key={index} className={styles.row}>
+                                <span className={`blue ${styles.label}`}>{field.label}:</span>
+                            </div>
+                        ))}
+                    </div>
                 <div className={styles.fieldContainer}>
-                    {dataFields.map((field, index) => field.value !== null && (
+                    {dataFields.map((field, index) => field.value !== 0 && (
                         <div key={index} className={styles.row}>
-                            <span className={styles.label}>{field.label}:</span>
-                        </div>
-                    ))}
-                </div>
-                <div className={styles.fieldContainer}>
-                    {dataFields.map((field, index) => field.value !== null && (
-                        <div key={index} className={styles.row}>
-                            <span className={styles.value}>{field.value}</span>
+                            <span className={`blue ${styles.value}`}>{field.value}</span>
                         </div>
                     ))}
                 </div>

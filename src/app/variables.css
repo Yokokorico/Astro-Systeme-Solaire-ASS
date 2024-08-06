@@ -4,3 +4,17 @@
   --astrobar-secondary:  rgb(138, 246, 250);
   --astrobar-tertiary:   rgb(239, 250, 138);
 }
+
+
+@font-face {
+  font-family: 'Nasalization';
+  src: url(../../public/assets/fonts/nasalization-rg.otf);
+}
+
+.nasalization {
+  font-family: 'Nasalization';
+}
+
+.blue {
+  color: #46FCFF
+}

@@ -1,18 +1,20 @@
+
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 5px solid #663300;
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 50px;
-    background-color: rgba(245, 245, 245, 0.5);
-    max-width: 650px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(5px);
+    width: 35rem;
     margin: 0 auto;
     position: absolute;
-    top:20%;
+    top: 20%;
     left: 2%;
- 
 }
 
 .imageContainer {
@@ -21,38 +23,56 @@
     margin-bottom: 10px;
 }
 
+.imageWrapper {
+    flex: 1 1 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ 
+.image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 50%;
+}
+
 .textContainer {
-    flex: 1 1 100%;
+    flex: 1 1 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
+.titleContainer {
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 1rem;
+    padding-inline: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+}
+
 .title {
-    margin: 0 0 10px 0;
-    font-size: 24px;
-    color: #663300;
-    border-bottom: 2px solid #663300;
-    padding-bottom: 5px;
+    font-size: 28px;
     width: fit-content;
+    font-weight: bold;
 }
 
 .scrollContainer {
     display: flex;
-    max-height: 300px;
+    max-height: 70vh;
     overflow-y: auto;
-    border-top: 2px solid #663300;
-    width: 120%;
-    justify-content: flex-start;
+    width: 100%;
 }
 
 .fieldContainer {
     display: table;
-    width: 100%;
+    width: 50%;
     padding: 10px;
     box-sizing: border-box;
-    margin-left: auto; 
 }
 
 .row {
@@ -63,10 +83,8 @@
 .label {
     display: table-cell;
     font-weight: bold;
-    color: #663300;
 }
 
 .value {
     display: table-cell;
-    color: #663300;
 }

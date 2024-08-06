@@ -1,14 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import AstreDetails from "./components/AstreDetails";
-import ThreeScene from "./components/ThreeScene";
 import AstroNav from "./components/AstroNav";
-
 import "./variables.css";
-import { Canvas } from "@react-three/fiber";
-import { FirstPersonControls } from "@react-three/drei";
-import Scene from "./components/TestScene";
+import AstroMap from "./components/AstroMap";
 
 function Home() {
   const astroPlanets = [
@@ -22,10 +17,6 @@ function Home() {
     "neptune",
     "uranus",
   ];
-  const astroCamera = {
-    position: { x: 0, y: 300, z: -180 },
-    lookAt: { x: 0, y: -30, z: 0 },
-  };
 
   const [selectedPlanet, setSelectedPlanet] = useState(astroPlanets[0]);
 
@@ -35,9 +26,7 @@ function Home() {
 
   return (
     <div>
-      {/* <ThreeScene position={astroCamera.position} lookAt={astroCamera.lookAt}/> */}
-        <Scene></Scene>
-      {/* <AstreDetails id={selectedPlanet} /> */}
+      <AstroMap astroPlanets={astroPlanets} selectedPlanetId={selectedPlanet}/>
       <AstroNav planets={astroPlanets} onPlanetChange={handlePlanetChange} />
     </div>
   );

@@ -21,7 +21,6 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, onPlanetChange }) => {
         setIndexObjects(indexObjects - 1);
         onPlanetChange(planets[indexObjects - 1]);
         indexObjects === 1 ? setAtMin(true) : '';
-        focusOnTarget(indexObjects);
     }
 
     function next() {
@@ -31,10 +30,7 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, onPlanetChange }) => {
         indexObjects === countObjects - 2 ? setAtMax(true) : '';
     }
 
-    function focusOnTarget(target: number) {
-        // const targeteName = planets.filter(planet => planet.)
-        console.log(planets);
-    }
+
 
     return(
         <div className="flex justify-center items-center" id={styles.astroNav}>

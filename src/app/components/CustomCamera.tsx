@@ -15,6 +15,7 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
     perspectiveCamera.position.set(0, 0, 250);
     perspectiveCamera.far = 10000;
+    perspectiveCamera.fov = 10;
 
     const handleResize = () => {
       perspectiveCamera.aspect = window.innerWidth / window.innerHeight;

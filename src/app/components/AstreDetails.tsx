@@ -68,14 +68,14 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
             <div className={`flex flex-cols ${styles.titleContainer}`}><h2 className={`nasalization blue ${styles.title}`}>{data.name}</h2></div>
                 <div className={styles.scrollContainer} ref={scrollContainerRef}>
                     <div className={styles.fieldContainer}>
-                        {dataFields.map((field, index) => field.value !== 0 && (
+                        {dataFields.map((field, index) => field.value !== null && (
                             <div key={index} className={styles.row}>
                                 <span className={`blue ${styles.label}`}>{field.label}:</span>
                             </div>
                         ))}
                     </div>
                 <div className={styles.fieldContainer}>
-                    {dataFields.map((field, index) => field.value !== 0 && (
+                    {dataFields.map((field, index) => field.value !== null && (
                         <div key={index} className={styles.row}>
                             <span className={`blue ${styles.value}`}>{field.value}</span>
                         </div>

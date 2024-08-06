@@ -31,3 +31,9 @@ body {
 		text-wrap: balance;
 	}
 }
+
+#input-slider {
+	font-family: 'Nasalization';
+	letter-spacing: .05rem;
+	margin-bottom: -2px;
+}

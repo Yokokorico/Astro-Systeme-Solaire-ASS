@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import AstroHeader from "./components/AstroHeader";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
 import AstroMap from "./components/AstroMap";
@@ -85,9 +86,9 @@ function Home() {
 
   return (
     <div>
-      <Box sx={{ width: 300, marginBottom: 2 }}>
+      <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
         <Typography id="input-slider" gutterBottom>
-          Vitesse: {speedRatio}
+          Vitesse: {speedRatio.toFixed(2)}
         </Typography>
         <Slider
           value={sliderValue}
@@ -98,6 +99,7 @@ function Home() {
           aria-labelledby="input-slider"
         />
       </Box>
+      <AstroHeader />
       <AstroMap
         speedRatio={speedRatio}
         astroType={astroPlanets}

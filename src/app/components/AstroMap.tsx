@@ -51,7 +51,7 @@ function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
             <Sphere args={[32, 64, 64]} position={[0, 0, 0]}>
                 <meshBasicMaterial color="white" />
             </Sphere>
-            {data.filter(astroBody => astroBody.name !== 'soleil').map(astroBody => (
+            {data.filter(astroBody => astroBody.id !== 'soleil').map(astroBody => (
                 <React.Fragment key={astroBody.id}>
                     <OrbitLine
                         semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)}
@@ -60,7 +60,7 @@ function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
                     />
                     <AstroPlanet
                         key={astroBody.id}
-                        name={astroBody.name}
+                        name={astroBody.id}
                         radius={scaleRadius(astroBody.equaRadius)}
                         widthSegments={128}
                         heightSegments={64}

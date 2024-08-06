@@ -14,6 +14,7 @@ export interface AstroType {
 }
 
 function Home() {
+  const [sliderValue, setSliderValue] = useState(50); // 50 corresponds to the center value 1 in the new scale
   const [speedRatio, setSpeedRatio] = useState(1);
 
   const astroPlanets: AstroType[] = [
@@ -73,7 +74,12 @@ function Home() {
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number') {
-      setSpeedRatio(newValue);
+      setSliderValue(newValue);
+      if (newValue <= 50) {
+        setSpeedRatio(1 - (50 - newValue) / 50);
+      } else {
+        setSpeedRatio((newValue - 50) * 2); 
+      }
     }
   };
 
@@ -84,7 +90,7 @@ function Home() {
           Vitesse: {speedRatio}
         </Typography>
         <Slider
-          value={speedRatio}
+          value={sliderValue}
           min={0}
           max={100}
           step={1}

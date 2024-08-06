@@ -8,6 +8,7 @@ import { scaleOrbit, scaleRadius, scaleSideralOrbit, scaleSideralRotation } from
 import { CustomCamera } from './CustomCamera';
 import { OrbitLine } from './OrbitLine';
 import { Vector3 } from 'three';
+import Stars from './Stars';
 
 export interface AstroMapProps {
     astroPlanets: string[];
@@ -46,34 +47,33 @@ function AstroMap({ astroPlanets, selectedPlanetId }: AstroMapProps) {
         <Canvas style={{ width: '100vw', height: '100vh' }}>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={0.8} />
-        <Sphere args={[32, 64, 64]} position={[0, 0, 0]} >
-            <meshBasicMaterial color="white" />
-        </Sphere>
-        {data.filter(astroBody => astroBody.name !== 'soleil').map((astroBody) => {
-            return (
-                <React.Fragment key={astroBody.name}>
-                    <OrbitLine semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)} orbitCenter={new Vector3(0, 0, 0)} lineOpacity={0.5}/>
-                    <AstroPlanet
-                    key={astroBody.name}
-                    name={astroBody.name}
-                    radius={scaleRadius(astroBody.equaRadius)}
-                    widthSegments={128}
-                    heightSegments={64}
-                    texture={`2k_${astroBody.id}.jpg`}
-                    sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit)}
-                    distance={scaleOrbit(astroBody.semimajorAxis)}
-                    rotationSpeed={scaleSideralRotation(astroBody.sideralRotation)}
-                    axialTilt={astroBody.axialTilt}
-                    speedMultiplier={100}
-                    timeDilation={100}
-                    />
-                </React.Fragment>
-            );
-        })} 
+            <Sphere args={[32, 64, 64]} position={[0, 0, 0]}>
+                <meshBasicMaterial color="white" />
+            </Sphere>
+            {data.filter(astroBody => astroBody.id !== 'soleil').map((astroBody) => {
+                return (
+                    <React.Fragment key={astroBody.id}>
+                        <OrbitLine semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)} orbitCenter={new Vector3(0, 0, 0)} lineOpacity={0.5}/>
+                        <AstroPlanet
+                            key={astroBody.id}
+                            name={astroBody.id}
+                            radius={scaleRadius(astroBody.equaRadius)}
+                            widthSegments={128}
+                            heightSegments={64}
+                            texture={`2k_${astroBody.id}.jpg`}
+                            sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit)}
+                            distance={scaleOrbit(astroBody.semimajorAxis)}
+                            rotationSpeed={scaleSideralRotation(astroBody.sideralRotation)}
+                            axialTilt={astroBody.axialTilt}
+                            speedMultiplier={100}
+                            timeDilation={100}
+                        />
+                    </React.Fragment>
+                );
+            })} 
+            <Stars />
             <OrbitControls />
-            
-
-            <CustomCamera />
+            <CustomCamera targetName={selectedPlanet} />
         </Canvas>
     );
 }

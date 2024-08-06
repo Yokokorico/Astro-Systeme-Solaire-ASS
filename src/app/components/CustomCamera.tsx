@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-interface CustomCameraProps {
-  targetName: string;
+export interface CameraProps {
+  cameraPositionOffset?: number;
+  cameraLookAtOffset?: number;
+  cameraPlanetFocused?: string;
 }
-
-export const CustomCamera: React.FC<CustomCameraProps> = ({ targetName }) => {
+export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, cameraLookAtOffset, cameraPlanetFocused }) => {
+  
   const { camera, gl, scene } = useThree();
 
+  useEffect(() => {
+    console.log('focus camera: ', cameraPlanetFocused, 'position offset: ', cameraPositionOffset, 'look at offset: ', cameraLookAtOffset);
+  }), [cameraPlanetFocused, cameraPositionOffset, cameraLookAtOffset];
   useEffect(() => {
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
     perspectiveCamera.position.set(0, 0, 250);
@@ -34,7 +39,7 @@ export const CustomCamera: React.FC<CustomCameraProps> = ({ targetName }) => {
 
     scene.traverse((object) => {
       
-      if (object instanceof THREE.Mesh && object.name === targetName) {
+      if (object instanceof THREE.Mesh && object.name === cameraPlanetFocused) {
         targetObject = object;        
       }
     });

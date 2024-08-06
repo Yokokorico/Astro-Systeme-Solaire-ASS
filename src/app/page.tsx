@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
 import AstroMap from "./components/AstroMap";
+import AstreDetails from "./components/AstreDetails";
 
 export interface AstroType {
   id: string;
@@ -69,6 +70,7 @@ function Home() {
   return (
     <div>
       <AstroMap astroType={astroPlanets} selectedPlanetId={selectedPlanet.id} />
+      <AstreDetails id={selectedPlanet.id} />
       <AstroNav planets={astroPlanets.map(p => p.id)} onPlanetChange={handlePlanetChange} />
     </div>
   );

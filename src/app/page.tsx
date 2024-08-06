@@ -97,7 +97,7 @@ function Home() {
         astroType={astroPlanets}
         selectedPlanetId={selectedPlanet.id}
       />
-      <AstreDetails id={selectedPlanet.id} />
+      <AstreDetails id={selectedPlanet.id} isVisible={false} />
       <AstroNav
         planets={astroPlanets.map((p) => p.id)}
         onPlanetChange={handlePlanetChange}

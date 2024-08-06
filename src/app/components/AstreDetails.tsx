@@ -49,17 +49,17 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
         { label: 'SemimajorAxis', value: `${data.semimajorAxis?.toLocaleString()} km` },
         { label: 'Périhélie', value: `${data.perihelion?.toLocaleString()} km` },
         { label: 'Aphélie', value: `${data.aphelion?.toLocaleString()} km` },
-        { label: 'Inclination', value: data.inclination },
+        { label: 'Inclination', value: `${data.inclination}°` },
         { label: 'Volume', value: data.vol ? `${data.vol.volValue} x 10^${data.vol.volExponent} km³` : null },
         { label: 'Densité', value: `${data.density} g/cm³` },
-        { label: 'Vitesse de libération', value: data.escape },
-        { label: 'Rayon équatorial', value: data.equaRadius },
+        { label: 'Vitesse de libération', value: `${data.escape?.toLocaleString()} km/s` },
+        { label: 'Rayon équatorial', value: `${data.equaRadius.toLocaleString()} km` },
         { label: 'Aplatissement', value: data.flattening },
-        { label: 'Orbite Sidérale', value: data.sideralOrbit },
-        { label: 'Rotation Sidérale', value: data.sideralRotation },
+        { label: 'Période de révolution', value: `${data.sideralOrbit?.toLocaleString()} jours` },
+        { label: 'Période de rotation', value: `${data.sideralRotation} heures` },
         { label: 'Autour de la planète', value: data.aroundPlanet?.planet || null },
         { label: 'Type de corps', value: data.bodyType },
-        { label: 'Inclinaison axiale', value: data.axialTilt  },
+        { label: 'Inclinaison axiale', value: `${data.axialTilt}°`  },
         { label: 'Température', value: data.avgTemp !== null ? `${kelvinToCelsius(data.avgTemp).toFixed(2)} °C` : null }
     ];
 

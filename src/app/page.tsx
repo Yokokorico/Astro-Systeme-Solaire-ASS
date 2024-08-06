@@ -15,48 +15,48 @@ function Home() {
   const astroPlanets: AstroType[] = [
     {
       id: "soleil",
-      cameraPositionOffset: 100,
-      cameraLookAtOffset: 10,
+      cameraPositionOffset: 1500 ,
+      cameraLookAtOffset: -2.4,
     },
     {
       id: "mercure",
-      cameraPositionOffset: 150,
-      cameraLookAtOffset: 15,
+      cameraPositionOffset: 6,
+      cameraLookAtOffset: -2.4,
     },
     {
       id: "venus",
-      cameraPositionOffset: 200,
-      cameraLookAtOffset: 20,
+      cameraPositionOffset: 14,
+      cameraLookAtOffset: -5.4,
     },
     {
       id: "terre",
-      cameraPositionOffset: 250,
-      cameraLookAtOffset: 25,
+      cameraPositionOffset: 14,
+      cameraLookAtOffset: -5.4,
     },
     {
       id: "mars",
-      cameraPositionOffset: 300,
-      cameraLookAtOffset: 30,
+      cameraPositionOffset: 8,
+      cameraLookAtOffset: -4,
     },
     {
       id: "jupiter",
-      cameraPositionOffset: 350,
-      cameraLookAtOffset: 35,
+      cameraPositionOffset: 140,
+      cameraLookAtOffset: -40,
     },
     {
       id: "saturne",
-      cameraPositionOffset: 400,
-      cameraLookAtOffset: 40,
+      cameraPositionOffset: 250,
+      cameraLookAtOffset: -120,
     },
     {
       id: "neptune",
-      cameraPositionOffset: 450,
-      cameraLookAtOffset: 45,
+      cameraPositionOffset: 60,
+      cameraLookAtOffset: -30,
     },
     {
       id: "uranus",
-      cameraPositionOffset: 500,
-      cameraLookAtOffset: 50,
+      cameraPositionOffset: 60,
+      cameraLookAtOffset: -20,
     }
   ];
 

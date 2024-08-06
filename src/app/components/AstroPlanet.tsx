@@ -57,9 +57,9 @@ function AstroPlanet({
         <group ref={groupRef}>
             {distance ? (
                 <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
-                    <mesh ref={meshRef} name={name}>
+                    <mesh ref={meshRef} name={name} >
                         <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-                        <meshBasicMaterial map={textureMap} />
+                        <meshStandardMaterial map={textureMap} />
                     </mesh>
                 </group>
             ) : null}

@@ -9,6 +9,7 @@ import { OrbitLine } from './OrbitLine';
 import { Vector3 } from 'three';
 import { AstroType } from '../page';
 import AstroPlanet from './AstroPlanet';
+import Stars from './Stars';
 
 export interface AstroMapProps {
     astroType: AstroType[];
@@ -45,18 +46,19 @@ function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
     if (error) return <div>Error: {error.message}</div>;
 
     return (
-        <Canvas style={{ width: '100vw', height: '100vh' }}>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={0.8} />
+        <Canvas style={{ width: '100vw', height: '100vh' }} >
+            <ambientLight intensity={0.2} />
+            <pointLight distance={0} decay={0.01} intensity={5} />
             <Sphere args={[32, 64, 64]} position={[0, 0, 0]}>
                 <meshBasicMaterial color="white" />
             </Sphere>
             {data.filter(astroBody => astroBody.id !== 'soleil').map(astroBody => (
                 <React.Fragment key={astroBody.id}>
+                    
                     <OrbitLine
                         semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)}
                         orbitCenter={new Vector3(0, 0, 0)}
-                        lineOpacity={0.5}
+                        lineOpacity={(selectedPlanetId == "soleil") ? 0.3 : 0 }
                     />
                     <AstroPlanet
                         key={astroBody.id}
@@ -75,6 +77,7 @@ function AstroMap({ astroType, selectedPlanetId }: AstroMapProps) {
                 </React.Fragment>
             ))}
             <OrbitControls />
+            <Stars />
             <CustomCamera cameraPositionOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset} cameraLookAtOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset} cameraPlanetFocused={selectedPlanetId} />
         </Canvas>
     );

@@ -15,7 +15,6 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
     perspectiveCamera.position.set(0, 0, 250);
     perspectiveCamera.far = 10000;
-    perspectiveCamera.fov = 10;
 
     const handleResize = () => {
       perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
@@ -46,7 +45,7 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
     if (targetObject) {
       targetObject.getWorldPosition(targetPos);
 
-      const cameraOffset = new THREE.Vector3(0, 0, 7); // Adjust as needed
+      const cameraOffset = new THREE.Vector3(0, 0, cameraPositionOffset); // Adjust as needed
       const newCameraPosition = new THREE.Vector3().addVectors(
         targetPos,
         cameraOffset
@@ -54,10 +53,10 @@ export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, came
 
       camera.position.copy(newCameraPosition);
 
-      const cameraLookAtOffset = new THREE.Vector3(-2.4, 0, 0); // Adjust as needed
+      const newcameraLookAtOffset = new THREE.Vector3(cameraLookAtOffset, 0, 0); // Adjust as needed
       const newCameraLookAt = new THREE.Vector3().addVectors(
         targetPos,
-        cameraLookAtOffset
+        newcameraLookAtOffset
       );
 
       camera.lookAt(newCameraLookAt);

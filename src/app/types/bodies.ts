@@ -1,6 +1,6 @@
 export interface Astre {
     id?: string;
-    name?: string;
+    name: string;
     mass?: {
         massValue: number;
         massExponent: number;
@@ -27,7 +27,7 @@ export interface Astre {
         rel: string;
     };
     axialTilt?: number;
-    avgTemp?: number;
+    avgTemp: number;
     eccentricity?: number;
     bodyType?: string;
 

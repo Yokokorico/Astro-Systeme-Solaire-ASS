@@ -74,6 +74,8 @@ function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
                         axialTilt={astroBody.axialTilt}
                         speedMultiplier={100}
                         timeDilation={100}
+                        hasRing={(astroBody.id == "saturne") ? true : false}
+                        ringTexture={(astroBody.id == "saturne") ? `2k_${astroBody.id}_ring.png` : undefined}
                     />
                 </React.Fragment>
             ))}

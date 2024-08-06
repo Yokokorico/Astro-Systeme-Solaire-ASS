@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Astre } from '../types/bodies';
 import getPlanetById from '../services/ApiService';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { scaleOrbit, scaleRadius, scaleSideralOrbit, scaleSideralRotation } from '../utils/Conversion';
 import { CustomCamera } from './CustomCamera';
 import { OrbitLine } from './OrbitLine';
@@ -19,12 +19,15 @@ export interface AstroMapProps {
 
 function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
     const [data, setData] = useState<Astre[]>([]);
+    const [soleil, setSoleil] = useState<Astre | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-   
+
     useEffect(() => {
-        console.log(selectedPlanetId); 
+        console.log(selectedPlanetId);
     }, [selectedPlanetId]);
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +36,7 @@ function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
                     astroType.map(planet => getPlanetById(planet.id))
                 );
                 setData(results);
+                setSoleil(results.find(planet => planet.id === 'soleil'));
             } catch (error) {
                 setError(error as Error);
             } finally {
@@ -48,18 +52,17 @@ function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
 
     return (
         <Canvas style={{ width: '100vw', height: '100vh' }} >
+  
             <ambientLight intensity={0.2} />
             <pointLight distance={0} decay={0.01} intensity={5} />
-            <Sphere args={[32, 64, 64]} position={[0, 0, 0]}>
-                <meshBasicMaterial color="white" />
-            </Sphere>
-            {data.filter(astroBody => astroBody.id !== 'soleil').map(astroBody => (
+
+
+            {data.filter(astroBody => astroBody.id).map(astroBody => (
                 <React.Fragment key={astroBody.id}>
-                    
                     <OrbitLine
                         semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)}
                         orbitCenter={new Vector3(0, 0, 0)}
-                        lineOpacity={(selectedPlanetId == "soleil") ? 0.3 : 0 }
+                        lineOpacity={(selectedPlanetId === "soleil") ? 0.3 : 0}
                     />
                     <AstroPlanet
                         key={astroBody.id}
@@ -68,9 +71,9 @@ function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
                         widthSegments={128}
                         heightSegments={64}
                         texture={`2k_${astroBody.id}.jpg`}
-                        sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit)*speedRatio}
+                        sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit) * speedRatio}
                         distance={scaleOrbit(astroBody.semimajorAxis)}
-                        rotationSpeed={scaleSideralRotation(astroBody.sideralRotation)*speedRatio}
+                        rotationSpeed={scaleSideralRotation(astroBody.sideralRotation) * speedRatio}
                         axialTilt={astroBody.axialTilt}
                         speedMultiplier={100}
                         timeDilation={100}
@@ -81,7 +84,11 @@ function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
             ))}
             <OrbitControls />
             <Stars />
-            <CustomCamera cameraPositionOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset} cameraLookAtOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset} cameraPlanetFocused={selectedPlanetId} />
+            <CustomCamera 
+                cameraPositionOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset} 
+                cameraLookAtOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset} 
+                cameraPlanetFocused={selectedPlanetId} 
+            />
         </Canvas>
     );
 }

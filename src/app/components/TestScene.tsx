@@ -81,7 +81,7 @@ const AstroObject: React.FC<{ astroBody: AstroBody; name: string }> = ({ astroBo
   );
 };
 
-export const Sun: React.FC<{ astroBody: AstroBody }> = ({ astroBody }) => {
+ const Sun: React.FC<{ astroBody: AstroBody }> = ({ astroBody }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const texture = useTexture(`/${astroBody.texture}`);
 

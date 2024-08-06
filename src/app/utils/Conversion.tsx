@@ -2,7 +2,7 @@ export const kelvinToCelsius = (kelvin: number): number => kelvin - 273.15;
 
 export const scaleRadius = (radius?: number): number => radius ? radius / 1000 : 0;
 
-export const scaleOrbit = (orbit?: number): number => orbit ? orbit / 1000000 : 0;
+export const scaleOrbit = (orbit?: number): number => orbit ? orbit / 20000: 0; 
 
 export const scaleSideralOrbit = (sideralOrbit?: number): number => {
     if (sideralOrbit) {

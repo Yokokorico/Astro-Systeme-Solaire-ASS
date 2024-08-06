@@ -12,9 +12,9 @@ export interface AstroPlanetProps {
     sideralOrbit?: number;
     distance?: number;
     rotationSpeed?: number;
-    speedMultiplier?: number; // Added prop for speed multiplier
-    timeDilation?: number; // Added prop for time dilation
-    axialTilt?: number; // Added prop for axial tilt 
+    speedMultiplier?: number;
+    timeDilation?: number;
+    axialTilt?: number;
     hasRing?: boolean; // Added prop for rings
     ringInnerRadius?: number; // Added prop for inner radius of the ring
     ringOuterRadius?: number; // Added prop for outer radius of the ring
@@ -30,9 +30,9 @@ function AstroPlanet({
     sideralOrbit = 0,
     distance = 0,
     rotationSpeed = 0,
-    speedMultiplier = 1, // Default multiplier is 1
-    timeDilation = 1, // Default time dilation is 1
-    axialTilt = 0, // Default axial tilt is 0 degrees
+    speedMultiplier = 1,
+    timeDilation = 1,
+    axialTilt = 0,
     hasRing, // Default no ring
     ringInnerRadius = radius * 1.1, // Default inner radius of ring slightly larger than planet
     ringOuterRadius = radius * 1.8, // Default outer radius of ring
@@ -51,16 +51,20 @@ function AstroPlanet({
 
     useEffect(() => {
         if (axialTiltGroupRef.current) {
-            axialTiltGroupRef.current.rotation.z = THREE.MathUtils.degToRad(axialTilt); // Apply axial tilt
+            axialTiltGroupRef.current.rotation.z = THREE.MathUtils.degToRad(axialTilt);
         }
     }, [axialTilt]);
+
+    useEffect(() => {
+        console.log(name, 'chargée');
+    }, [name]);
 
     useFrame(() => {
         const adjustedOrbitSpeed = sideralOrbit * speedMultiplier * timeDilation;
         const adjustedRotationSpeed = rotationSpeed * speedMultiplier * timeDilation;
 
         if (groupRef.current) {
-            groupRef.current.rotation.y += adjustedOrbitSpeed; // Apply orbital speed
+            groupRef.current.rotation.y += adjustedOrbitSpeed;
         }
         if (meshRef.current) {
             meshRef.current.rotation.y += adjustedRotationSpeed; // Apply rotational speed
@@ -88,7 +92,7 @@ function AstroPlanet({
     }, [ringInnerRadius, ringOuterRadius, ringTexture]);
     return (
         <group ref={groupRef}>
-            {distance ? (
+            {distance !== undefined && (
                 <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
                     <mesh ref={meshRef} name={name}>
                         <sphereGeometry args={[radius, widthSegments, heightSegments]} />
@@ -101,7 +105,7 @@ function AstroPlanet({
                         </mesh>
                     )}
                 </group>
-            ) : null}
+            )}
         </group>
     );
 }

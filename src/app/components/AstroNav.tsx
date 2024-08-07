@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '@/app/components/AstroNav.module.css';
 
 interface AstroNavProps {
   planets: string[];
+  selectedPlanetId: string;
   onPlanetChange: (planetId: string) => void;
 }
 
-const AstroNav: React.FC<AstroNavProps> = ({ planets, onPlanetChange }) => {
+const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanetChange }) => {
   const [indexObjects, setIndexObjects] = useState(0);
+
+  // Use effect to update indexObjects when selectedPlanetId changes
+  useEffect(() => {
+    const newIndex = planets.indexOf(selectedPlanetId);
+    if (newIndex !== -1) {
+      setIndexObjects(newIndex);
+    }
+  }, [selectedPlanetId, planets]);
 
   const countObjects = planets.length;
 

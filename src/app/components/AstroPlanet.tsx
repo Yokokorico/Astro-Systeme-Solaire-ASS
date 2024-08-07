@@ -101,7 +101,7 @@ function AstroPlanet({
                     {hasRing && (
                         <mesh ref={ringMeshRef} position={[0, 0, 0]} rotation={[-0.5 * Math.PI, 0, 0]}>
                             <ringGeometry args={[ringInnerRadius, ringOuterRadius, 512]} />
-                            <meshBasicMaterial map={ringTextureMap} side={THREE.DoubleSide} />
+                            <meshBasicMaterial map={ringTextureMap} alphaMap={ringTextureMap} alphaTest={.1} side={THREE.DoubleSide} transparent/>
                         </mesh>
                     )}
                 </group>

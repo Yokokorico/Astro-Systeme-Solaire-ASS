@@ -36,4 +36,5 @@ body {
 	font-family: 'Nasalization';
 	letter-spacing: .05rem;
 	margin-bottom: -2px;
+	user-select: none;
 }

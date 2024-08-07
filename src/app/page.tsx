@@ -7,6 +7,7 @@ import "./variables.css";
 import AstroMap from "./components/AstroMap";
 import AstreDetails from "./components/AstreDetails";
 import { Box, Slider, Typography } from "@mui/material";
+import AstroSummary from "./components/AstroSummary";
 
 export interface AstroType {
   id: string;
@@ -31,8 +32,8 @@ function Home() {
     },
     {
       id: "venus",
-      cameraPositionOffset: 14,
-      cameraLookAtOffset: -5.4,
+      cameraPositionOffset: 30,
+      cameraLookAtOffset: -8,
     },
     {
       id: "terre",
@@ -107,6 +108,10 @@ function Home() {
       />
       {/* <AstreDetails id={selectedPlanet.id} isVisible={false} /> */}
       <AstroNav
+        planets={astroPlanets.map((p) => p.id)}
+        onPlanetChange={handlePlanetChange}
+      />
+      <AstroSummary 
         planets={astroPlanets.map((p) => p.id)}
         onPlanetChange={handlePlanetChange}
       />

@@ -115,6 +115,8 @@ function Home() {
     }
   };
 
+  const selectedPlanetData = data.find(planet => planet.id === selectedPlanet.id);
+
   return (
     <div>
       <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
@@ -138,7 +140,7 @@ function Home() {
           planets={data}
           selectedPlanetId={selectedPlanet.id}
         />
-        <AstreDetails id={selectedPlanet.id} isVisible={false} />
+        <AstreDetails planet={selectedPlanetData} />
         <AstroNav
           planets={astroPlanetsToDisplay.map((p) => p.id)}
           onPlanetChange={handlePlanetChange}

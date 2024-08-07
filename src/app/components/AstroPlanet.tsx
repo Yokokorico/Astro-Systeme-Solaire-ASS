@@ -4,39 +4,39 @@ import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
 export interface AstroPlanetProps {
-  name: string;
-  radius: number;
-  widthSegments: number;
-  heightSegments: number;
-  texture: string;
-  sideralOrbit?: number;
-  distance?: number;
-  rotationSpeed?: number;
-  speedMultiplier?: number;
-  timeDilation?: number;
-  axialTilt?: number;
-  hasRing?: boolean;
-  ringInnerRadius?: number;
-  ringOuterRadius?: number;
-  ringTexture?: string;
+    name: string;
+    radius: number;
+    widthSegments: number;
+    heightSegments: number;
+    texture: string;
+    sideralOrbit?: number;
+    distance?: number;
+    rotationSpeed?: number;
+    speedMultiplier?: number;
+    timeDilation?: number; 
+    axialTilt?: number;
+    hasRing?: boolean;
+    ringInnerRadius?: number;
+    ringOuterRadius?: number;
+    ringTexture?: string;
 }
 
 function AstroPlanet({
-  name,
-  radius,
-  widthSegments,
-  heightSegments,
-  texture,
-  sideralOrbit = 0,
-  distance = 0,
-  rotationSpeed = 0,
-  speedMultiplier = 1,
-  timeDilation = 1,
-  axialTilt = 0,
-  hasRing,
-  ringInnerRadius = radius * 1.1,
-  ringOuterRadius = radius * 1.8,
-  ringTexture,
+    name,
+    radius, 
+    widthSegments,
+    heightSegments,
+    texture,
+    sideralOrbit = 0,
+    distance = 0,
+    rotationSpeed = 0,
+    speedMultiplier = 1,
+    timeDilation = 1,
+    axialTilt = 0,
+    hasRing,
+    ringInnerRadius = radius * 1.1,
+    ringOuterRadius = radius * 1.8,
+    ringTexture
 }: AstroPlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const ringMeshRef = useRef<THREE.Mesh>(null);
@@ -45,9 +45,9 @@ function AstroPlanet({
   const textureMap = useTexture(`/${texture}`);
   let ringTextureMap;
 
-  if (hasRing) {
-    ringTextureMap = useTexture(`/${ringTexture}`);
-  }
+    if (hasRing && ringTexture) {
+        ringTextureMap = useTexture(`/${ringTexture}`);
+    }
 
   useEffect(() => {
     if (axialTiltGroupRef.current) {
@@ -65,16 +65,16 @@ function AstroPlanet({
     const adjustedRotationSpeed =
       rotationSpeed * speedMultiplier * timeDilation;
 
-    if (groupRef.current) {
-      groupRef.current.rotation.y += adjustedOrbitSpeed;
-    }
-    if (meshRef.current) {
-      meshRef.current.rotation.y += adjustedRotationSpeed; // Apply rotational speed
-    }
-    if (ringMeshRef.current) {
-      ringMeshRef.current.rotation.z += adjustedRotationSpeed; // Apply rotational speed to the ring
-    }
-  });
+        if (groupRef.current) {
+            groupRef.current.rotation.y += adjustedOrbitSpeed;
+        }
+        if (meshRef.current) {
+            meshRef.current.rotation.y += adjustedRotationSpeed;
+        }
+        if (ringMeshRef.current) {
+            ringMeshRef.current.rotation.z += adjustedRotationSpeed;
+        }
+    });
 
   useEffect(() => {
     if (ringMeshRef.current) {
@@ -94,6 +94,7 @@ function AstroPlanet({
     }
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
+
   return (
     <group ref={groupRef}>
       {distance !== undefined && (
@@ -102,7 +103,7 @@ function AstroPlanet({
             <sphereGeometry args={[radius, widthSegments, heightSegments]} />
             <meshStandardMaterial map={textureMap} />
           </mesh>
-          {hasRing && (
+          {hasRing && ringTextureMap && (
             <mesh
               ref={ringMeshRef}
               position={[0, 0, 0]}

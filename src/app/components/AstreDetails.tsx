@@ -1,86 +1,58 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
-import ApiService from '../services/ApiService';
+import React, { useRef } from 'react';
 import { Astre } from '../types/bodies';
 import { kelvinToCelsius } from '../utils/Conversion';
 import styles from './AstreDetails.module.css';
 
 export interface AstreDetailsProps {
-    id: string;
-    isVisible: boolean;
+    planet: Astre | null | undefined;
 }
 
-const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
-    const [data, setData] = useState<Astre | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
+const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await ApiService(id);
-                setData(result);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [id]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    if (!data) {
+    if (!planet) {
         return <div>No data available</div>;
     }
- 
+
     const dataFields = [
-        { label: 'Masse', value: data.mass ? `${data.mass.massValue} x 10^${data.mass.massExponent} kg` : null },
-        { label: 'Gravité', value: `${data.gravity} m/s²` },
-        { label: 'SemimajorAxis', value: `${data.semimajorAxis?.toLocaleString()} km` },
-        { label: 'Périhélie', value: `${data.perihelion?.toLocaleString()} km` },
-        { label: 'Aphélie', value: `${data.aphelion?.toLocaleString()} km` },
-        { label: 'Inclination', value: `${data.inclination}°` },
-        { label: 'Volume', value: data.vol ? `${data.vol.volValue} x 10^${data.vol.volExponent} km³` : null },
-        { label: 'Densité', value: `${data.density} g/cm³` },
-        { label: 'Vitesse de libération', value: `${data.escape?.toLocaleString()} km/s` },
-        { label: 'Rayon équatorial', value: `${data.equaRadius.toLocaleString()} km` },
-        { label: 'Aplatissement', value: data.flattening },
-        { label: 'Période de révolution', value: `${data.sideralOrbit?.toLocaleString()} jours` },
-        { label: 'Période de rotation', value: `${data.sideralRotation} heures` },
-        { label: 'Autour de la planète', value: data.aroundPlanet?.planet || null },
-        { label: 'Type de corps', value: data.bodyType },
-        { label: 'Inclinaison axiale', value: `${data.axialTilt}°`  },
-        { label: 'Température', value: data.avgTemp !== null ? `${kelvinToCelsius(data.avgTemp).toFixed(2)} °C` : null }
+        { label: 'Masse', value: planet.mass ? `${planet.mass.massValue} x 10^${planet.mass.massExponent} kg` : null },
+        { label: 'Gravité', value: `${planet.gravity} m/s²` },
+        { label: 'SemimajorAxis', value: `${planet.semimajorAxis?.toLocaleString()} km` },
+        { label: 'Périhélie', value: `${planet.perihelion?.toLocaleString()} km` },
+        { label: 'Aphélie', value: `${planet.aphelion?.toLocaleString()} km` },
+        { label: 'Inclination', value: `${planet.inclination}°` },
+        { label: 'Volume', value: planet.vol ? `${planet.vol.volValue} x 10^${planet.vol.volExponent} km³` : null },
+        { label: 'Densité', value: `${planet.density} g/cm³` },
+        { label: 'Vitesse de libération', value: `${planet.escape?.toLocaleString()} km/s` },
+        { label: 'Rayon équatorial', value: `${planet.equaRadius.toLocaleString()} km` },
+        { label: 'Aplatissement', value: planet.flattening },
+        { label: 'Période de révolution', value: `${planet.sideralOrbit?.toLocaleString()} jours` },
+        { label: 'Période de rotation', value: `${planet.sideralRotation} heures` },
+        { label: 'Autour de la planète', value: planet.aroundPlanet?.planet || null },
+        { label: 'Type de corps', value: planet.bodyType },
+        { label: 'Inclinaison axiale', value: `${planet.axialTilt}°` },
+        { label: 'Température', value: planet.avgTemp !== null ? `${kelvinToCelsius(planet.avgTemp).toFixed(2)} °C` : null }
     ];
 
     return (
-        <div className={`${styles.container} ${styles[data.id]}`}>
-            <div className={`flex flex-cols ${styles.titleContainer} `}>
-                <h2 className={`nasalization ${styles.title}`}>{data.name}</h2>
+        <div className={`${styles.container} ${styles[planet.id]}`}>
+            <div className={`flex flex-cols ${styles.titleContainer}`}>
+                <h2 className={`nasalization ${styles.title}`}>{planet.name}</h2>
             </div>
             <div className={styles.scrollContainer} ref={scrollContainerRef}>
                 <div className={styles.fieldContainer}>
                     {dataFields.map((field, index) => field.value !== null && (
                         <div key={index} className={styles.row}>
-                            <span className={`${styles.label}`}>{field.label}:</span>
+                            <span className={styles.label}>{field.label}:</span>
                         </div>
                     ))}
                 </div>
                 <div className={styles.fieldContainer}>
                     {dataFields.map((field, index) => field.value !== null && (
                         <div key={index} className={styles.row}>
-                            <span className={`${styles.value}`}>{field.value}</span>
+                            <span className={styles.value}>{field.value}</span>
                         </div>
                     ))}
                 </div>

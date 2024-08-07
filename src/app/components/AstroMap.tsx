@@ -1,92 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Astre } from '../types/bodies';
-import getPlanetById from '../services/ApiService';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { scaleOrbit, scaleRadius, scaleSideralOrbit, scaleSideralRotation } from '../utils/Conversion';
 import { CustomCamera } from './CustomCamera';
 import { OrbitLine } from './OrbitLine';
 import { Vector3 } from 'three';
-import { AstroType } from '../page';
 import AstroPlanet from './AstroPlanet';
 import Stars from './Stars';
 
 export interface AstroMapProps {
-    astroType: AstroType[];
+    planets: Astre[];
     selectedPlanetId: string;
     speedRatio: number;
 }
 
-function AstroMap({ astroType, selectedPlanetId, speedRatio }: AstroMapProps) {
-    const [data, setData] = useState<Astre[]>([]);
-    const [soleil, setSoleil] = useState<Astre | undefined>(undefined);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
-
-    useEffect(() => {
-        console.log(selectedPlanetId);
-    }, [selectedPlanetId]);
-
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const results = await Promise.all(
-                    astroType.map(planet => getPlanetById(planet.id))
-                );
-                setData(results);
-                setSoleil(results.find(planet => planet.id === 'soleil'));
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [astroType]);
-
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
+    if (!planets.length) return <div>AstroMapLoading...</div>;
 
     return (
-        <Canvas style={{ width: '100vw', height: '100vh' }} >
-  
+        <Canvas style={{ width: '100vw', height: '100vh' }}>
             <ambientLight intensity={0.2} />
             <pointLight distance={0} decay={0.01} intensity={5} />
 
-
-            {data.filter(astroBody => astroBody.id).map(astroBody => (
-                <React.Fragment key={astroBody.id}>
+            {planets.filter(planet => planet.id).map(planet => (
+                <React.Fragment key={planet.id}>
                     <OrbitLine
-                        semiMajorAxis={scaleOrbit(astroBody.semimajorAxis)}
+                        semiMajorAxis={scaleOrbit(planet.semimajorAxis)}
                         orbitCenter={new Vector3(0, 0, 0)}
                         lineOpacity={(selectedPlanetId === "soleil") ? 0.3 : 0}
                     />
                     <AstroPlanet
-                        key={astroBody.id}
-                        name={astroBody.id}
-                        radius={scaleRadius(astroBody.equaRadius)}
+                        name={planet.id}
+                        radius={scaleRadius(planet.equaRadius)}
                         widthSegments={128}
                         heightSegments={64}
-                        texture={`2k_${astroBody.id}.jpg`}
-                        sideralOrbit={scaleSideralOrbit(astroBody.sideralOrbit) * speedRatio}
-                        distance={scaleOrbit(astroBody.semimajorAxis)}
-                        rotationSpeed={scaleSideralRotation(astroBody.sideralRotation) * speedRatio}
-                        axialTilt={astroBody.axialTilt}
+                        texture={`2k_${planet.id}.jpg`}
+                        sideralOrbit={scaleSideralOrbit(planet.sideralOrbit) * speedRatio}
+                        distance={scaleOrbit(planet.semimajorAxis)}
+                        rotationSpeed={scaleSideralRotation(planet.sideralRotation) * speedRatio}
+                        axialTilt={planet.axialTilt}
+                        hasRing={planet.id === "saturne"}
+                        ringTexture={planet.id === "saturne" ? `2k_${planet.id}_ring.png` : undefined}
                         speedMultiplier={100}
                         timeDilation={100}
-                        hasRing={(astroBody.id == "saturne") ? true : false}
-                        ringTexture={(astroBody.id == "saturne") ? `2k_${astroBody.id}_ring.png` : undefined}
                     />
                 </React.Fragment>
             ))}
             <OrbitControls />
             {/* <Stars /> */}
             <CustomCamera 
-                cameraPositionOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset} 
-                cameraLookAtOffset={astroType.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset} 
+                cameraPositionOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset || 0} 
+                cameraLookAtOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset || 0} 
                 cameraPlanetFocused={selectedPlanetId} 
             />
         </Canvas>

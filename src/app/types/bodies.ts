@@ -30,5 +30,6 @@ export interface Astre {
     avgTemp: number;
     eccentricity?: number;
     bodyType?: string;
-
+    cameraPositionOffset?: number;
+    cameraLookAtOffset?: number;
 }

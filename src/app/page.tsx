@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import AstroHeader from "./components/AstroHeader";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
@@ -98,6 +98,7 @@ function Home() {
     fetchData();
   }, []);
 
+
   const [selectedPlanet, setSelectedPlanet] = useState<AstroType>(astroPlanetsToDisplay[0]);
 
   const handlePlanetChange = (newPlanet: string) => {
@@ -141,14 +142,16 @@ function Home() {
           planets={data}
           selectedPlanetId={selectedPlanet.id}
         />
-                <AstreDetails planet={selectedPlanetData} />
+        <AstreDetails planet={selectedPlanetData} />
 
         <AstroNav
           planets={astroPlanetsToDisplay.map((p) => p.id)}
+          selectedPlanetId={selectedPlanet.id}
           onPlanetChange={handlePlanetChange}
         />
-        <AstroSummary 
+        <AstroSummary
           planets={astroPlanetsToDisplay.map((p) => p.id)}
+          selectedPlanetId={selectedPlanet.id}
           onPlanetChange={handlePlanetChange}
         />
       </div>

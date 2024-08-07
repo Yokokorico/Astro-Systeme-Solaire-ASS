@@ -19,7 +19,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
     if (!planets.length) return <div>AstroMapLoading...</div>;
 
     return (
-        <Canvas style={{ width: '100vw', height: '100vh' }}>
+        <Canvas style={{ width: '100vw', height: '100vh' }} camera={{position: [0, 5000, 5000] }}>
             <ambientLight intensity={0.2} />
             <pointLight distance={0} decay={0.01} intensity={5} />
 

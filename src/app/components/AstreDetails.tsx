@@ -17,20 +17,20 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ id }) => {
     const [error, setError] = useState<Error | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await ApiService(id);
-                setData(result);
-            } catch (error) {
-                setError(error as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const result = await ApiService(id);
+    //             setData(result);
+    //         } catch (error) {
+    //             setError(error as Error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchData();
-    }, [id]);
+    //     fetchData();
+    // }, [id]);
 
     if (loading) {
         return <div>Loading...</div>;

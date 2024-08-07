@@ -7,7 +7,7 @@ import "./variables.css";
 import AstroMap from "./components/AstroMap";
 import AstreDetails from "./components/AstreDetails";
 import { Box, Slider, Typography } from "@mui/material";
-import getPlanetById from "./services/ApiService";
+import { getListOfPlanet } from "./services/ApiService";
 import { Astre } from "./types/bodies";
 
 export interface AstroType {
@@ -71,40 +71,33 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const results = await Promise.all(
-          astroPlanetsToDisplay.map((planet) => getPlanetById(planet.id))
-        );
+        const results = await getListOfPlanet();
 
-        // Combine the API data with the local offsets
-        const combinedData = results.map((apiData) => {
-          const offsets = astroPlanetsToDisplay.find(
-            (planet) => planet.id === apiData.id
-          );
+        // Enrich each planet with its camera offsets
+        const enrichedResults = results.bodies.map((planet: Astre) => {
+          const offsets = astroPlanetsToDisplay.find(p => p.id === planet.id);
           return {
-            ...apiData,
-            ...offsets,
+            ...planet,
+            cameraPositionOffset: offsets?.cameraPositionOffset,
+            cameraLookAtOffset: offsets?.cameraLookAtOffset
           };
         });
 
-        setData(combinedData);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
+        setData(enrichedResults);
+        setLoading(false);
+        console.log(enrichedResults)
+      } catch (err: Error | any) {
+        setError(err);
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
- 
-
   const [selectedPlanet, setSelectedPlanet] = useState<AstroType>(astroPlanetsToDisplay[0]);
-
 
   const handlePlanetChange = (newPlanet: string) => {
     const planet = astroPlanetsToDisplay.find((p) => p.id === newPlanet);
@@ -118,7 +111,7 @@ function Home() {
         setSpeedRatio(1 - (50 - newValue) / 50);
       } else {
         setSpeedRatio((newValue - 50) * 2); 
-      }
+      } 
     }
   };
 
@@ -138,21 +131,20 @@ function Home() {
         />
       </Box>
       <AstroHeader />
-      {loading ? <div>Loading...</div> : error ? <div>Error: {error.message}</div> : (
+      {loading ? <div>page Loading...</div> : error ? <div>Error: {error.message}</div> : (
       <div>
         <AstroMap
-        speedRatio={speedRatio}
-        planets={data}
-        selectedPlanetId={selectedPlanet.id}
-      />
-      <AstreDetails id={selectedPlanet.id} isVisible={false} />
-      <AstroNav
-        planets={astroPlanetsToDisplay.map((p) => p.id)}
-        onPlanetChange={handlePlanetChange}
-      />
+          speedRatio={speedRatio}
+          planets={data}
+          selectedPlanetId={selectedPlanet.id}
+        />
+        <AstreDetails id={selectedPlanet.id} isVisible={false} />
+        <AstroNav
+          planets={astroPlanetsToDisplay.map((p) => p.id)}
+          onPlanetChange={handlePlanetChange}
+        />
       </div>
       )}
- 
     </div>
   );
 }

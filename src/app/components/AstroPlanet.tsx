@@ -13,12 +13,12 @@ export interface AstroPlanetProps {
     distance?: number;
     rotationSpeed?: number;
     speedMultiplier?: number;
-    timeDilation?: number;
+    timeDilation?: number; 
     axialTilt?: number;
-    hasRing?: boolean; // Added prop for rings
-    ringInnerRadius?: number; // Added prop for inner radius of the ring
-    ringOuterRadius?: number; // Added prop for outer radius of the ring
-    ringTexture?: string; // Added prop for ring texture
+    hasRing?: boolean;
+    ringInnerRadius?: number;
+    ringOuterRadius?: number;
+    ringTexture?: string;
 }
 
 function AstroPlanet({
@@ -33,10 +33,10 @@ function AstroPlanet({
     speedMultiplier = 1,
     timeDilation = 1,
     axialTilt = 0,
-    hasRing, // Default no ring
-    ringInnerRadius = radius * 1.1, // Default inner radius of ring slightly larger than planet
-    ringOuterRadius = radius * 1.8, // Default outer radius of ring
-    ringTexture // Default texture for the ring
+    hasRing,
+    ringInnerRadius = radius * 1.1,
+    ringOuterRadius = radius * 1.8,
+    ringTexture
 }: AstroPlanetProps) {
     const meshRef = useRef<THREE.Mesh>(null);
     const ringMeshRef = useRef<THREE.Mesh>(null);
@@ -45,7 +45,7 @@ function AstroPlanet({
     const textureMap = useTexture(`/${texture}`);
     let ringTextureMap;
 
-    if(hasRing){
+    if (hasRing && ringTexture) {
         ringTextureMap = useTexture(`/${ringTexture}`);
     }
 
@@ -56,7 +56,7 @@ function AstroPlanet({
     }, [axialTilt]);
 
     useEffect(() => {
-        console.log(name, 'chargée');
+        console.log(name, 'loaded');
     }, [name]);
 
     useFrame(() => {
@@ -67,10 +67,10 @@ function AstroPlanet({
             groupRef.current.rotation.y += adjustedOrbitSpeed;
         }
         if (meshRef.current) {
-            meshRef.current.rotation.y += adjustedRotationSpeed; // Apply rotational speed
+            meshRef.current.rotation.y += adjustedRotationSpeed;
         }
         if (ringMeshRef.current) {
-            ringMeshRef.current.rotation.z += adjustedRotationSpeed; // Apply rotational speed to the ring
+            ringMeshRef.current.rotation.z += adjustedRotationSpeed;
         }
     });
 
@@ -90,6 +90,7 @@ function AstroPlanet({
             uv.needsUpdate = true;
         }
     }, [ringInnerRadius, ringOuterRadius, ringTexture]);
+
     return (
         <group ref={groupRef}>
             {distance !== undefined && (
@@ -98,7 +99,7 @@ function AstroPlanet({
                         <sphereGeometry args={[radius, widthSegments, heightSegments]} />
                         <meshStandardMaterial map={textureMap} />
                     </mesh>
-                    {hasRing && (
+                    {hasRing && ringTextureMap && (
                         <mesh ref={ringMeshRef} position={[0, 0, 0]} rotation={[-0.5 * Math.PI, 0, 0]}>
                             <ringGeometry args={[ringInnerRadius, ringOuterRadius, 512]} />
                             <meshBasicMaterial map={ringTextureMap} side={THREE.DoubleSide} />

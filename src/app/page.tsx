@@ -7,6 +7,7 @@ import "./variables.css";
 import AstroMap from "./components/AstroMap";
 import AstreDetails from "./components/AstreDetails";
 import { Box, Slider, Typography } from "@mui/material";
+import AstroSummary from "./components/AstroSummary";
 import { getListOfPlanet } from "./services/ApiService";
 import { Astre } from "./types/bodies";
 
@@ -140,8 +141,13 @@ function Home() {
           planets={data}
           selectedPlanetId={selectedPlanet.id}
         />
-        <AstreDetails planet={selectedPlanetData} />
+                <AstreDetails planet={selectedPlanetData} />
+
         <AstroNav
+          planets={astroPlanetsToDisplay.map((p) => p.id)}
+          onPlanetChange={handlePlanetChange}
+        />
+        <AstroSummary 
           planets={astroPlanetsToDisplay.map((p) => p.id)}
           onPlanetChange={handlePlanetChange}
         />

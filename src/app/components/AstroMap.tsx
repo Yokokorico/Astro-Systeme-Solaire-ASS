@@ -48,7 +48,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
                 </React.Fragment>
             ))}
             <OrbitControls />
-            <Stars />
+            {/* <Stars /> */}
             <CustomCamera 
                 cameraPositionOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset || 0} 
                 cameraLookAtOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset || 0} 

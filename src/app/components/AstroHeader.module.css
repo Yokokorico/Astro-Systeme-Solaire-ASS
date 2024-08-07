@@ -8,8 +8,8 @@
     align-items: center;
     padding: 1rem 3rem 0 3rem;
     font-family: 'Nasalization';
-    background: var(--astrobar-background);
-    margin: 0;
+    user-select: none;
+    pointer-events: none;
     z-index: 2;
 }
 .title {

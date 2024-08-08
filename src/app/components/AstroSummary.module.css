@@ -1,7 +1,7 @@
 .container {
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 150px;
     height: 100%;
     gap: 2%;
@@ -14,14 +14,14 @@
     border-radius: 50%;
     background: none;
     overflow: visible;
-}
+} 
 .container button p {
     position: absolute;
-    width: 14rem;
+    width: 8rem;
     height: 100%;
     top: 0;
-    left: -14rem;
-    padding-right: 2rem;
+    right: -10rem;
+    justify-content: flex-start;
     font-family: 'Nasalization';
     font-size: 1.1rem;
     letter-spacing: .1rem;
@@ -29,11 +29,14 @@
                  0 0 4px var(--clr),
                  0 0 32px var(--clr);
     transform: scaleX(0);
-    transform-origin: right;
+    transform-origin: left;
     transition: .2s;
 }
 .container button:hover p {
     transform: none;
+}
+.container button:hover .icon {
+    filter: none;
 }
 .icon {
     position: relative;
@@ -47,12 +50,15 @@
     transition: .2s;
     pointer-events: none;
 }
-.selected {
+.selected  {
     box-shadow: 0 0 4px var(--clr),
                 0 0 32px var(--clr);
 }
 .selected p {
     transform: none !important;
+}
+.selected .icon {
+    filter: none;
 }
 .icon:hover {
     filter: none;

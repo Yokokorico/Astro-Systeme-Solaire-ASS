@@ -101,7 +101,7 @@ function AstroPlanet({
         <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
           <mesh ref={meshRef} name={name} castShadow receiveShadow>
             <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-            <meshStandardMaterial map={textureMap} />
+            <meshStandardMaterial map={textureMap} lightMap={textureMap} lightMapIntensity={name === 'soleil' ? 25 : 0} emissive={0x000000}/>
           </mesh>
           {hasRing && ringTextureMap && (
             <mesh

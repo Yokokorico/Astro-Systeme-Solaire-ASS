@@ -20,28 +20,28 @@ export interface AstroType {
 const astroPlanetsToDisplay: AstroType[] = [
   {
     id: "soleil",
-    cameraPositionOffset: 1500,
-    cameraLookAtOffset: -2.4,
+    cameraPositionOffset: 10000,
+    cameraLookAtOffset: 0,
   },
   {
     id: "mercure",
-    cameraPositionOffset: 6,
-    cameraLookAtOffset: -2.4,
+    cameraPositionOffset: 20,
+    cameraLookAtOffset: -5,
   },
   {
     id: "venus",
-    cameraPositionOffset: 14,
-    cameraLookAtOffset: -5.4,
+    cameraPositionOffset: 30,
+    cameraLookAtOffset: -8,
   },
   {
     id: "terre",
-    cameraPositionOffset: 14,
-    cameraLookAtOffset: -5.4,
+    cameraPositionOffset: 30,
+    cameraLookAtOffset: -8,
   },
   {
     id: "mars",
-    cameraPositionOffset: 8,
-    cameraLookAtOffset: -4,
+    cameraPositionOffset: 20,
+    cameraLookAtOffset: -5,
   },
   {
     id: "jupiter",
@@ -50,24 +50,24 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "saturne",
-    cameraPositionOffset: 250,
-    cameraLookAtOffset: -120,
+    cameraPositionOffset: 140,
+    cameraLookAtOffset: -40,
   },
   {
     id: "neptune",
-    cameraPositionOffset: 60,
-    cameraLookAtOffset: -30,
+    cameraPositionOffset: 80,
+    cameraLookAtOffset: -25,
   },
   {
     id: "uranus",
-    cameraPositionOffset: 60,
-    cameraLookAtOffset: -20,
+    cameraPositionOffset: 80,
+    cameraLookAtOffset: -25,
   },
 ];
 
 function Home() {
-  const [sliderValue, setSliderValue] = useState(50); // 50 corresponds to the center value 1 in the new scale
-  const [speedRatio, setSpeedRatio] = useState(1);
+  const [sliderValue, setSliderValue] = useState(1); // 50 corresponds to the center value 1 in the new scale
+  const [speedRatio, setSpeedRatio] = useState(0.1);
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -129,7 +129,7 @@ function Home() {
           value={sliderValue}
           min={0}
           max={100}
-          step={1}
+          step={0.1}
           onChange={handleSliderChange}
           aria-labelledby="input-slider"
         />

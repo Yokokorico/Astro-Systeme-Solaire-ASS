@@ -63,8 +63,9 @@ function AstroPlanet({
   }, [inclination]);
 
   useEffect(() => {
-    if (planetGroupRef.current) {
-      planetGroupRef.current.rotation.z = THREE.MathUtils.degToRad(axialTilt);
+    if (axialTiltGroupRef.current) {
+      axialTiltGroupRef.current.rotation.z =
+        THREE.MathUtils.degToRad(axialTilt);
     }
   }, [axialTilt]);
 

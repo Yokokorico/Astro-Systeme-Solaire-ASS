@@ -17,7 +17,7 @@
     padding: 20px;
     background: linear-gradient(45deg, var(--clr3), var(--clr4));
     backdrop-filter: blur(5px);
-    width: 25rem;
+    width: 29rem;
     user-select: none;
     border-image: linear-gradient(90deg, var(--clr2), var(--clr)) 10;
     color: var(--clr);

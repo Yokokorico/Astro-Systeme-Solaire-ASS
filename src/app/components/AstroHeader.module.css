@@ -5,7 +5,7 @@
     width: 100%;
     height: 80px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 1rem 3rem 0 3rem;
     font-family: 'Nasalization';
     user-select: none;
@@ -27,7 +27,10 @@
 .subtitle {
     font-size: 1rem;
 }
-
+.tooltipContainer {
+    position: relative;
+    top: 0;
+}
 .tooltip {
     width: 200px;
     height: 100%;
@@ -37,7 +40,8 @@
     height: 29px;
     background-image: url(../../../public/assets/images/mouse.png);
     background-position: center;
-    background-size: 140%;
+    background-size: 130%;
+    background-repeat: no-repeat;
     filter: invert(1);
 }
 .tooltip p,
@@ -49,4 +53,8 @@
 }
 .tooltip .leftClick {
     transform: rotateY(180deg);
+}
+.tooltip .mouseWheel {
+    background-image: url(../../../public/assets/images/mouse-scroll-wheel-icon.png);
+    /* background-size: 60%; */
 }

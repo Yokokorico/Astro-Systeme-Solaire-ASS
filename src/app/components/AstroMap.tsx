@@ -63,9 +63,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               texture={`2k_${planet.id}.jpg`}
               sideralOrbit={scaleSideralOrbit(planet.sideralOrbit) * speedRatio}
               distance={scaleOrbit(planet.semimajorAxis)}
-              rotationSpeed={
-                scaleSideralRotation(planet.sideralRotation) * speedRatio
-              }
+              rotationSpeed={planet.id === 'soleil' ? scaleSideralRotation(500) * speedRatio : scaleSideralRotation(planet.sideralRotation) * speedRatio}
               axialTilt={planet.axialTilt}
               hasRing={planet.id === "saturne"}
               ringTexture={
@@ -81,7 +79,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
             />
           </React.Fragment>
         ))}
-      <OrbitControls />
+      <OrbitControls minDistance={1500} maxDistance={300000} />
       <Stars />
       <CustomCamera
         cameraPositionOffset={

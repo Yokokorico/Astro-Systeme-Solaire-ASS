@@ -88,10 +88,11 @@ function AstroPlanet({
       if (name === 'venus') {
         meshRef.current.rotation.y -= adjustedRotationSpeed * -30;
       } else {
-    if (ringMeshRef.current) {
-      ringMeshRef.current.rotation.z += adjustedRotationSpeed;
+        meshRef.current.rotation.y += adjustedRotationSpeed;
+      if (ringMeshRef.current) {
+        ringMeshRef.current.rotation.z += adjustedRotationSpeed;
+      }
     }
-  }
 
     // Calcul du temps pour l'orbite
     const orbitTime = elapsedTime * adjustedOrbitSpeed;

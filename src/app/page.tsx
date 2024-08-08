@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AstroHeader from "./components/AstroHeader";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
@@ -18,55 +18,20 @@ export interface AstroType {
 }
 
 const astroPlanetsToDisplay: AstroType[] = [
-  {
-    id: "soleil",
-    cameraPositionOffset: 10000,
-    cameraLookAtOffset: 0,
-  },
-  {
-    id: "mercure",
-    cameraPositionOffset: 20,
-    cameraLookAtOffset: -5,
-  },
-  {
-    id: "venus",
-    cameraPositionOffset: 30,
-    cameraLookAtOffset: -8,
-  },
-  {
-    id: "terre",
-    cameraPositionOffset: 30,
-    cameraLookAtOffset: -8,
-  },
-  {
-    id: "mars",
-    cameraPositionOffset: 20,
-    cameraLookAtOffset: -5,
-  },
-  {
-    id: "jupiter",
-    cameraPositionOffset: 140,
-    cameraLookAtOffset: -40,
-  },
-  {
-    id: "saturne",
-    cameraPositionOffset: 140,
-    cameraLookAtOffset: -40,
-  },
-  {
-    id: "neptune",
-    cameraPositionOffset: 80,
-    cameraLookAtOffset: -25,
-  },
-  {
-    id: "uranus",
-    cameraPositionOffset: 80,
-    cameraLookAtOffset: -25,
-  },
+  { id: "soleil", cameraPositionOffset: 10000, cameraLookAtOffset: 0 },
+  { id: "mercure", cameraPositionOffset: 20, cameraLookAtOffset: -5 },
+  { id: "venus", cameraPositionOffset: 30, cameraLookAtOffset: -8 },
+  { id: "terre", cameraPositionOffset: 30, cameraLookAtOffset: -8 },
+  { id: "mars", cameraPositionOffset: 20, cameraLookAtOffset: -5 },
+  { id: "jupiter", cameraPositionOffset: 140, cameraLookAtOffset: -40 },
+  { id: "saturne", cameraPositionOffset: 140, cameraLookAtOffset: -40 },
+  { id: "neptune", cameraPositionOffset: 80, cameraLookAtOffset: -25 },
+  { id: "uranus", cameraPositionOffset: 80, cameraLookAtOffset: -25 },
+  { id: "pluton", cameraPositionOffset: 10, cameraLookAtOffset: -2 },
 ];
 
 function Home() {
-  const [sliderValue, setSliderValue] = useState(1); // 50 corresponds to the center value 1 in the new scale
+  const [sliderValue, setSliderValue] = useState(1);
   const [speedRatio, setSpeedRatio] = useState(0.1);
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);
@@ -75,7 +40,8 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const results = await getListOfPlanet();
+        const planetIds = astroPlanetsToDisplay.map(p => p.id);
+        const results = await getListOfPlanet(planetIds);
 
         // Enrich each planet with its camera offsets
         const enrichedResults = results.bodies.map((planet: Astre) => {
@@ -88,16 +54,15 @@ function Home() {
         });
 
         setData(enrichedResults);
+        console.log(enrichedResults);
         setLoading(false);
-        console.log(enrichedResults)
-      } catch (err: Error | any) {
+      } catch (err: any) {
         setError(err);
         setLoading(false);
       }
     };
     fetchData();
   }, []);
-
 
   const [selectedPlanet, setSelectedPlanet] = useState<AstroType>(astroPlanetsToDisplay[0]);
 
@@ -159,4 +124,5 @@ function Home() {
     </div>
   );
 }
+
 export default Home;

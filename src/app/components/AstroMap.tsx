@@ -73,6 +73,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               speedMultiplier={100}
               timeDilation={100}
               inclination={planet.inclination}
+              eccentricity={planet.eccentricity}
 
             />
           </React.Fragment>

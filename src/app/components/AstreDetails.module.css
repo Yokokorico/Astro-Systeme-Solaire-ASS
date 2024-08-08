@@ -23,12 +23,12 @@
     border-image: linear-gradient(90deg, var(--clr2), var(--clr)) 10;
     color: var(--clr);
     box-shadow: 2px 0px 2px var(--clr),
-                0px 0px 64px var(--clr),
-          inset 0px 0px 30px var(--clr);
+                0px 0px 16px var(--clr),
+          inset 0px 0px 16px var(--clr);
     transition: .5s ease-out;
     transform-origin: left;
+    opacity: .85;
 }
-
 .container::before {
     content: '';
     position: absolute;
@@ -98,7 +98,6 @@
     justify-content: center;
     align-items: center;
 }
-
  
 .image {
     max-width: 80%;
@@ -128,6 +127,11 @@
     font-size: 1.2rem;
     width: fit-content;
     font-weight: bold;
+    text-shadow: 0 0 2px #000,
+                 0 0 4px #000,
+                 0 0 8px #000,
+                 0 0 12px var(--clr2),
+                 0 0 36px var(--clr);
 }
 
 .scrollContainer {
@@ -145,6 +149,11 @@
     font-size: .85rem;
     letter-spacing: .1rem;
     line-height: 1.2rem;
+    text-shadow: 0 0 2px #000,
+                 0 0 4px #000,
+                 0 0 8px #000,
+                 0 0 12px var(--clr2),
+                 0 0 20px var(--clr);
 }
 
 .fieldContainer:first-of-type {

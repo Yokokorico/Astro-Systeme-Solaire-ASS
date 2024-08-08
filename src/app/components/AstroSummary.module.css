@@ -14,7 +14,7 @@
     border-radius: 50%;
     background: none;
     overflow: visible;
-}
+} 
 .container button p {
     position: absolute;
     width: 8rem;
@@ -35,6 +35,9 @@
 .container button:hover p {
     transform: none;
 }
+.container button:hover .icon {
+    filter: none;
+}
 .icon {
     position: relative;
     width: 100%;
@@ -47,12 +50,15 @@
     transition: .2s;
     pointer-events: none;
 }
-.selected {
+.selected  {
     box-shadow: 0 0 4px var(--clr),
                 0 0 32px var(--clr);
 }
 .selected p {
     transform: none !important;
+}
+.selected .icon {
+    filter: none;
 }
 .icon:hover {
     filter: none;

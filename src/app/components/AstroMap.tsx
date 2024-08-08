@@ -7,7 +7,6 @@ import { CustomCamera } from './CustomCamera';
 import { OrbitLine } from './OrbitLine';
 import { Vector3 } from 'three';
 import AstroPlanet from './AstroPlanet';
-import Stars from './Stars';
 
 export interface AstroMapProps {
     planets: Astre[];
@@ -28,7 +27,9 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
                     <OrbitLine
                         semiMajorAxis={scaleOrbit(planet.semimajorAxis)}
                         orbitCenter={new Vector3(0, 0, 0)}
-                        lineOpacity={(selectedPlanetId === "soleil") ? 0.3 : 0}
+                        lineOpacity={(selectedPlanetId === "soleil") ? 0.2 : 0}
+                        inclination={planet.inclination}
+                        eccentricity={planet.eccentricity}
                     />
                     <AstroPlanet
                         name={planet.id}
@@ -44,11 +45,12 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
                         ringTexture={planet.id === "saturne" ? `2k_${planet.id}_ring.png` : undefined}
                         speedMultiplier={100}
                         timeDilation={100}
+                        inclination={planet.inclination}
+                 
                     />
                 </React.Fragment>
             ))}
             <OrbitControls />
-            {/* <Stars /> */}
             <CustomCamera 
                 cameraPositionOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraPositionOffset || 0} 
                 cameraLookAtOffset={planets.find(planet => planet.id === selectedPlanetId)?.cameraLookAtOffset || 0} 

@@ -66,7 +66,7 @@ const params = {
 
 type Props = {
   radiusSphere: number;
-  color: Color;
+  color?: Color;
 };
 
 export const Halo = ({ radiusSphere, color }: Props) => {

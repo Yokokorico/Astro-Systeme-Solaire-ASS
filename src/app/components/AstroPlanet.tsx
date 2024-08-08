@@ -60,9 +60,6 @@ function AstroPlanet({
   if (hasRing && ringTexture) {
     ringTextureMap = useTexture(`/${ringTexture}`);
   }
-  if (hasRing && ringTexture) {
-    ringTextureMap = useTexture(`/${ringTexture}`);
-  }
 
   useEffect(() => {
     if (orbitGroupRef.current) {

@@ -27,7 +27,7 @@ const astroPlanetsToDisplay: AstroType[] = [
   { id: "saturne", cameraPositionOffset: 140, cameraLookAtOffset: -40 },
   { id: "neptune", cameraPositionOffset: 80, cameraLookAtOffset: -25 },
   { id: "uranus", cameraPositionOffset: 80, cameraLookAtOffset: -25 },
-  { id: "pluton", cameraPositionOffset: 20, cameraLookAtOffset: -5 },
+  { id: "pluton", cameraPositionOffset: 10, cameraLookAtOffset: -2 },
 ];
 
 function Home() {

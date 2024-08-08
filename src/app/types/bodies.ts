@@ -1,3 +1,5 @@
+import { Color, Vector3 } from "three";
+
 export interface Astre {
     id: string;
     name: string;
@@ -32,4 +34,6 @@ export interface Astre {
     bodyType?: string;
     cameraPositionOffset?: number;
     cameraLookAtOffset?: number;
+    hasAtmo?: boolean;
+    atmoRgb: Color;
 }

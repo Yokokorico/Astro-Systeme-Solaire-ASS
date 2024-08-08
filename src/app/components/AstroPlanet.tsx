@@ -2,6 +2,8 @@ import * as THREE from "three";
 import React, { useRef, useEffect } from "react";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import Halo from "./Halo";
+import { Color, Vector3 } from "three";
 
 export interface AstroPlanetProps {
   name: string;
@@ -21,6 +23,8 @@ export interface AstroPlanetProps {
   ringInnerRadius?: number;
   ringOuterRadius?: number;
   ringTexture?: string;
+  hasAtmo?: boolean;
+  atmoRgb?: Color;
 }
 
 function AstroPlanet({
@@ -40,7 +44,9 @@ function AstroPlanet({
   hasRing,
   ringInnerRadius = radius * 1.1,
   ringOuterRadius = radius * 1.8,
-  ringTexture
+  ringTexture,
+  hasAtmo,
+  atmoRgb,
 }: AstroPlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const ringMeshRef = useRef<THREE.Mesh>(null);
@@ -125,9 +131,14 @@ function AstroPlanet({
     <group ref={groupRef}>
       {distance !== undefined && (
         <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
-          <mesh ref={meshRef} name={name} castShadow receiveShadow>
+          <mesh ref={meshRef} name={name}>
             <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-            <meshStandardMaterial map={textureMap} lightMap={textureMap} lightMapIntensity={name === 'soleil' ? 25 : 0}/>
+            <meshStandardMaterial
+              map={textureMap}
+              lightMap={textureMap}
+              lightMapIntensity={name === "soleil" ? 25 : 0}
+            />
+            {hasAtmo && <Halo radiusSphere={radius * 1.23} color={atmoRgb} />}
           </mesh>
           {name === 'terre' && (
             <mesh name={'terre_nuages'} castShadow receiveShadow>

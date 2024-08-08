@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import styles from '@/app/components/AstroNav.module.css';
 
 interface AstroNavProps {
@@ -36,6 +36,32 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
     }
   };
 
+  const [keyWasPressed, setKeyWasPressed] = useState(false);
+  const handleKeyDown: React.KeyboardEventHandler<HTMLButtonElement> = useCallback((event) => {
+    if (!keyWasPressed) {
+      if (event.key === "ArrowLeft") {
+        previous();
+      } else if (event.key === "ArrowRight") {
+        next();
+      }
+      setKeyWasPressed(true);
+    }
+  }, [keyWasPressed]);
+
+  const handleKeyUp = useCallback(() => {
+    setKeyWasPressed(false);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown as any);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown as any);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [handleKeyDown, handleKeyUp]);
+
   return (
     <div className="flex justify-center items-center" id={styles.astroNav}>
       <button
@@ -54,6 +80,7 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
         className={`flex justify-center items-center ${indexObjects === countObjects - 1 ? 'locked' : ''}`}
         id={styles.next}
         onClick={next}
+        // onKeyDown={handleKeyDown}
       >
         <div className={styles.chevronDot}></div>
       </button>

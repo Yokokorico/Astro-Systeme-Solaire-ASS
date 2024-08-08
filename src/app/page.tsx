@@ -55,18 +55,18 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "neptune",
-    cameraPositionOffset: 60,
-    cameraLookAtOffset: -30,
+    cameraPositionOffset: 80,
+    cameraLookAtOffset: -25,
   },
   {
     id: "uranus",
-    cameraPositionOffset: 60,
-    cameraLookAtOffset: -20,
+    cameraPositionOffset: 80,
+    cameraLookAtOffset: -25,
   },
 ];
 
 function Home() {
-  const [sliderValue, setSliderValue] = useState(50); // 50 corresponds to the center value 1 in the new scale
+  const [sliderValue, setSliderValue] = useState(1); // 50 corresponds to the center value 1 in the new scale
   const [speedRatio, setSpeedRatio] = useState(0.1);
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);

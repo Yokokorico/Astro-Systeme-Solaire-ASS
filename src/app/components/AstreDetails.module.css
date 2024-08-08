@@ -55,6 +55,7 @@
     align-items: center;
     border: 59px solid transparent;
     border-right: 9px solid var(--clr2);
+    opacity: .85;
     cursor: pointer;
     pointer-events: all;
 }
@@ -71,8 +72,9 @@
     text-shadow: 0 0 2px #000,
                  0 0 4px #000,
                  0 0 32px #000;
-    transform: scaleY(0);
-    transform-origin: top;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: .25s;
 }
 .hideDetails:hover {
     filter: brightness(2);

@@ -10,7 +10,8 @@ export interface CameraProps {
 export const CustomCamera: React.FC<CameraProps> = ({ cameraPositionOffset, cameraLookAtOffset, cameraPlanetFocused }) => {
   
   const { camera, gl, scene } = useThree();
-
+  let targetIsSun: boolean = true;
+  
   useEffect(() => {
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
     perspectiveCamera.position.set(2500, 5000, 10000);

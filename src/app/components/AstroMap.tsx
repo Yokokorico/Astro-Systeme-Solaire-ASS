@@ -38,7 +38,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
                         texture={`2k_${planet.id}.jpg`}
                         sideralOrbit={scaleSideralOrbit(planet.sideralOrbit) * speedRatio}
                         distance={scaleOrbit(planet.semimajorAxis)}
-                        rotationSpeed={scaleSideralRotation(planet.sideralRotation) * speedRatio}
+                        rotationSpeed={planet.id !== 'soleil' ? scaleSideralRotation(planet.sideralRotation) * speedRatio : scaleSideralRotation(1000) * speedRatio}
                         axialTilt={planet.axialTilt}
                         hasRing={planet.id === "saturne"}
                         ringTexture={planet.id === "saturne" ? `2k_${planet.id}_ring.png` : undefined}

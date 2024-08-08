@@ -10,7 +10,7 @@
     margin: 0 auto;
     position: absolute;
     top: 20%;
-    left: 10%;
+    left: 18rem;
     user-select: none;
     border-image: linear-gradient(90deg, var(--clr2), var(--clr)) 10;
     color: var(--clr);

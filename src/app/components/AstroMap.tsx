@@ -14,6 +14,7 @@ import { Vector3 } from "three";
 import * as THREE from "three";
 import AstroPlanet from "./AstroPlanet";
 import Stars from "./Stars";
+import Halo from "./Halo";
 
 export interface AstroMapProps {
   planets: Astre[];
@@ -23,7 +24,7 @@ export interface AstroMapProps {
 
 function SetEnvironment() {
   const { scene } = useThree();
-  const envMap = useTexture("/gaia.png");
+  const envMap = useTexture("/milky_way.jpg");
   envMap.mapping = THREE.EquirectangularReflectionMapping;
 
   useEffect(() => {
@@ -39,10 +40,10 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
   if (!planets.length) return <div>AstroMapLoading...</div>;
 
   return (
-    <Canvas ref={canvasRef} style={{ width: "100vw", height: "100vh" }}>
+    <Canvas ref={canvasRef} style={{ width: "100vw", height: "100vh" }} camera={{far: 1000000}}>
       <ambientLight intensity={0.2} />
       <pointLight distance={0} decay={0.01} intensity={5} />
-      <SetEnvironment />
+      {/* <SetEnvironment /> */}
       {planets
         .filter((planet) => planet.id)
         .map((planet) => (
@@ -70,11 +71,13 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               }
               speedMultiplier={100}
               timeDilation={100}
+              hasAtmo={planet.hasAtmo}
+              atmoRgb={planet.atmoRgb}
             />
           </React.Fragment>
         ))}
       <OrbitControls />
-      {/* <Stars /> */}
+      <Stars />
       <CustomCamera
         cameraPositionOffset={
           planets.find((planet) => planet.id === selectedPlanetId)

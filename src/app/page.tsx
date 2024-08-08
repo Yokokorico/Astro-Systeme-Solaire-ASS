@@ -10,11 +10,14 @@ import { Box, Slider, Typography } from "@mui/material";
 import AstroSummary from "./components/AstroSummary";
 import { getListOfPlanet } from "./services/ApiService";
 import { Astre } from "./types/bodies";
+import { Color, Vector3 } from "three";
 
 export interface AstroType {
   id: string;
   cameraPositionOffset: number;
   cameraLookAtOffset: number;
+  hasAtmo?: boolean;
+  atmoRgb?: Color;
 }
 
 const astroPlanetsToDisplay: AstroType[] = [
@@ -22,6 +25,8 @@ const astroPlanetsToDisplay: AstroType[] = [
     id: "soleil",
     cameraPositionOffset: 10000,
     cameraLookAtOffset: 0,
+    hasAtmo: true,
+    atmoRgb: new Color(0.94, 0.94, 0.94),
   },
   {
     id: "mercure",
@@ -32,16 +37,22 @@ const astroPlanetsToDisplay: AstroType[] = [
     id: "venus",
     cameraPositionOffset: 30,
     cameraLookAtOffset: -8,
+    hasAtmo: true,
+    atmoRgb: new Color(0.91, 0.89, 0.47),
   },
   {
     id: "terre",
     cameraPositionOffset: 30,
     cameraLookAtOffset: -8,
+    hasAtmo: true,
+    atmoRgb: new Color(0.29, 0.4, 0.94),
   },
   {
     id: "mars",
     cameraPositionOffset: 20,
     cameraLookAtOffset: -5,
+    hasAtmo: true,
+    atmoRgb: new Color(0.89, 0.38, 0.37),
   },
   {
     id: "jupiter",
@@ -52,16 +63,22 @@ const astroPlanetsToDisplay: AstroType[] = [
     id: "saturne",
     cameraPositionOffset: 140,
     cameraLookAtOffset: -40,
+    hasAtmo: true,
+    atmoRgb: new Color(0.97, 0.95, 0.6),
   },
   {
     id: "neptune",
     cameraPositionOffset: 80,
     cameraLookAtOffset: -25,
+    hasAtmo: true,
+    atmoRgb: new Color(0.08, 0.3, 0.95),
   },
   {
     id: "uranus",
     cameraPositionOffset: 80,
     cameraLookAtOffset: -25,
+    hasAtmo: true,
+    atmoRgb: new Color(0.35, 0.81, 0.96),
   },
 ];
 
@@ -71,7 +88,7 @@ function Home() {
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,17 +96,19 @@ function Home() {
 
         // Enrich each planet with its camera offsets
         const enrichedResults = results.bodies.map((planet: Astre) => {
-          const offsets = astroPlanetsToDisplay.find(p => p.id === planet.id);
+          const offsets = astroPlanetsToDisplay.find((p) => p.id === planet.id);
           return {
             ...planet,
             cameraPositionOffset: offsets?.cameraPositionOffset,
-            cameraLookAtOffset: offsets?.cameraLookAtOffset
+            cameraLookAtOffset: offsets?.cameraLookAtOffset,
+            hasAtmo: offsets?.hasAtmo,
+            atmoRgb: offsets?.atmoRgb,
           };
         });
 
         setData(enrichedResults);
         setLoading(false);
-        console.log(enrichedResults)
+        console.log(enrichedResults);
       } catch (err: Error | any) {
         setError(err);
         setLoading(false);
@@ -98,8 +117,9 @@ function Home() {
     fetchData();
   }, []);
 
-
-  const [selectedPlanet, setSelectedPlanet] = useState<AstroType>(astroPlanetsToDisplay[0]);
+  const [selectedPlanet, setSelectedPlanet] = useState<AstroType>(
+    astroPlanetsToDisplay[0]
+  );
 
   const handlePlanetChange = (newPlanet: string) => {
     const planet = astroPlanetsToDisplay.find((p) => p.id === newPlanet);
@@ -107,21 +127,32 @@ function Home() {
   };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (typeof newValue === 'number') {
+    if (typeof newValue === "number") {
       setSliderValue(newValue);
       if (newValue <= 50) {
         setSpeedRatio(1 - (50 - newValue) / 50);
       } else {
-        setSpeedRatio((newValue - 50) * 2); 
-      } 
+        setSpeedRatio((newValue - 50) * 2);
+      }
     }
   };
 
-  const selectedPlanetData = data.find(planet => planet.id === selectedPlanet.id);
+  const selectedPlanetData = data.find(
+    (planet) => planet.id === selectedPlanet.id
+  );
 
   return (
     <div>
-      <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
+      <Box
+        sx={{
+          width: 300,
+          marginBottom: 0,
+          position: "absolute",
+          bottom: 0,
+          left: 50,
+          zIndex: 99,
+        }}
+      >
         <Typography id="input-slider" gutterBottom>
           Vitesse: {speedRatio.toFixed(2)}
         </Typography>
@@ -135,26 +166,30 @@ function Home() {
         />
       </Box>
       <AstroHeader />
-      {loading ? <div>page Loading...</div> : error ? <div>Error: {error.message}</div> : (
-      <div>
-        <AstroMap
-          speedRatio={speedRatio}
-          planets={data}
-          selectedPlanetId={selectedPlanet.id}
-        />
-        <AstreDetails planet={selectedPlanetData} />
+      {loading ? (
+        <div>page Loading...</div>
+      ) : error ? (
+        <div>Error: {error.message}</div>
+      ) : (
+        <div>
+          <AstroMap
+            speedRatio={speedRatio}
+            planets={data}
+            selectedPlanetId={selectedPlanet.id}
+          />
+          <AstreDetails planet={selectedPlanetData} />
 
-        <AstroNav
-          planets={astroPlanetsToDisplay.map((p) => p.id)}
-          selectedPlanetId={selectedPlanet.id}
-          onPlanetChange={handlePlanetChange}
-        />
-        <AstroSummary
-          planets={astroPlanetsToDisplay.map((p) => p.id)}
-          selectedPlanetId={selectedPlanet.id}
-          onPlanetChange={handlePlanetChange}
-        />
-      </div>
+          <AstroNav
+            planets={astroPlanetsToDisplay.map((p) => p.id)}
+            selectedPlanetId={selectedPlanet.id}
+            onPlanetChange={handlePlanetChange}
+          />
+          <AstroSummary
+            planets={astroPlanetsToDisplay.map((p) => p.id)}
+            selectedPlanetId={selectedPlanet.id}
+            onPlanetChange={handlePlanetChange}
+          />
+        </div>
       )}
     </div>
   );

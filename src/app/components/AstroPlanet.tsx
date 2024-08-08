@@ -69,7 +69,6 @@ function AstroPlanet({
         }
         if (meshRef.current) {
           if (name === 'venus') {
-            console.log(adjustedRotationSpeed * -30);
             meshRef.current.rotation.y -= adjustedRotationSpeed * -30;
           } else {
             meshRef.current.rotation.y += adjustedRotationSpeed;

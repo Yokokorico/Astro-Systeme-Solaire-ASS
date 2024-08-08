@@ -27,3 +27,26 @@
 .subtitle {
     font-size: 1rem;
 }
+
+.tooltip {
+    width: 200px;
+    height: 100%;
+}
+.tooltip span div {
+    width: 29px;
+    height: 29px;
+    background-image: url(../../../public/assets/images/mouse.png);
+    background-position: center;
+    background-size: 140%;
+    filter: invert(1);
+}
+.tooltip p,
+.tooltip span p {
+    height: 29px;
+    text-shadow: 0 0 2px #000,
+    0 0 4px #000,
+    0 0 32px #000;
+}
+.tooltip .leftClick {
+    transform: rotateY(180deg);
+}

@@ -83,9 +83,9 @@ export const Halo = ({ radiusSphere, color }: Props) => {
             atmPowFactor: { value: params.atmPowFactor.value },
             atmMultiplier: { value: params.atmMultiplier.value },
             atmColor: { value: color },
-            r: { value: color.r },
-            g: { value: color.g },
-            b: { value: color.b },
+            r: { value: color?.r },
+            g: { value: color?.g },
+            b: { value: color?.b },
           }}
           blending={AdditiveBlending}
           side={BackSide}

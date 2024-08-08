@@ -62,14 +62,18 @@ function AstroPlanet({
 
   useFrame(() => {
     const adjustedOrbitSpeed = sideralOrbit * speedMultiplier * timeDilation;
-    const adjustedRotationSpeed =
-      rotationSpeed * speedMultiplier * timeDilation;
+    const adjustedRotationSpeed = rotationSpeed * speedMultiplier * timeDilation;
 
         if (groupRef.current) {
             groupRef.current.rotation.y += adjustedOrbitSpeed;
         }
         if (meshRef.current) {
+          if (name === 'venus') {
+            console.log(adjustedRotationSpeed * -30);
+            meshRef.current.rotation.y -= adjustedRotationSpeed * -30;
+          } else {
             meshRef.current.rotation.y += adjustedRotationSpeed;
+          }
         }
         if (ringMeshRef.current) {
             ringMeshRef.current.rotation.z += adjustedRotationSpeed;
@@ -101,7 +105,7 @@ function AstroPlanet({
         <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
           <mesh ref={meshRef} name={name} castShadow receiveShadow>
             <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-            <meshStandardMaterial map={textureMap} lightMap={textureMap} lightMapIntensity={name === 'soleil' ? 25 : 0} emissive={0x000000}/>
+            <meshStandardMaterial map={textureMap} lightMap={textureMap} lightMapIntensity={name === 'soleil' ? 25 : 0}/>
           </mesh>
           {hasRing && ringTextureMap && (
             <mesh

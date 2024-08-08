@@ -12,6 +12,14 @@
     pointer-events: none;
     z-index: 2;
 }
+.title,
+.subtitle {
+    text-shadow: 0 0 2px #000,
+                 0 0 8px #000,
+                 0 0 16px #000,
+                 0 0 32px #000,
+                 0 0 64px #000;
+}
 .title {
     font-size: 3rem;
     line-height: 2rem;

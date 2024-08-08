@@ -1,5 +1,6 @@
 import React, { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import styles from '@/app/components/AstroNav.module.css';
+import { div } from 'three/webgpu';
 
 interface AstroNavProps {
   planets: string[];
@@ -63,28 +64,31 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
   }, [handleKeyDown, handleKeyUp]);
 
   return (
-    <div className="flex justify-center items-center" id={styles.astroNav}>
-      <button
-        className={`flex justify-center items-center ${indexObjects === 0 ? 'locked' : ''}`}
-        id={styles.previous}
-        onClick={previous}
-      >
-        <div className={styles.chevronDot}></div>
-      </button>
+    <div className={`flex justify-center ${styles.container}`}>
+      <div className="flex justify-center items-center" id={styles.astroNav}>
+        <button
+          className={`flex justify-center items-center ${indexObjects === 0 ? 'locked' : ''}`}
+          id={styles.previous}
+          onClick={previous}
+        >
+          <div className={styles.chevronDot}></div>
+        </button>
 
-      <p className="flex justify-center items-center" id={styles.current}>
-        {planets[indexObjects].charAt(0).toUpperCase() + planets[indexObjects].slice(1)}
-      </p>
+        <p className="flex justify-center items-center" id={styles.current}>
+          {planets[indexObjects].charAt(0).toUpperCase() + planets[indexObjects].slice(1)}
+        </p>
 
-      <button
-        className={`flex justify-center items-center ${indexObjects === countObjects - 1 ? 'locked' : ''}`}
-        id={styles.next}
-        onClick={next}
-        // onKeyDown={handleKeyDown}
-      >
-        <div className={styles.chevronDot}></div>
-      </button>
+        <button
+          className={`flex justify-center items-center ${indexObjects === countObjects - 1 ? 'locked' : ''}`}
+          id={styles.next}
+          onClick={next}
+          // onKeyDown={handleKeyDown}
+        >
+          <div className={styles.chevronDot}></div>
+        </button>
+      </div>
     </div>
+    
   );
 };
 

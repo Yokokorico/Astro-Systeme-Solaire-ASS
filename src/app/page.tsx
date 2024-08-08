@@ -99,7 +99,7 @@ function Home() {
           aria-labelledby="input-slider"
         />
       </Box>
-      <AstroHeader />
+      <AstroHeader planet={selectedPlanet.id} />
       {loading ? <div>page Loading...</div> : error ? <div>Error: {error.message}</div> : (
       <div>
         <AstroMap

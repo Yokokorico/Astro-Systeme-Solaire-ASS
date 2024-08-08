@@ -5,12 +5,20 @@
     width: 100%;
     height: 80px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 1rem 3rem 0 3rem;
     font-family: 'Nasalization';
     user-select: none;
     pointer-events: none;
     z-index: 2;
+}
+.title,
+.subtitle {
+    text-shadow: 0 0 2px #000,
+                 0 0 8px #000,
+                 0 0 16px #000,
+                 0 0 32px #000,
+                 0 0 64px #000;
 }
 .title {
     font-size: 3rem;
@@ -18,4 +26,35 @@
 }
 .subtitle {
     font-size: 1rem;
+}
+.tooltipContainer {
+    position: relative;
+    top: 0;
+}
+.tooltip {
+    width: 200px;
+    height: 100%;
+}
+.tooltip span div {
+    width: 29px;
+    height: 29px;
+    background-image: url(../../../public/assets/images/mouse.png);
+    background-position: center;
+    background-size: 130%;
+    background-repeat: no-repeat;
+    filter: invert(1);
+}
+.tooltip p,
+.tooltip span p {
+    height: 29px;
+    text-shadow: 0 0 2px #000,
+    0 0 4px #000,
+    0 0 32px #000;
+}
+.tooltip .leftClick {
+    transform: rotateY(180deg);
+}
+.tooltip .mouseWheel {
+    background-image: url(../../../public/assets/images/mouse-scroll-wheel-icon.png);
+    /* background-size: 60%; */
 }

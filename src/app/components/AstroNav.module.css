@@ -11,15 +11,16 @@
     src: url(../../../public/assets/fonts/nasalization-rg.otf);
 }
 
-#astroNav {
+.container {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 60px;
-    background: var(--astrobar-background);
+}
+#astroNav {
     color: var(--astrobar-primary);
-    backdrop-filter: blur(8px);
+    background: var(--astrobar-background);
 }
 
 #previous,

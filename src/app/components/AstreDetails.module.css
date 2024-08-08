@@ -13,19 +13,79 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border: 4px solid transparent;
     padding: 20px;
     background: linear-gradient(45deg, var(--clr3), var(--clr4));
     backdrop-filter: blur(5px);
-    width: 25rem;
+    width: 29rem;
     user-select: none;
     border-image: linear-gradient(90deg, var(--clr2), var(--clr)) 10;
     color: var(--clr);
     box-shadow: 2px 0px 2px var(--clr),
                 0px 0px 64px var(--clr),
           inset 0px 0px 30px var(--clr);
+    transition: .5s ease-out;
+    transform-origin: left;
 }
 
+.container::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 11px;
+    height: 100%;
+    background:  linear-gradient(var(--clr), var(--clr2), transparent);
+}
+.container::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 4px;
+    width: 100%;
+    height: 11px;
+    background:  linear-gradient(270deg, transparent, var(--clr2), var(--clr));
+}
+
+.hideDetails {
+    position: absolute;
+    left: -73px;
+    display: flex;
+    align-items: center;
+    border: 59px solid transparent;
+    border-right: 9px solid var(--clr2);
+    opacity: .85;
+    cursor: pointer;
+    pointer-events: all;
+}
+.tooltip {
+    position: absolute;
+    right: 10px;
+    width: 0;
+    display: flex;
+    justify-content: center;
+    word-break: break-all;
+    line-height: 1rem;
+    letter-spacing: 1rem;
+    font-family: 'Nasalization';
+    text-shadow: 0 0 2px #000,
+                 0 0 4px #000,
+                 0 0 32px #000;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: .25s;
+}
+.hideDetails:hover {
+    filter: brightness(2);
+    transition: .25s;
+}
+.hideDetails:hover .tooltip {
+    transform: none;
+}
+.hide {
+    transform: scaleX(0);
+}
 .imageContainer {
     display: flex;
     width: 100%;
@@ -135,55 +195,55 @@
 }
 
 .soleil {
-    --clr:  rgb(255, 255, 82);
+    --clr:  rgb(255, 255, 193);
     --clr2: rgba(255, 255, 82, .75);
     --clr3: rgba(10, 10, 0, .75);
     --clr4: rgba(75, 75, 0, .75);
 }
 .mercure {
-    --clr:  rgb(194, 194, 194);
-    --clr2: rgba(194, 194, 194, .75);
+    --clr:  rgb(216, 216, 216);
+    --clr2: rgba(145, 145, 145, 0.75);
     --clr3: rgba(10, 10, 10, .75);
     --clr4: rgba(75, 75, 75, .75);
 }
 .venus {
-    --clr:  rgb(255, 192, 76);
+    --clr:  rgb(255, 231, 187);
     --clr2: rgba(255, 192, 76, .75);
     --clr3: rgba(10, 5, 0, .75);
     --clr4: rgba(75, 50, 0, .75);
 }
 .terre {
-    --clr:  rgb(74, 137, 255);
+    --clr:  rgb(161, 194, 255);
     --clr2: rgba(74, 137, 255, .75);
     --clr3: rgba(5, 10, 15, .75);
     --clr4: rgba(40, 75, 150, .75);
 }
 .mars {
-    --clr:  rgb(255, 103, 76);
+    --clr:  #ffa292;
     --clr2: rgba(255, 103, 76, .75);
     --clr3: rgba(10, 0, 0, .75);
     --clr4: rgba(75, 0, 0, .75);
 }
 .jupiter {
-    --clr:  rgb(221, 156, 81);
+    --clr:  rgb(255, 210, 159);
     --clr2: rgba(218, 201, 181, .751);
     --clr3: rgba(10, 8, 5, .75);
     --clr4: rgba(100, 75, 50, .75);
 }
 .saturne {
-    --clr:  rgb(218, 201, 181);
+    --clr:  rgb(255, 229, 199);
     --clr2: rgba(218, 201, 181, .751);
     --clr3: rgba(10, 8, 5, .75);
     --clr4: rgba(100, 75, 50, .75);
 }
 .neptune {
-    --clr:  rgb(74, 137, 255);
+    --clr:  rgb(179, 205, 255);
     --clr2: rgba(74, 137, 255, .75);
     --clr3: rgba(5, 10, 15, .75);
     --clr4: rgba(40, 75, 150, .75);
 }
 .uranus{
-    --clr: rgb(148, 201, 207);
+    --clr: rgb(188, 248, 255);
     --clr2: rgba(181,206,209, .75);
     --clr3: rgba(5, 10, 15, .75);
     --clr4: rgba(148, 201, 207, .75);

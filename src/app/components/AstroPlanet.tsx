@@ -45,7 +45,9 @@ function AstroPlanet({
   const meshRef = useRef<THREE.Mesh>(null);
   const ringMeshRef = useRef<THREE.Mesh>(null);
   const orbitGroupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const planetGroupRef = useRef<THREE.Group>(null);
+  const axialTiltGroupRef = useRef<THREE.Group>(null);
   const textureMap = useTexture(`/${texture}`);
   let ringTextureMap;
 
@@ -76,12 +78,13 @@ function AstroPlanet({
     }
 
     if (meshRef.current) {
-      meshRef.current.rotation.y += adjustedRotationSpeed;
-    }
-
+      if (name === 'venus') {
+        meshRef.current.rotation.y -= adjustedRotationSpeed * -30;
+      } else {
     if (ringMeshRef.current) {
       ringMeshRef.current.rotation.z += adjustedRotationSpeed;
     }
+  }
 
     // Calcul du temps pour l'orbite
     const orbitTime = elapsedTime * adjustedOrbitSpeed;
@@ -95,7 +98,8 @@ function AstroPlanet({
     if (planetGroupRef.current) {
       planetGroupRef.current.position.set(x, 0, z);
     }
-  });
+  }});
+
 
   useEffect(() => {
     if (ringMeshRef.current) {
@@ -116,33 +120,39 @@ function AstroPlanet({
 
   return (
     <group ref={orbitGroupRef}>
-      <group ref={planetGroupRef} position={[0, 0, 0]}>
-        <mesh ref={meshRef} name={name} castShadow receiveShadow>
-          <sphereGeometry args={[radius, widthSegments, heightSegments]} />
-          <meshStandardMaterial
-            map={textureMap}
-            lightMap={textureMap}
-            lightMapIntensity={name === 'soleil' ? 25 : 0}
-            emissive={0x000000}
-          />
-        </mesh>
-        {hasRing && ringTextureMap && (
-          <mesh
-            ref={ringMeshRef}
-            position={[0, 0, 0]}
-            rotation={[-0.5 * Math.PI, 0, 0]}
-            castShadow
-            receiveShadow
-          >
-            <ringGeometry args={[ringInnerRadius, ringOuterRadius, 512]} />
-            <meshStandardMaterial
-              map={ringTextureMap}
-              side={THREE.DoubleSide}
-              transparent
-              opacity={0.7}
-            />
+
+    <group ref={groupRef}>
+      {distance !== undefined && (
+        <group ref={axialTiltGroupRef} position={[distance, 0, 0]}>
+          <mesh ref={meshRef} name={name} castShadow receiveShadow>
+            <sphereGeometry args={[radius, widthSegments, heightSegments]} />
+            <meshStandardMaterial map={textureMap} lightMap={textureMap} lightMapIntensity={name === 'soleil' ? 25 : 0}/>
           </mesh>
-        )}
+          {name === 'terre' && (
+            <mesh name={'terre_nuages'} castShadow receiveShadow>
+              <sphereGeometry args={[radius + .01, widthSegments, heightSegments]} />
+              <meshStandardMaterial map={useTexture('/earth-clouds.png')} transparent={true} opacity={.8}/>
+            </mesh>
+          )}
+          {hasRing && ringTextureMap && (
+            <mesh
+              ref={ringMeshRef}
+              position={[0, 0, 0]}
+              rotation={[-0.5 * Math.PI, 0, 0]}
+              castShadow
+              receiveShadow
+            >
+              <ringGeometry args={[ringInnerRadius, ringOuterRadius, 512]} />
+              <meshStandardMaterial
+                map={ringTextureMap}
+                side={THREE.DoubleSide}
+                transparent
+                opacity={0.7} // Adjust for better lighting effect
+              />
+            </mesh>
+          )}
+        </group>
+      )}
       </group>
     </group>
   );

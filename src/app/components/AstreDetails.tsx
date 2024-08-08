@@ -18,7 +18,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
     const hideDetails = () => {
         if (isVisible) {
             setVisible(false);
-            setTooltip('Afficher');
+            setTooltip('Détails');
         }
         else {
             setVisible(true);

@@ -61,19 +61,27 @@
 .tooltip {
     position: absolute;
     right: 10px;
-    width: .5rem;
+    width: 0;
+    display: flex;
+    justify-content: center;
     word-break: break-all;
     line-height: 1rem;
+    letter-spacing: 1rem;
     font-family: 'Nasalization';
-    opacity: 0;
-    transition: .1s;
+    text-shadow: 0 0 2px #000,
+                 0 0 4px #000,
+                 0 0 32px #000;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: .25s;
 }
 .hideDetails:hover {
     filter: brightness(1.5);
+    transform: translateX(10px);
     transition: .25s;
 }
 .hideDetails:hover .tooltip {
-    opacity: 1;
+    transform: none;
 }
 .hide {
     transform: scaleX(0);

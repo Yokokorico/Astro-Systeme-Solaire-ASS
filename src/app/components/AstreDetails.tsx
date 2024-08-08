@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Astre } from '../types/bodies';
 import { kelvinToCelsius } from '../utils/Conversion';
 import styles from './AstreDetails.module.css';
@@ -12,6 +12,19 @@ export interface AstreDetailsProps {
 
 const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [isVisible, setVisible] = useState(true);
+    const [tooltip, setTooltip] = useState('Masquer');
+
+    const hideDetails = () => {
+        if (isVisible) {
+            setVisible(false);
+            setTooltip('Détails');
+        }
+        else {
+            setVisible(true);
+            setTooltip('Masquer');
+        }
+    }
 
     if (!planet) {
         return <div>No data available</div>;
@@ -39,27 +52,36 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={`${styles.container} ${styles[planet.id]}`}>
-                <div className={`flex flex-cols ${styles.titleContainer}`}>
-                    <h2 className={`nasalization ${styles.title}`}>{planet.name}</h2>
-                </div>
-                <div className={styles.scrollContainer} ref={scrollContainerRef}>
-                    <div className={styles.fieldContainer}>
-                        {dataFields.map((field, index) => field.value !== null && (
-                            <div key={index} className={styles.row}>
-                                <span className={styles.label}>{field.label}:</span>
-                            </div>
-                        ))}
+            <div className={`flex items-center ${styles[planet.id]}`}>
+
+                <button className={styles.hideDetails} onClick={hideDetails}>
+                    <p className={styles.tooltip}>{tooltip}</p>
+                </button>
+
+                <div className={`${styles.container} ${styles[planet.id]} ${!isVisible ? styles.hide : ''}`}>
+                    <div className={`flex flex-cols ${styles.titleContainer}`}>
+                        <h2 className={`nasalization ${styles.title}`}>{planet.name}</h2>
                     </div>
-                    <div className={styles.fieldContainer}>
-                        {dataFields.map((field, index) => field.value !== null && (
-                            <div key={index} className={styles.row}>
-                                <span className={styles.value}>{field.value}</span>
-                            </div>
-                        ))}
+                    <div className={styles.scrollContainer} ref={scrollContainerRef}>
+                        <div className={styles.fieldContainer}>
+                            {dataFields.map((field, index) => field.value !== null && (
+                                <div key={index} className={styles.row}>
+                                    <span className={styles.label}>{field.label}:</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={styles.fieldContainer}>
+                            {dataFields.map((field, index) => field.value !== null && (
+                                <div key={index} className={styles.row}>
+                                    <span className={styles.value}>{field.value}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
+
             </div>
+           
         </div>
         
     );

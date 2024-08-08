@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AstroHeader from "./components/AstroHeader";
 import AstroNav from "./components/AstroNav";
 import "./variables.css";
@@ -83,7 +83,7 @@ const astroPlanetsToDisplay: AstroType[] = [
 ];
 
 function Home() {
-  const [sliderValue, setSliderValue] = useState(1); // 50 corresponds to the center value 1 in the new scale
+  const [sliderValue, setSliderValue] = useState(1);
   const [speedRatio, setSpeedRatio] = useState(0.1);
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,7 +92,8 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const results = await getListOfPlanet();
+        const planetIds = astroPlanetsToDisplay.map(p => p.id);
+        const results = await getListOfPlanet(planetIds);
 
         // Enrich each planet with its camera offsets
         const enrichedResults = results.bodies.map((planet: Astre) => {
@@ -107,6 +108,7 @@ function Home() {
         });
 
         setData(enrichedResults);
+        console.log(enrichedResults);
         setLoading(false);
         console.log(enrichedResults);
       } catch (err: Error | any) {
@@ -143,16 +145,7 @@ function Home() {
 
   return (
     <div>
-      <Box
-        sx={{
-          width: 300,
-          marginBottom: 0,
-          position: "absolute",
-          bottom: 0,
-          left: 50,
-          zIndex: 99,
-        }}
-      >
+      <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
         <Typography id="input-slider" gutterBottom>
           Vitesse: {speedRatio.toFixed(2)}
         </Typography>
@@ -165,7 +158,7 @@ function Home() {
           aria-labelledby="input-slider"
         />
       </Box>
-      <AstroHeader />
+      <AstroHeader planet={selectedPlanet.id} />
       {loading ? (
         <div>page Loading...</div>
       ) : error ? (
@@ -194,4 +187,5 @@ function Home() {
     </div>
   );
 }
+
 export default Home;

@@ -8,7 +8,9 @@ export interface Astre {
         massExponent: number;
     };
     gravity?: number;
-    moons?: Astre[];
+    moons?: {
+        rel: string;
+    }[];
     isPlanet?: boolean;
     semimajorAxis?: number;
     perihelion?: number;
@@ -35,5 +37,6 @@ export interface Astre {
     cameraPositionOffset?: number;
     cameraLookAtOffset?: number;
     hasAtmo?: boolean;
-    atmoRgb: Color;
+    atmoRgb?: Color;
+    moonAstres: Astre[]
 }

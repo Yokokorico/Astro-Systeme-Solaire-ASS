@@ -70,7 +70,6 @@ type Props = {
 };
 
 export const Halo = ({ radiusSphere, color }: Props) => {
-  console.log(color);
 
   return (
     <mesh>

@@ -60,7 +60,7 @@ export const getListOfMoons = async (planets: Astre[]) => {
         planets.forEach(planet => {
             if (planet.moons) {
                 enrichedResults.forEach((moons: Astre) =>{                                   
-                    if(planet.moonAstres.length <= 5){
+                    if(planet.moonAstres.length <= 10){
                         if(planet.id == moons.aroundPlanet?.planet){
                             planet?.moonAstres.push(moons)
                         }

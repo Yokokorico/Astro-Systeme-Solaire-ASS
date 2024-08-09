@@ -103,12 +103,7 @@ function AstroMoon({
     }
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
-  console.log({
-    name: name,
-    radius: radius,
-    texture: texture,
-    distance: distance
-  });
+
   
 
   return (

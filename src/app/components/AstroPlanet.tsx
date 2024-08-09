@@ -138,6 +138,16 @@ function AstroPlanet({
     }
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
+  const randomNames = [
+    'ceres', 'eris', 'haumea', 'makemake'
+  ]
+
+  function getRandomName(names: string[]) {
+    const randomIndex = Math.floor(Math.random() * names.length);
+    return names[randomIndex];
+  }
+
+
   return (
     
     <group ref={orbitGroupRef}>
@@ -170,7 +180,7 @@ function AstroPlanet({
                   radius={scaleRadius((moon.equaRadius != 0) ? moon.equaRadius : moon.meanRadius)}
                   widthSegments={128}
                   heightSegments={64}
-                  texture={`assets/moons/2k_lune.jpg`}
+                  texture={(moon.id !== 'lune') ? `assets/moons/random_textures/2k_${getRandomName(randomNames)}.jpg` : `assets/moons/2k_${moon.id}.jpg`}
                   sideralOrbit={scaleSideralOrbit(moon.sideralOrbit) * speedRatio}
                   distance={scaleOrbit(moon.semimajorAxis)}
                   rotationSpeed={moon.id === 'soleil' ? scaleSideralRotation(500) * speedRatio : scaleSideralRotation(moon.sideralRotation) * speedRatio}

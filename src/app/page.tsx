@@ -149,23 +149,31 @@ function Home() {
   const selectedPlanetData = data.find(
     (planet) => planet.id === selectedPlanet.id
   );
+  
+  const [uiIsVisible, setUiVisibility] = useState(true);
+
+  const handleUiVisibilityChange = (newValue: boolean) => {
+    setUiVisibility(newValue);
+  }
 
   return (
     <div>
-      <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
-        <Typography id="input-slider" gutterBottom>
-          Vitesse: {speedRatio.toFixed(2)}
-        </Typography>
-        <Slider
-          value={sliderValue}
-          min={0}
-          max={100}
-          step={0.1}
-          onChange={handleSliderChange}
-          aria-labelledby="input-slider"
-        />
-      </Box>
-      <AstroHeader planet={selectedPlanet.id} />
+      {uiIsVisible && (
+        <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
+          <Typography id="input-slider" gutterBottom>
+            Vitesse: {speedRatio.toFixed(2)}
+          </Typography>
+          <Slider
+            value={sliderValue}
+            min={0}
+            max={100}
+            step={0.1}
+            onChange={handleSliderChange}
+            aria-labelledby="input-slider"
+          />
+        </Box>
+      )}
+        <AstroHeader planet={selectedPlanet.id} onUiVisibilityChange={handleUiVisibilityChange} />
       {loading ? (
         <div>page Loading...</div>
       ) : error ? (
@@ -177,18 +185,23 @@ function Home() {
             planets={data}
             selectedPlanetId={selectedPlanet.id}
           />
-          <AstreDetails planet={selectedPlanetData} />
-
-          <AstroNav
+          {uiIsVisible && (
+            <AstreDetails planet={selectedPlanetData} />
+          )}
+          {uiIsVisible && (
+            <AstroNav
             planets={astroPlanetsToDisplay.map((p) => p.id)}
             selectedPlanetId={selectedPlanet.id}
             onPlanetChange={handlePlanetChange}
           />
-          <AstroSummary
-            planets={astroPlanetsToDisplay.map((p) => p.id)}
-            selectedPlanetId={selectedPlanet.id}
-            onPlanetChange={handlePlanetChange}
-          />
+          )}
+          {uiIsVisible && (
+            <AstroSummary
+              planets={astroPlanetsToDisplay.map((p) => p.id)}
+              selectedPlanetId={selectedPlanet.id}
+              onPlanetChange={handlePlanetChange}
+            />
+          )}
         </div>
       )}
     </div>

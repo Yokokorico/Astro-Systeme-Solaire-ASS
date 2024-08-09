@@ -51,6 +51,9 @@ body {
 	letter-spacing: .1rem;
 	z-index: 9999;
 }
+.loader {
+	pointer-events: none;
+}
 .loader span {
 	position: relative;
 	width: 300px;

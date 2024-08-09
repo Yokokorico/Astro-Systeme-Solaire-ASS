@@ -56,22 +56,15 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "jupiter",
-    cameraPositionOffset: 210,
+    cameraPositionOffset: 250,
     cameraLookAtOffset: -40,
   },
   {
     id: "saturne",
-    cameraPositionOffset: 210,
+    cameraPositionOffset: 270,
     cameraLookAtOffset: -40,
     hasAtmo: true,
     atmoRgb: new Color(0.97, 0.95, 0.6),
-  },
-  {
-    id: "neptune",
-    cameraPositionOffset: 210,
-    cameraLookAtOffset: -40,
-    hasAtmo: true,
-    atmoRgb: new Color(0.08, 0.3, 0.95),
   },
   {
     id: "uranus",
@@ -80,6 +73,14 @@ const astroPlanetsToDisplay: AstroType[] = [
     hasAtmo: true,
     atmoRgb: new Color(0.35, 0.81, 0.96),
   },
+  {
+    id: "neptune",
+    cameraPositionOffset: 210,
+    cameraLookAtOffset: -40,
+    hasAtmo: true,
+    atmoRgb: new Color(0.08, 0.3, 0.95),
+  },
+
   {
     id: "pluton",
     cameraPositionOffset: 20,

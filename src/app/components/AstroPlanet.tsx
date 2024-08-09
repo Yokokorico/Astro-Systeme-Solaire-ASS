@@ -64,10 +64,8 @@ function AstroPlanet({
   const axialTiltGroupRef = useRef<THREE.Group>(null);
   const textureMap = useTexture(`/${texture}`);
   let ringTextureMap;
-
-  if (hasRing && ringTexture) {
-    ringTextureMap = useTexture(`/${ringTexture}`);
-  }
+  ringTextureMap = useTexture(`/${(ringTexture != undefined ? '2k_saturne_ring.png' : texture)}`);
+  
 
   useEffect(() => {
     if (orbitGroupRef.current) {

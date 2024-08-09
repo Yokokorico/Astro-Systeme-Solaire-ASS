@@ -41,12 +41,7 @@ function AstroMoon({
   const planetGroupRef = useRef<THREE.Group>(null);
   const axialTiltGroupRef = useRef<THREE.Group>(null);
   const textureMap = useTexture(`/${texture}`);
-  let ringTextureMap;
-
-  if (hasRing && ringTexture) {
-    ringTextureMap = useTexture(`/${ringTexture}`);
-  }
-
+ 
   useEffect(() => {
     if (orbitGroupRef.current) {
       orbitGroupRef.current.rotation.set(0, 0, 0);

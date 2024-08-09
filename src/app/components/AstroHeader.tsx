@@ -15,8 +15,19 @@ const AstroHeader: React.FC<AstreDetailsProps> = ({ planet }) => {
             </div>
             
             <div className={styles.tooltipContainer}>
+                <div className={styles.tooltip}>
+                    <p>Navigation</p>
+                    <span className='flex items-center'>
+                        <div className={styles.arrowLeft}></div>
+                        <p>Précédent</p>
+                    </span>
+                    <span className='flex items-center'>
+                        <div className={styles.arrowRight}></div>
+                        <p>Suivant</p>
+                    </span>
+                </div>
             {planet === 'soleil' && (
-                <div className={`flex flex-col ${styles.tooltip}`}>
+                <div className={`flex flex-col mt-3 ${styles.tooltip}`}>
                     <p>Contrôle de la caméra</p>
 
                     <span className='flex items-center'>

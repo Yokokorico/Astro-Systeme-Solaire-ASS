@@ -49,6 +49,7 @@ function AstroPlanet({
   atmoRgb,
 }: AstroPlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const cloudsRef = useRef<THREE.Mesh>(null);
   const ringMeshRef = useRef<THREE.Mesh>(null);
   const orbitGroupRef = useRef<THREE.Group>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -82,6 +83,10 @@ function AstroPlanet({
 
     if (orbitGroupRef.current) {
       orbitGroupRef.current.rotation.y += adjustedOrbitSpeed;
+    }
+
+    if (cloudsRef.current) {
+        cloudsRef.current.rotation.y += adjustedRotationSpeed + .0005;
     }
 
     if (meshRef.current) {
@@ -142,7 +147,7 @@ function AstroPlanet({
             {hasAtmo && <Halo radiusSphere={radius * 1.23} color={atmoRgb} />}
           </mesh>
           {name === 'terre' && (
-            <mesh name={'terre_nuages'} castShadow receiveShadow>
+            <mesh ref={cloudsRef} name={'terre_nuages'} castShadow receiveShadow>
               <sphereGeometry args={[radius + .01, widthSegments, heightSegments]} />
               <meshStandardMaterial map={useTexture('/earth-clouds.png')} transparent={true} opacity={.8}/>
             </mesh>

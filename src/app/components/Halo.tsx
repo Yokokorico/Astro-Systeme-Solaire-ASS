@@ -59,9 +59,9 @@ const params = {
   sunIntensity: 1.3, // brightness of the sun
   speedFactor: 2.0, // rotation speed of the earth
   metalness: 0.1,
-  atmOpacity: { value: 0.7 },
-  atmPowFactor: { value: 4.1 },
-  atmMultiplier: { value: 9.5 },
+  atmOpacity: { value: 0.5 },
+  atmPowFactor: { value: 0.8 },
+  atmMultiplier: { value: 3.9 },
 };
 
 type Props = {
@@ -89,6 +89,7 @@ export const Halo = ({ radiusSphere, color }: Props) => {
           }}
           blending={AdditiveBlending}
           side={BackSide}
+          transparent={true}
         />
       </Sphere>
     </mesh>

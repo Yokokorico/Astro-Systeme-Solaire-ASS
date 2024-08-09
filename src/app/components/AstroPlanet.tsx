@@ -139,7 +139,7 @@ function AstroPlanet({
               lightMap={textureMap}
               lightMapIntensity={name === "soleil" ? 25 : 0}
             />
-            {hasAtmo && <Halo radiusSphere={radius * 1.23} color={atmoRgb} />}
+            {hasAtmo && <Halo radiusSphere={radius * 1.03} color={atmoRgb} />}
           </mesh>
           {name === 'terre' && (
             <mesh name={'terre_nuages'} castShadow receiveShadow>

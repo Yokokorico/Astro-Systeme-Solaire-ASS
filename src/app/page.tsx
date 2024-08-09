@@ -56,8 +56,8 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "jupiter",
-    cameraPositionOffset: 300,
-    cameraLookAtOffset: -50,
+    cameraPositionOffset: 180,
+    cameraLookAtOffset: -40,
   },
   {
     id: "saturne",
@@ -68,15 +68,15 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "neptune",
-    cameraPositionOffset: 80,
-    cameraLookAtOffset: -25,
+    cameraPositionOffset: 180,
+    cameraLookAtOffset: -40,
     hasAtmo: true,
     atmoRgb: new Color(0.08, 0.3, 0.95),
   },
   {
     id: "uranus",
-    cameraPositionOffset: 80,
-    cameraLookAtOffset: -25,
+    cameraPositionOffset: 180,
+    cameraLookAtOffset: -40,
     hasAtmo: true,
     atmoRgb: new Color(0.35, 0.81, 0.96),
   },
@@ -173,11 +173,19 @@ function Home() {
       )}
         <AstroHeader planet={selectedPlanet.id} onUiVisibilityChange={handleUiVisibilityChange} />
       {loading ? (
-        <div>page Loading...</div>
+          <div className="blackScreen"></div>
+        // <div className="flex flex-col justify-center items-center loader">
+        //   <p>Chargement...</p>
+        //   <span className="flex flex-col items-center"></span>
+        // </div>
       ) : error ? (
         <div>Error: {error.message}</div>
       ) : (
         <div>
+           <div className={`flex flex-col justify-center items-center loader ${loading ? '' : 'loaded'}`}>
+              <p>Chargement...</p>
+              <span className="flex flex-col items-center"></span>
+            </div>
           <AstroMap
             speedRatio={speedRatio}
             planets={data}

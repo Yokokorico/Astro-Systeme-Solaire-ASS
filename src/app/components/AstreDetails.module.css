@@ -86,6 +86,9 @@
 .hide {
     transform: scaleX(0);
 }
+.visible {
+    transform: none;
+}
 .imageContainer {
     display: flex;
     width: 100%;
@@ -152,8 +155,7 @@
     text-shadow: 0 0 2px #000,
                  0 0 4px #000,
                  0 0 8px #000,
-                 0 0 12px var(--clr2),
-                 0 0 20px var(--clr);
+                 0 0 12px var(--clr2);
 }
 
 .fieldContainer:first-of-type {

@@ -55,7 +55,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
             <div className={`flex items-center ${styles[planet.id]}`}>
 
                 <button className={styles.hideDetails} onClick={hideDetails}>
-                    <p className={styles.tooltip}>{tooltip}</p>
+                    <p className={`${styles.tooltip} ${isVisible ? styles.visible : ''}`}>{tooltip}</p>
                 </button>
 
                 <div className={`${styles.container} ${styles[planet.id]} ${!isVisible ? styles.hide : ''}`}>

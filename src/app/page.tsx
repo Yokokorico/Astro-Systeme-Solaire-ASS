@@ -56,8 +56,8 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "jupiter",
-    cameraPositionOffset: 140,
-    cameraLookAtOffset: -40,
+    cameraPositionOffset: 180,
+    cameraLookAtOffset: -50,
   },
   {
     id: "saturne",

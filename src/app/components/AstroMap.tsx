@@ -22,23 +22,12 @@ export interface AstroMapProps {
   speedRatio: number;
 }
 
-function SetEnvironment() {
-  const { scene } = useThree();
-  const envMap = useTexture("/milky_way.jpg");
-  envMap.mapping = THREE.EquirectangularReflectionMapping;
-
-  useEffect(() => {
-    scene.background = envMap;
-  }, [scene, envMap]);
-
-  return null;
-}
 
 function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
   const canvasRef = useRef(null);
-
-  if (!planets.length) return <div>AstroMapLoading...</div>;
-
+  
+  if (planets.length < 8) return <div>AstroMapLoading...</div>;
+  
   return (
     <Canvas ref={canvasRef} style={{ width: "100vw", height: "100vh" }} camera={{far: 1000000}}>
       <ambientLight intensity={0.2} />
@@ -75,9 +64,10 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               timeDilation={100}
               inclination={planet.inclination}
               eccentricity={planet.eccentricity}
-
+              moonAstres={planet.moonAstres}
               hasAtmo={planet.hasAtmo}
               atmoRgb={planet.atmoRgb}
+              speedRatio={speedRatio}
             />
           </React.Fragment>
         ))}

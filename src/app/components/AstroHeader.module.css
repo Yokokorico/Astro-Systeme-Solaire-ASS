@@ -71,3 +71,48 @@
 .tooltip .arrowRight {
     transform: translateY(-.2rem) rotateY(180deg);
 }
+
+.toggleUi {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 51px;
+    height: 29px;
+    padding: 0 2px;
+    border-radius: 16px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 2px #000,
+                0 0 5px #000,
+          inset 0 0 5px #000;
+    background: rgba(50, 50, 50, .5);
+    pointer-events: all;
+    cursor: pointer;
+    transition: .25s;
+    opacity: .8;
+}
+.toggleUi:hover {
+    background: rgba(50, 50, 50, .85);
+}
+.toggleUi:hover .switch {
+    box-shadow: 0 0 11px #fff,
+          inset 0 0 11px #fff;
+}
+.toggleUi .switch {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 5px #000,
+          inset 0 0 5px #000;
+    transform: translateX(22px);
+    transition: .25s;
+}
+.switchOn {
+    transform: none !important;
+}
+.switchOff {
+    opacity: .3;
+}
+.hidden {
+    display: none;
+}

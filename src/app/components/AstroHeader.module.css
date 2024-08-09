@@ -92,6 +92,7 @@
 }
 .toggleUi:hover {
     background: rgba(50, 50, 50, .85);
+    opacity: .8;
 }
 .toggleUi:hover .switch {
     box-shadow: 0 0 11px #fff,

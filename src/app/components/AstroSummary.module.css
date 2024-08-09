@@ -123,4 +123,9 @@
 .uranus div {
     background-image: url(../../../public/assets/images/uranus_icon.png);
 }
-
+.pluton {
+    --clr: rgb(221, 152, 152);
+}
+.pluton div {
+    background-image: url(../../../public/assets/images/pluton_icon.png);
+}

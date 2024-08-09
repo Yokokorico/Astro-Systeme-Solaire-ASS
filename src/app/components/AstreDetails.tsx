@@ -33,7 +33,7 @@ const AstreDetails: React.FC<AstreDetailsProps> = ({ planet }) => {
     const dataFields = [
         { label: 'Masse', value: planet.mass ? `${planet.mass.massValue} x 10^${planet.mass.massExponent} kg` : null, sun: planet.mass ? `${planet.mass.massValue} x 10^${planet.mass.massExponent} kg` : null },
         { label: 'Gravité', value: `${planet.gravity} m/s²`, sun: '274 m/s²' },
-        { label: 'SemimajorAxis', value: `${planet.semimajorAxis?.toLocaleString()} km`, sun: 'N/A' },
+        { label: 'Demi-grand axe', value: `${planet.semimajorAxis?.toLocaleString()} km`, sun: 'N/A' },
         { label: 'Périhélie', value: `${planet.perihelion?.toLocaleString()} km`, sun: 'N/A' },
         { label: 'Aphélie', value: `${planet.aphelion?.toLocaleString()} km`, sun: 'N/A' },
         { label: 'Inclination', value: `${planet.inclination}°`, sun : '7,25°' },

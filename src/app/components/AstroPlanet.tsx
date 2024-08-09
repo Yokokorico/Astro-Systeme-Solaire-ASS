@@ -138,7 +138,7 @@ function AstroPlanet({
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
   const randomNames = [
-    'ceres', 'eris', 'haumea', 'makemake'
+    'ceres', 'eris', 'haumea', 'makemake', 'callisto', 'charon', 'deimos', 'enceladus', 'europa', 'ganymede', 'hyperion', 'io', 'phobos', 'titan'
   ]
 
   function getRandomName(names: string[]) {

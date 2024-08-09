@@ -63,6 +63,7 @@ function AstroPlanet({
   const planetGroupRef = useRef<THREE.Group>(null);
   const axialTiltGroupRef = useRef<THREE.Group>(null);
   const textureMap = useTexture(`/${texture}`);
+  const cloudTextureMap = useTexture('/earth-clouds.png');
   let ringTextureMap;
   ringTextureMap = useTexture(`/${(ringTexture != undefined ? '2k_saturne_ring.png' : texture)}`);
   
@@ -155,7 +156,7 @@ function AstroPlanet({
           {name === 'terre' && (
             <mesh ref={cloudsRef} name={'terre_nuages'} castShadow receiveShadow>
               <sphereGeometry args={[radius + .01, widthSegments, heightSegments]} />
-              <meshStandardMaterial map={useTexture('/earth-clouds.png')} transparent={true} opacity={.8}/>
+              <meshStandardMaterial map={cloudTextureMap} transparent={true} opacity={.8}/>
             </mesh>
           )}
           <mesh>

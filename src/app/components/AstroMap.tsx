@@ -48,13 +48,15 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
         .filter((planet) => planet.id)
         .map((planet) => (
           <React.Fragment key={planet.id}>
-            <OrbitLine
-              semiMajorAxis={scaleOrbit(planet.semimajorAxis)}
-              orbitCenter={new Vector3(0, 0, 0)}
-              lineOpacity={(selectedPlanetId === "soleil") ? 0.2 : 0}
-              inclination={planet.inclination}
-              eccentricity={planet.eccentricity}
-            />
+            {selectedPlanetId === 'soleil' && (
+              <OrbitLine
+                semiMajorAxis={scaleOrbit(planet.semimajorAxis)}
+                orbitCenter={new Vector3(0, 0, 0)}
+                lineOpacity={(selectedPlanetId === "soleil") ? 0.2 : 0}
+                inclination={planet.inclination}
+                eccentricity={planet.eccentricity}
+              />
+            )}
             <AstroPlanet
               name={planet.id}
               radius={scaleRadius(planet.equaRadius)}

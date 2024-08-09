@@ -61,7 +61,7 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "saturne",
-    cameraPositionOffset: 140,
+    cameraPositionOffset: 180,
     cameraLookAtOffset: -40,
     hasAtmo: true,
     atmoRgb: new Color(0.97, 0.95, 0.6),
@@ -82,8 +82,8 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "pluton",
-    cameraPositionOffset: 80,
-    cameraLookAtOffset: -25,
+    cameraPositionOffset: 15,
+    cameraLookAtOffset: -3.5,
     }
 ];
 

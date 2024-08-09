@@ -4,6 +4,9 @@ import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import Halo from "./Halo";
 import { Color, Vector3 } from "three";
+import { Astre } from "../types/bodies";
+import { scaleOrbit, scaleRadius, scaleSideralOrbit, scaleSideralRotation } from "../utils/Conversion";
+import AstroMoon from "./AstroMoon";
 
 export interface AstroPlanetProps {
   name: string;
@@ -25,6 +28,8 @@ export interface AstroPlanetProps {
   ringTexture?: string;
   hasAtmo?: boolean;
   atmoRgb?: Color;
+  moonAstres?: Astre[],
+  speedRatio: number
 }
 
 function AstroPlanet({
@@ -47,6 +52,8 @@ function AstroPlanet({
   ringTexture,
   hasAtmo,
   atmoRgb,
+  moonAstres,
+  speedRatio
 }: AstroPlanetProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const cloudsRef = useRef<THREE.Mesh>(null);
@@ -132,6 +139,7 @@ function AstroPlanet({
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
   return (
+    
     <group ref={orbitGroupRef}>
 
     <group ref={groupRef}>
@@ -152,6 +160,33 @@ function AstroPlanet({
               <meshStandardMaterial map={useTexture('/earth-clouds.png')} transparent={true} opacity={.8}/>
             </mesh>
           )}
+          <mesh>
+          { moonAstres && moonAstres.length > 1 && moonAstres.map((moon ,index) => {
+            if(index !=0){
+              return(
+                  <AstroMoon
+                  key={moon.id + index}
+                  name={moon.id}
+                  radius={scaleRadius((moon.equaRadius != 0) ? moon.equaRadius : moon.meanRadius)}
+                  widthSegments={128}
+                  heightSegments={64}
+                  texture={`assets/moons/2k_lune.jpg`}
+                  sideralOrbit={scaleSideralOrbit(moon.sideralOrbit) * speedRatio}
+                  distance={scaleOrbit(moon.semimajorAxis)}
+                  rotationSpeed={moon.id === 'soleil' ? scaleSideralRotation(500) * speedRatio : scaleSideralRotation(moon.sideralRotation) * speedRatio}
+                  axialTilt={moon.axialTilt}
+                  speedMultiplier={100}
+                  timeDilation={100}
+                  inclination={moon.inclination}
+                  eccentricity={moon.eccentricity}
+                  speedRatio={speedRatio}
+                />
+              )
+            }
+          })
+          }
+          </mesh>
+          
           {hasRing && ringTextureMap && (
             <mesh
               ref={ringMeshRef}

@@ -23,6 +23,7 @@ export interface Astre {
     density?: number;
     escape?: number;
     equaRadius: number;
+    meanRadius: number;
     flattening?: number;
     sideralOrbit?: number;
     sideralRotation?: number;

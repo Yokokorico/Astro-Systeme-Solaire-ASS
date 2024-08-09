@@ -56,7 +56,7 @@ const astroPlanetsToDisplay: AstroType[] = [
   },
   {
     id: "jupiter",
-    cameraPositionOffset: 180,
+    cameraPositionOffset: 300,
     cameraLookAtOffset: -50,
   },
   {
@@ -116,8 +116,6 @@ function Home() {
         setLoading(false);
         const planetWithMoons = await getListOfMoons(enrichedResults);
         setData(planetWithMoons);
-        console.log(planetWithMoons);
-
       } catch (err: Error | any) {
         setError(err);
         setLoading(false);

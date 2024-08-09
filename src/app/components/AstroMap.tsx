@@ -53,7 +53,6 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               orbitCenter={new Vector3(0, 0, 0)}
               lineOpacity={(selectedPlanetId === "soleil") ? 0.2 : 0}
               inclination={planet.inclination}
-              eccentricity={planet.eccentricity}
             />
             <AstroPlanet
               name={planet.id}

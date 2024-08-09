@@ -8,9 +8,9 @@ import AstroMap from "./components/AstroMap";
 import AstreDetails from "./components/AstreDetails";
 import { Box, Slider, Typography } from "@mui/material";
 import AstroSummary from "./components/AstroSummary";
-import { getListOfPlanet } from "./services/ApiService";
+import { getListOfMoons, getListOfPlanet, getMoonsIds } from "./services/ApiService";
 import { Astre } from "./types/bodies";
-import { Color, Vector3 } from "three";
+import { Color } from "three";
 
 export interface AstroType {
   id: string;
@@ -80,6 +80,11 @@ const astroPlanetsToDisplay: AstroType[] = [
     hasAtmo: true,
     atmoRgb: new Color(0.35, 0.81, 0.96),
   },
+  {
+    id: "pluton",
+    cameraPositionOffset: 80,
+    cameraLookAtOffset: -25,
+    }
 ];
 
 function Home() {
@@ -104,13 +109,15 @@ function Home() {
             cameraLookAtOffset: offsets?.cameraLookAtOffset,
             hasAtmo: offsets?.hasAtmo,
             atmoRgb: offsets?.atmoRgb,
+            moonAstres: [{}]
           };
         });
 
-        setData(enrichedResults);
-        console.log(enrichedResults);
         setLoading(false);
-        console.log(enrichedResults);
+        const planetWithMoons = await getListOfMoons(enrichedResults);
+        setData(planetWithMoons);
+        console.log(planetWithMoons);
+
       } catch (err: Error | any) {
         setError(err);
         setLoading(false);

@@ -12,7 +12,7 @@ const Stars = ({ count = 10000 }) => {
     const minDistance = 400000;
 
     for (let i = 0; i < count; i++) {
-      const distance = minDistance + Math.random() * 4500;
+      const distance = minDistance + Math.random() * 100000;
       const theta = Math.random() * 2 * Math.PI;
       const phi = Math.random() * Math.PI;
 

@@ -89,7 +89,7 @@ const astroPlanetsToDisplay: AstroType[] = [
 
 function Home() {
   const [sliderValue, setSliderValue] = useState(1);
-  const [speedRatio, setSpeedRatio] = useState(0.1);
+  const [speedRatio, setSpeedRatio] = useState(0.05);
   const [data, setData] = useState<Astre[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -167,7 +167,7 @@ function Home() {
             value={sliderValue}
             min={0}
             max={100}
-            step={0.1}
+            step={0.05}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
           />

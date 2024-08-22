@@ -96,6 +96,7 @@ function Home() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    console.log("page.tsx use effect")
     const fetchData = async () => {
       try {
         const planetIds = astroPlanetsToDisplay.map(p => p.id);
@@ -138,9 +139,9 @@ function Home() {
     if (typeof newValue === "number") {
       setSliderValue(newValue);
       if (newValue <= 50) {
-        setSpeedRatio(1 - (50 - newValue) / 50);
+        setSpeedRatio(+((1 - (50 - newValue) / 50).toFixed(2)));
       } else {
-        setSpeedRatio((newValue - 50) * 2);
+        setSpeedRatio(+((newValue - 50) * 2).toFixed(0));
       }
     }
   };
@@ -155,12 +156,13 @@ function Home() {
     setUiVisibility(newValue);
   }
 
+
   return (
     <div>
       {uiIsVisible && (
         <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
           <Typography id="input-slider" gutterBottom>
-            Vitesse: {speedRatio.toFixed(2)}
+            Vitesse: {speedRatio}
           </Typography>
           <Slider
             value={sliderValue}
@@ -175,10 +177,6 @@ function Home() {
         <AstroHeader planet={selectedPlanet.id} onUiVisibilityChange={handleUiVisibilityChange} />
       {loading ? (
           <div className="blackScreen"></div>
-        // <div className="flex flex-col justify-center items-center loader">
-        //   <p>Chargement...</p>
-        //   <span className="flex flex-col items-center"></span>
-        // </div>
       ) : error ? (
         <div>Error: {error.message}</div>
       ) : (
@@ -186,7 +184,7 @@ function Home() {
            <div className={`flex flex-col justify-center items-center loader ${loading ? '' : 'loaded'}`}>
               <p>Chargement...</p>
               <span className="flex flex-col items-center"></span>
-            </div>
+          </div>
           <AstroMap
             speedRatio={speedRatio}
             planets={data}

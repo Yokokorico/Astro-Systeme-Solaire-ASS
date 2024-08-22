@@ -92,7 +92,7 @@ function AstroPlanet({
     }
 
     if (cloudsRef.current) {
-        cloudsRef.current.rotation.y += adjustedRotationSpeed + .0005;
+        cloudsRef.current.rotation.y += adjustedRotationSpeed * 1.05;
     }
 
     if (meshRef.current) {
@@ -142,6 +142,7 @@ function AstroPlanet({
   ]
 
   function getRandomName(names: string[]) {
+    // console.log('getRandomNames');   // DECOMMENTER ICI ET CHANGER LA VITESSE SUR LA PAGE POUR VOIR A QUEL POINT CA BUG
     const randomIndex = Math.floor(Math.random() * names.length);
     return names[randomIndex];
   }

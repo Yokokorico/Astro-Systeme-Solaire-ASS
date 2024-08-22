@@ -2,17 +2,18 @@ import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Object3D } from "three";
 
-const Stars = ({ count = 10000 }) => {
+const Stars = ({ count = 15000 }) => {
   const meshRef: any = useRef();
 
   // Pre-generate positions for the stars
   const positions = useMemo(() => {
     const positions = [];
 
-    const minDistance = 400000;
+    const minDistance = 600000;
 
     for (let i = 0; i < count; i++) {
-      const distance = minDistance + Math.random() * 100000;
+      // const distance = minDistance + Math.random() * 100000;
+      const distance = minDistance;
       const theta = Math.random() * 2 * Math.PI;
       const phi = Math.random() * Math.PI;
 
@@ -52,7 +53,7 @@ const Stars = ({ count = 10000 }) => {
 
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      <dodecahedronGeometry args={[150, 0]} />
+      <dodecahedronGeometry args={[275, 0]} />
       <meshBasicMaterial attach="material" color="white" />
     </instancedMesh>
   );

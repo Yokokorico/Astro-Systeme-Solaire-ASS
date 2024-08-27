@@ -1,15 +1,17 @@
-import React, { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '@/app/components/AstroNav.module.css';
-import { div } from 'three/webgpu';
 
 interface AstroNavProps {
   planets: string[];
   selectedPlanetId: string;
   onPlanetChange: (planetId: string) => void;
+  onSpeedChange: (speed: number) => void;
 }
 
-const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanetChange }) => {
+const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanetChange, onSpeedChange }) => {
   const [indexObjects, setIndexObjects] = useState(0);
+  const [currentSpeed, setCurrentSpeed] = useState(1);
+  const [isPaused, setPaused] = useState(false);
 
   // Use effect to update indexObjects when selectedPlanetId changes
   useEffect(() => {
@@ -18,6 +20,30 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
       setIndexObjects(newIndex);
     }
   }, [selectedPlanetId, planets]);
+
+  const setSpeed = (val: number) => {
+    setPaused(false);
+    setCurrentSpeed(val);
+    onSpeedChange(val);
+  }
+
+  let previousSpeed = 1;
+
+  const switchPlayPause = () => {
+    console.log(isPaused)
+    isPaused ? setPlay() : setPause();
+  }
+
+  const setPlay = () => {
+    setPaused(false);
+    onSpeedChange(currentSpeed);
+  }
+
+  const setPause = () => {
+    setPaused(true);
+    previousSpeed = currentSpeed;
+    onSpeedChange(0);
+  }
 
   const countObjects = planets.length;
 
@@ -64,7 +90,14 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
   }, [handleKeyDown, handleKeyUp]);
 
   return (
-    <div className={`flex justify-center ${styles.container}`}>
+    <div className={`flex justify-center ${styles.container}`}>.
+      <div className={`flex flex-col gap-1 ${styles.adjustSpeed} `}>
+        <p className='text-center'>Vitesse</p>
+        <button className={` ${currentSpeed === 1 ? styles.currentSpeedBtn : ''}`} onClick={() => setSpeed(1)}>x1</button>
+        <button className={` ${currentSpeed === 10 ? styles.currentSpeedBtn : ''}`} onClick={() => setSpeed(10)}>x10</button>
+        <button className={` ${currentSpeed === 100 ? styles.currentSpeedBtn : ''}`} onClick={() => setSpeed(100)}>x100</button>
+        <button className={` ${!isPaused ? styles.btnPlay : styles.btnPause}`} onClick={() => switchPlayPause()} id={ styles.play }></button>
+      </div>
       <div className="flex justify-center items-center" id={styles.astroNav}>
         <button
           className={`flex justify-center items-center ${indexObjects === 0 ? 'locked' : ''}`}

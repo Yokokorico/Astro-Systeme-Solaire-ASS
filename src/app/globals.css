@@ -71,6 +71,25 @@ body {
 	transform: scaleX(0);
 	transform-origin: left;
 }
+.portrait {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+	pointer-events: none;
+	background: #000;
+	font-family: 'Nasalization';
+	font-size: 2rem;
+	z-index: 99;
+}
+.portrait iframe {
+	filter: invert(1);
+}
 @keyframes loading {
 	0% {
 		transform: scaleX(0);
@@ -89,5 +108,13 @@ body {
 	}
 	100% {
 		opacity: 0;
+	}
+}
+
+@media screen and (orientation: portrait) {
+	
+	.portrait {
+		opacity: 1 !important;
+		z-index: 99;
 	}
 }

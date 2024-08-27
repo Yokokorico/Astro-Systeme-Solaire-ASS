@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "Découvrez le système solaire en 3D avec ThreeJS",
     images: [
       {
-        url: "/assets/images/description-image.png", // Utilisera metadataBase pour compléter l'URL
+        url: "https://astro-systeme-solaire-ass.vercel.app/assets/images/description-image.png", // URL complète de l'image
         width: 1200,
         height: 630,
         alt: "Astronomical Solar System",
@@ -42,10 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@VotreCompteTwitter", // Remplacez par votre compte Twitter
     title: "Astronomical Solar System",
     description: "Découvrez le système solaire en 3D avec ThreeJS",
-    images: ["https://astro-systeme-solaire-ass.vercel.app/assets/images/description-image.png"], // Utilisation directe de l'URL complète
+    images: ["https://astro-systeme-solaire-ass.vercel.app/assets/images/description-image.png"], 
   },
 };
 export default function RootLayout({

@@ -130,7 +130,7 @@
     background-image: url(../../../public/assets/images/pluton_icon.png);
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1345px) {
     .container {
         transform: scale(.8) translateX(-2rem);
     }

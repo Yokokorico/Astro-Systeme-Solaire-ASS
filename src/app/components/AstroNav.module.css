@@ -129,7 +129,7 @@
     text-align: center;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1345px) {
 	.adjustSpeed {
 		transform: scale(.7);
         margin-right: .5rem;

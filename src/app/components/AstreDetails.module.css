@@ -266,7 +266,7 @@
     --clr4: rgba(82, 49, 49, 0.75);
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1345px) {
     .wrapper {
         transform: scale(.8) translateX(-30%);
     }

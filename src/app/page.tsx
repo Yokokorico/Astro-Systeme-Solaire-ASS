@@ -189,7 +189,7 @@ function Home() {
               <span className="flex flex-col items-center"></span>
           </div>
           <div className='portrait flex flex-col'>
-            <p>Retournez l'écran</p>
+            <p>Retournez l&apos;écran</p>
             <iframe src="https://giphy.com/embed/JOtdkVKp0q8tJ0DGyJ" width="480" height="480" className="giphy-embed" allowFullScreen></iframe>
           </div>
           <AstroMap

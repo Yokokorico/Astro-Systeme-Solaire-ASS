@@ -92,7 +92,7 @@ function AstroPlanet({
     }
 
     if (cloudsRef.current) {
-        cloudsRef.current.rotation.y += adjustedRotationSpeed + .0005;
+        cloudsRef.current.rotation.y += adjustedRotationSpeed * 1.05;
     }
 
     if (meshRef.current) {

@@ -24,12 +24,13 @@ export interface AstroMapProps {
 
 
 function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
+  
   const canvasRef = useRef(null);
   
   if (planets.length < 8) return <div>AstroMapLoading...</div>;
   
   return (
-    <Canvas ref={canvasRef} style={{ width: "100vw", height: "100vh" }} camera={{ far: 10000000}}>
+    <Canvas ref={canvasRef} style={{ width: "100vw", height: "100vh" }} camera={{far: 2000000}}>
       <ambientLight intensity={0.2} />
       <pointLight distance={0} decay={0.01} intensity={5} />
       {/* <SetEnvironment /> */}

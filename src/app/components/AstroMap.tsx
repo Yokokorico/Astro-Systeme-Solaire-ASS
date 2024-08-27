@@ -42,7 +42,7 @@ function AstroMap({ planets, selectedPlanetId, speedRatio }: AstroMapProps) {
               <OrbitLine
                 semiMajorAxis={scaleOrbit(planet.semimajorAxis)}
                 orbitCenter={new Vector3(0, 0, 0)}
-                lineOpacity={(selectedPlanetId === "soleil") ? 0.4 : 0}
+                lineOpacity={(selectedPlanetId === "soleil") ? 0.15 : 0}
                 inclination={planet.inclination}
                 eccentricity={planet.eccentricity}
               />

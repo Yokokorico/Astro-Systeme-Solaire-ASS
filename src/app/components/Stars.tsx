@@ -42,6 +42,7 @@ const Stars = ({ count = 15000 }) => {
       meshRef.current.setMatrixAt(i, matrix.matrix);
     }
     meshRef.current.instanceMatrix.needsUpdate = true;
+    meshRef.current.geometry.computeBoundingSphere();
   }, [count, positions]);
 
   // Animate the stars
@@ -52,7 +53,7 @@ const Stars = ({ count = 15000 }) => {
   // })
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
       <dodecahedronGeometry args={[275, 0]} />
       <meshBasicMaterial attach="material" color="white" />
     </instancedMesh>

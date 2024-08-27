@@ -137,15 +137,6 @@ function AstroPlanet({
     }
   }, [ringInnerRadius, ringOuterRadius, ringTexture]);
 
-  const randomNames = [
-    'ceres', 'eris', 'haumea', 'makemake', 'callisto', 'charon', 'deimos', 'enceladus', 'europa', 'ganymede', 'hyperion', 'io', 'phobos', 'titan'
-  ]
-
-  function getRandomName(names: string[]) {
-    // console.log('getRandomNames');   // DECOMMENTER ICI ET CHANGER LA VITESSE SUR LA PAGE POUR VOIR A QUEL POINT CA BUG
-    const randomIndex = Math.floor(Math.random() * names.length);
-    return names[randomIndex];
-  }
 
 
   return (
@@ -180,7 +171,7 @@ function AstroPlanet({
                   radius={scaleRadius((moon.equaRadius != 0) ? moon.equaRadius : moon.meanRadius)}
                   widthSegments={128}
                   heightSegments={64}
-                  texture={(moon.id !== 'lune') ? `assets/moons/random_textures/2k_${getRandomName(randomNames)}.jpg` : `assets/moons/2k_${moon.id}.jpg`}
+                  texture={moon.id}
                   sideralOrbit={scaleSideralOrbit(moon.sideralOrbit) * speedRatio}
                   distance={scaleOrbit(moon.semimajorAxis)}
                   rotationSpeed={moon.id === 'soleil' ? scaleSideralRotation(500) * speedRatio : scaleSideralRotation(moon.sideralRotation) * speedRatio}

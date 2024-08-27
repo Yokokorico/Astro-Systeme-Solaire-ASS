@@ -30,7 +30,6 @@ const AstroNav: React.FC<AstroNavProps> = ({ planets, selectedPlanetId, onPlanet
   let previousSpeed = 1;
 
   const switchPlayPause = () => {
-    console.log(isPaused)
     isPaused ? setPlay() : setPause();
   }
 

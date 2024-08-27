@@ -4,10 +4,15 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://astro-systeme-solaire-ass.vercel.app/"), // Ajoutez cette ligne
   title: "Astronomical Solar System",
   description: "Le système solaire en 3D avec ThreeJS",
-  viewport: "width=device-width, initial-scale=1",
   robots: {
     index: true,
     follow: true,
@@ -23,22 +28,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://astro-systeme-solaire-ass.vercel.app/", 
+    url: "https://astro-systeme-solaire-ass.vercel.app/",
     title: "Astronomical Solar System",
     description: "Découvrez le système solaire en 3D avec ThreeJS",
     images: [
       {
-        url: "/assets/images/description-image.png", 
+        url: "/assets/images/description-image.png", // Utilisera metadataBase pour compléter l'URL
         width: 1200,
         height: 630,
         alt: "Astronomical Solar System",
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@VotreCompteTwitter", // Remplacez par votre compte Twitter
+    title: "Astronomical Solar System",
+    description: "Découvrez le système solaire en 3D avec ThreeJS",
+    images: ["https://astro-systeme-solaire-ass.vercel.app/assets/images/description-image.png"], // Utilisation directe de l'URL complète
+  },
 };
-
-
-
 export default function RootLayout({
   children,
 }: Readonly<{

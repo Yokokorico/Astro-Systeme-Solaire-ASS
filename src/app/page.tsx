@@ -96,7 +96,6 @@ function Home() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    console.log("page.tsx use effect")
     const fetchData = async () => {
       try {
         const planetIds = astroPlanetsToDisplay.map(p => p.id);

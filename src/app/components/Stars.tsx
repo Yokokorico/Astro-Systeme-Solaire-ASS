@@ -9,7 +9,7 @@ const Stars = ({ count = 10000 }) => {
   const positions = useMemo(() => {
     const positions = [];
 
-    const minDistance = 400000;
+    const minDistance = 500000;
 
     for (let i = 0; i < count; i++) {
       const distance = minDistance + Math.random() * 100000;
@@ -41,6 +41,7 @@ const Stars = ({ count = 10000 }) => {
       meshRef.current.setMatrixAt(i, matrix.matrix);
     }
     meshRef.current.instanceMatrix.needsUpdate = true;
+    meshRef.current.geometry.computeBoundingSphere();
   }, [count, positions]);
 
   // Animate the stars
@@ -51,7 +52,7 @@ const Stars = ({ count = 10000 }) => {
   // })
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
       <dodecahedronGeometry args={[150, 0]} />
       <meshBasicMaterial attach="material" color="white" />
     </instancedMesh>

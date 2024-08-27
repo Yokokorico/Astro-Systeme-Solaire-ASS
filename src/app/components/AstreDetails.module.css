@@ -265,3 +265,20 @@
     --clr3: rgba(27, 1, 1, 0.75);
     --clr4: rgba(82, 49, 49, 0.75);
 }
+
+@media screen and (max-width: 920px) {
+    .wrapper {
+        transform: scale(.8) translateX(-30%);
+    }
+    .fieldContainer {
+        line-height: .85rem;
+        font-size: .8rem;
+    }
+}
+@media screen and (orientation: portrait) {
+	
+	.wrapper {
+		display: none;
+        height: 0 !important;
+	}
+}

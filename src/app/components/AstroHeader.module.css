@@ -117,3 +117,24 @@
 .hidden {
     display: none;
 }
+
+@media screen and (max-width: 920px) {
+    .header {
+        padding: 0 .5rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+    .subtitle {
+        position: fixed;
+        bottom: 0;
+        font-size: .8rem;
+    }
+    .tooltipContainer > div {
+        display: none;
+    }
+    .tooltipContainer button {
+        margin-top: .5rem;
+    }
+}

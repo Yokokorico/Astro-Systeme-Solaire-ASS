@@ -135,6 +135,10 @@ function Home() {
     if (planet) setSelectedPlanet(planet);
   };
 
+  const handleSpeedChange = (val: number) => {
+    setSpeedRatio(0.05 * val);
+  }
+
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") {
       setSliderValue(newValue);
@@ -159,7 +163,7 @@ function Home() {
 
   return (
     <div>
-      {uiIsVisible && (
+      {/* {uiIsVisible && (
         <Box sx={{ width: 300, marginBottom: 0, position: 'absolute', bottom: 0, left: 50, zIndex: 99 }}>
           <Typography id="input-slider" gutterBottom>
             Vitesse: {speedRatio}
@@ -173,8 +177,8 @@ function Home() {
             aria-labelledby="input-slider"
           />
         </Box>
-      )}
-        <AstroHeader planet={selectedPlanet.id} onUiVisibilityChange={handleUiVisibilityChange} />
+      )} */}
+      <AstroHeader planet={selectedPlanet.id} onUiVisibilityChange={handleUiVisibilityChange} />
       {loading ? (
           <div className="blackScreen"></div>
       ) : error ? (
@@ -184,6 +188,10 @@ function Home() {
            <div className={`flex flex-col justify-center items-center loader ${loading ? '' : 'loaded'}`}>
               <p>Chargement...</p>
               <span className="flex flex-col items-center"></span>
+          </div>
+          <div className='portrait flex flex-col'>
+            <p>Retournez l'écran</p>
+            <iframe src="https://giphy.com/embed/JOtdkVKp0q8tJ0DGyJ" width="480" height="480" className="giphy-embed" allowFullScreen></iframe>
           </div>
           <AstroMap
             speedRatio={speedRatio}
@@ -198,6 +206,7 @@ function Home() {
             planets={astroPlanetsToDisplay.map((p) => p.id)}
             selectedPlanetId={selectedPlanet.id}
             onPlanetChange={handlePlanetChange}
+            onSpeedChange={handleSpeedChange}
           />
           )}
           {uiIsVisible && (

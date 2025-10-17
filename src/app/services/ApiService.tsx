@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Astre } from '../types/bodies';
 
-const API_URL = 'https://api.le-systeme-solaire.net/rest.php';
+// L'API demande maintenant un token d'authentification
+// Pour les CORS on utilise un proxy dans src/app/api/proxy
 
 const generateFilters = (planetIds: string[]): string[] => {
     return planetIds.map(id => `id,eq,${id}`);
@@ -36,7 +37,7 @@ export const getListOfPlanet = async (planetIds: string[]) => {
     try {
         const filters = generateFilters(planetIds);
         const filterString = filters.join("&filter%5B%5D=");
-        const response = await axios.get(`${API_URL}/bodies?filter%5B%5D=${filterString}&satisfy=any`);
+        const response = await axios.get(`/api/proxy?filter%5B%5D=${filterString}&satisfy=any`);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -49,7 +50,7 @@ export const getListOfMoons = async (planets: Astre[]) => {
         const tabMoon = getMoonsIds(planets);
         const filters = generateMoonsFilters(tabMoon);
         const filterString = filters.join("&filter%5B%5D=");
-        const response = await axios.get(`${API_URL}/bodies?order=equaRadius%2Cdesc&filter%5B%5D=${filterString}&satisfy=any`);
+        const response = await axios.get(`/api/proxy?order=equaRadius%2Cdesc&filter%5B%5D=${filterString}&satisfy=any`);
         const data = response.data;
         const enrichedResults = data.bodies.map((moon: Astre) => {
             return {

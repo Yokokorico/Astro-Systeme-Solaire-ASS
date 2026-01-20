@@ -21,10 +21,10 @@ export const getMoonsIds = (planets: Astre[]): string[] => {
     const moonIds: string[] = [];
     planets.forEach(planet => {
         if (planet.moons) {
-            planet.moons.forEach(moon => {
+            planet.moons.forEach((moon, i) => {
+                if (i > 5) return;
                 if(!moon.rel.includes("s20")){
                     moonIds.push(moon.rel);
-                 
                 }
             });
         }
